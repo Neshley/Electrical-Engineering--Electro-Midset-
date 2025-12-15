@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="with=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <title>Engineering</title>
+        <link rel="stylesheet" href="styles.css" />
+        <script src="script.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    </head>
+    
+    <!------ Body ------>
+    <body>
+        <h1 class="title">EEE HUB</h1>
+    <section Class="sub-header">
+        <nav>
+            <a href="index.html"><img src="images/logo.png"></a>
+            <div class="nav-links" id="navlinks">
+                <i class="fa fa-times" onclick="hidemenu()"></i>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="about.html">ABOUT</a></li>
+          <li><a href="units.html">TOPICS</a></li>
+          <li><a href="Contacts.html">CONTACT</a></li>
+        
+        </ul>
+            </div>
+             <i class="fa fa-bars" onclick="showmenu()"></i>
+        </nav>
+                <h1>About Us</h1>
+    </section>
+        
+     <!--About us content-->
+        
+    <section class="about-Us">
+        
+        <div class="row">
+            <div class="about-col">
+                <h1>WELCOME HERE AT ELECTRO-MIDSET HUB</h1>
+               <p>Here at ELECTRO-MIDSET we provide you with reliable notes and Revision Materials in Electrical Engineering.<br>
+                We provide notes and Revision material which are trusted by many students.We Provide notes and Revision 
+                materials in soft copies which makes it easier to carry around and access at any time.<br>
+                We provide notes on many different Electrical Units covered in Engineering.<br>click the link below 👇 and start 
+                Reading With Us today.</p>
+                <a href="units.html" class="hero-btn green-btn">EXPLORE NOW</a>
+            </div> 
+            <div class="about-col">
+                <img src="images/about.jpg">
+            </div>
+        </div>
+    </section> 
+        
+        
+            <!------Footer------> 
+    
+   <section class="footer">
+        <h4>About Us</h4>
+        <p>Here at ELECTRO-MIDSET we Provide Notes on Electric Engineering.<br>We have helped to solve Electrical questions 
+            and to provide Answers to many Electrical students.<br>Study with us today</p>
+        <div class="icons">
+            <a href="https://www.facebook.com/nesh.ley.2025" class="fa fa-facebook"></a>
+            <a href="https://wa.me/+254799873196" class="fa fa-whatsapp"></a>
+            <a href="https://t.me/Technesh1" class="fa fa-telegram"></a>
+            <a href="https://linkedin.com/in/derricknesh" class="fa fa-linkedin"></a>
+        </div>
+        <p>made with <i class="fa fa-heart-o"></i> by Derrick Nesh</p>
+    </section>
+        
+    <!------javascript for Toggle Menu------>
+    <script>
+
+    var navlinks = document.getElementById("navlinks");
+    function showmenu(){
+    navlinks.style.right = "0";
+    }
+    function hidemenu(){
+    navlinks.style.right = "-200px";
+    }
+    </script>
+            
+        
+    </body>
+</html>

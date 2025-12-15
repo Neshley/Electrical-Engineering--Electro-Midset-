@@ -1,0 +1,9 @@
+Current through a conductor is dirrectly proportional to current.
+>current in series is equal.
+>voltage is different 
+
+>Current in pararell is different while Voltage is equal.
+
+
+>Kirchoffs law of current =Total current entering a node is equal to the total current leaving the node.
+>Kirchoffs law of voltage=In any circuit loop around a selected direction,the sum of the voltage drops is equal to the sum o voltage rises. 

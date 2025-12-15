@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="with=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <title>Engineering</title>
+        <link rel="stylesheet" href="styles.css" />
+        <script src="script.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    </head>
+    
+    <!------ Body ------>
+    <body>
+<section Class="header">
+        <nav>
+            <a href="index.html"><img src="images/logo.png"></a>
+            <div class="nav-links" id="navlinks">
+                <i class="fa fa-times" onclick="hidemenu()"></i>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="about.html">ABOUT</a></li>
+          <li><a href="units.html">TOPICS</a></li>
+          <li><a href="Contacts.html">CONTACT</a></li>
+        </ul>
+            </div>
+             <i class="fa fa-bars" onclick="showmenu()"></i>
+        </nav>
+    
+        <div class="text-box">
+           <h1>ELECTRO-MIDSET</h1>
+            <p>Welcome here at ELECTRO-MIDSET a place where we grow tongether. <br>
+                A place where we read different kinds of books.Finance books,Electronics 
+                books,Electrical e.t.c.<br>Study here with us at ELECTRO-MIDSET.</p>
+            <a href="Contacts.html" class="hero-btn">Visit us to know more</a>
+        </div>
+    </section>
+        
+        
+          <!------ units ------>
+    
+    <section class="units">
+        <h1>Units</h1>
+        <p>We have provided notes for the units covered in Electrical and Electronics Engineering.<br>Below are some of the units covered</p>
+        
+        <div class="row">
+            <div class="units-col">
+                <h3>Electrical PowerLines</h3>
+                <p>Looking foward to Enhance your Knowledge in Electrical powerlines.To study the Electric transmission systems,
+                    to study Overhead transmission lines and more...We've got resourses for you.</p>
+            </div>
+            <div class="units-col">
+                <h3>Electrical Principles</h3>
+                <p>Trying to understand the Laws in Electrical principles and  the calculations...to Understanding Earthing systems too and 
+                    other areas covered in Electrical principles? We've got you covered</p>
+            </div>
+            <div class="units-col">
+                <h3>Electrical Machines</h3>
+                <p>Working on Star delta machines,Foward reverse or any other Electric machines,we have Important resourses for you...</p>
+            </div>
+        </div>
+        
+        
+    </section>
+        
+ 
+        
+    <!------testimonials------>
+    
+    <section class="testimonials">
+        <h1>What people says</h1>
+        <p>A lot of people have been using our website to learn and to do their studies.</p>
+        
+        <div class="row">
+            <div class="testimonial-col">
+                <img src="images/user1 (2).jpg">
+                <diV>
+                    <p>My Name is Derrick Munene Kariuki and I have been using this website for a while now and it has been of much help to me.
+                    It has helped me in my studies alot.</p>
+                    <h3>DERRICK MUNENE KARIUKI</h3>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                </diV>
+            </div>
+            <div class="testimonial-col">
+                <img src="images/user2 (2).jpg">
+                <diV>
+                    <p>My Name is Kariuki Derrick Munene and I have been using this website for a while now and it has been of much help to me.
+                    It has helped me alot in my studies.</p>
+                    <h3>KARIUKI DERRICK MUNENE</h3>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
+                </diV>
+            </div>
+        </div>
+    </section>
+        
+        
+        
+            <!------Call to Action------>
+    
+    <section class="cta">
+        <h1>Browse for Books</h1>
+        <a href="units.html" class="hero-btn green-btn">Browse</a>
+    </section>
+    
+
+    
+
+            <!------Footer------> 
+    
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Here at ELECTRO-MIDSET we Provide Notes on Electric Engineering.<br>We have helped to solve Electrical questions 
+            and to provide Answers to many Electrical students.<br>Study with us today</p>
+        <div class="icons">
+            <a href="https://www.facebook.com/nesh.ley.2025" class="fa fa-facebook"></a>
+            <a href="https://wa.me/+254799873196" class="fa fa-whatsapp"></a>
+            <a href="https://t.me/Technesh1" class="fa fa-telegram"></a>
+            <a href="https://linkedin.com/in/derricknesh" class="fa fa-linkedin"></a>
+        </div>
+        <p>made with <i class="fa fa-heart-o"></i> by Derrick Nesh</p>
+    </section>
+        
+        <!------javascript for Toggle Menu------>
+    <script>
+    
+        var navlinks = document.getElementById("navlinks");
+        function showmenu(){
+            navlinks.style.right = "0";
+        }
+        function hidemenu(){
+            navlinks.style.right = "-200px";
+        }
+    </script>
+        
+        
+    </body>
+</html>

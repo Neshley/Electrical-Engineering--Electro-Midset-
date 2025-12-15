@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="with=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <title>Engineering</title>
+        <link rel="stylesheet" href="styles.css" />
+        <script src="script.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    </head>
+    
+    <!------ Body ------>
+    <body>
+    <section Class="sub-header2">
+        <nav>
+            <a href="index.html"><img src="images/logo.png"></a>
+            <div class="nav-links" id="navlinks">
+                <i class="fa fa-times" onclick="hidemenu()"></i>        
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="about.html">ABOUT</a></li>
+          <li><a href="units.html">TOPICS</a></li>
+          <li><a href="Contacts.html">CONTACT</a></li>
+          <ol><li><a href="search.html">SEARCH</a></li></ol>
+        </ul>
+            </div>
+             <i class="fa fa-bars" onclick="showmenu()"></i>
+        </nav>
+        
+        <div class="search-box">
+            <h1>web</h1>
+            <p>Explore the web with the link below</p>
+            <a href="https://www.google.com" class="hero-btn red-btn">SEARCH</a>
+        </div>
+    
+    </section>
+        
+        
+        <!--Videos-->
+    <section class="videos"> 
+    <div>
+        <video controls src="videos/Coresound%20Ambient%20Pads%20-%20MultiTracks%20.mp4" width="200"></video>
+        <video controls src="videos/Coresound%20Ambient%20Pads%20-%20MultiTracks%20.mp4" width="200"></video>
+        <video controls src="videos/Coresound%20Ambient%20Pads%20-%20MultiTracks%20.mp4" width="200"></video>
+        <!--You can add any videos as you like in here-->
+    </div>
+<section>
+    <div style="display: contents">
+        <a href="videos/Coresound%20Ambient%20Pads%20-%20MultiTracks%20.mp4" class="hero-btn red-btn">videos</a>
+        <!--You can add any videos as you like in here-->
+    </div>
+</section>
+
+        <br>
+    </section>
+        
+        
+        <!--Iframe....Embended document...Embended the web-->
+        
+        <section class="bing-col">
+        <a href="https://www.bing.com" class="hero-btn green-btn">Bing search</a>
+        </section>
+        
+        
+                    <!------Footer------> 
+    
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Here at ELECTRO-MIDSET we Provide Notes on Electric Engineering.<br>We have helped to solve Electrical questions 
+            and to provide Answers to many Electrical students.<br>Study with us today</p>
+        <div class="icons">
+            <a href="https://www.facebook.com/nesh.ley.2025" class="fa fa-facebook"></a>
+            <a href="https://wa.me/+254799873196" class="fa fa-whatsapp"></a>
+            <a href="https://t.me/Technesh1" class="fa fa-telegram"></a>
+            <a href="https://linkedin.com/in/derricknesh" class="fa fa-linkedin"></a>
+        </div>
+        <p>made with <i class="fa fa-heart-o"></i> by Derrick Nesh</p>
+    </section>
+        
+        <!------javascript for Toggle Menu------>
+    <script>
+    
+        var navlinks = document.getElementById("navlinks");
+        function showmenu(){
+            navlinks.style.right = "0";
+        }
+        function hidemenu(){
+            navlinks.style.right = "-200px";
+        }
+    </script>
+        
+        
+    </body>
+</html>
