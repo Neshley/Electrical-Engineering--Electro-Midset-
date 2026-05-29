@@ -20,3 +20,5 @@ function calculateOhm() {
         resultDisplay.style.color = "#e74c3c"; // Red for error
     }
 }
+
+

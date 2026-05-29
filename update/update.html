@@ -1,0 +1,133 @@
+
+<?php
+// Current app version
+$currentVersion = "1.0.0";
+
+// URL to check latest version (this could be a JSON file or PHP script on your server)
+$updateUrl = "https://yourserver.com/update.json";
+
+// Fetch latest version info
+$latestVersion = null;
+$downloadLink = null;
+
+$response = @file_get_contents($updateUrl);
+if ($response) {
+    $data = json_decode($response, true);
+    if ($data) {
+        $latestVersion = $data['version'];
+        $downloadLink = $data['download'];
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Electro-Mindset Update Checker</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: #0d1b2a;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+    header {
+        background: #1b263b;
+        padding: 20px;
+    }
+    header h1 {
+        color: #fca311;
+        margin: 0;
+    }
+    button {
+        margin-top: 20px;
+        padding: 12px 20px;
+        background: #fca311;
+        border: none;
+        color: #000;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    button:hover {
+        background: #ffba08;
+    }
+    /* Popup styling */
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.7);
+        justify-content: center;
+        align-items: center;
+    }
+    .popup-content {
+        background: #1b263b;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 400px;
+    }
+    .popup-content h2 {
+        color: #4cc9f0;
+    }
+    .popup-content a {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 15px;
+        background: #fca311;
+        color: #000;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+    .popup-content a:hover {
+        background: #ffba08;
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>ELECTRO-MINDSET</h1>
+    <p>Version <?php echo $currentVersion; ?></p>
+</header>
+
+<button onclick="checkUpdate()">Check for Updates</button>
+
+<div class="popup" id="popup">
+    <div class="popup-content" id="popup-content">
+        <!-- Content injected by JS -->
+    </div>
+</div>
+
+<script>
+function checkUpdate() {
+    var current = "<?php echo $currentVersion; ?>";
+    var latest = "<?php echo $latestVersion; ?>";
+    var link = "<?php echo $downloadLink; ?>";
+    var popup = document.getElementById("popup");
+    var content = document.getElementById("popup-content");
+
+    if (latest && latest !== current) {
+        content.innerHTML = "<h2>Update Available!</h2>" +
+                            "<p>Latest version: " + latest + "</p>" +
+                            "<a href='" + link + "' target='_blank'>Download Update</a>";
+    } else {
+        content.innerHTML = "<h2>You are up to date ✅</h2>" +
+                            "<p>Current version: " + current + "</p>";
+    }
+    popup.style.display = "flex";
+}
+
+// Close popup when clicking outside
+document.getElementById("popup").addEventListener("click", function(e) {
+    if (e.target.id === "popup") {
+        this.style.display = "none";
+    }
+});
+</script>
+</body>
+</html>

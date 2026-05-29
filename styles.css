@@ -71,7 +71,9 @@ nav img {
 .nav-links ul li:hover::after{
     width: 100%;
 }
-
+.nav-links ul li a.active{
+    color: #36f44d;
+}
 .text-box{
     width: 90%;
     color: #fff;
@@ -102,8 +104,8 @@ nav img {
     cursor: pointer;
 }
 .hero-btn:hover{
-    border: 1px solid #36f44d;
-    background:  #36f44d;
+    border: 1px solid rgba(2, 255, 158, 0.678);
+    background:  rgba(2, 255, 158, 0.678);
     transition: 1s;
 }
 nav .fa{
@@ -119,7 +121,7 @@ nav .fa{
     }
     .nav-links{
         position: fixed;
-        background: #28b439;
+        background: rgb(2, 140, 145);
         height: 100vh;
         top: 0;
         right: -200px;
@@ -232,9 +234,9 @@ p{
      border-radius: 30px;
 }
 .green-btn{
-    border: 1px solid #36f44d;
+    border: 1px solid rgb(2, 255, 158);
     background: transparent;
-    color: #36f44d;
+    color: rgb(2, 255, 158);
 }
 
 .green-btn:hover{
@@ -614,8 +616,12 @@ img{
     border-radius: 10px;
     text-align: center;
     padding: 100px 0;
+    box-shadow: 0 20px 24px rgba(27, 27, 27, 0.514);
+    transition: 1s;
 }
-
+.cta:hover{
+    box-shadow: 0 20px 24px rgba(2, 255, 158, 0.678);
+}
 .cta h1{
     color: #fff;
     margin-bottom: 40px;
@@ -709,5 +715,27 @@ img{
 
 
 
+/*---back to top---*/
 
+    /* Floating Menu Button */
+    #backToTop {
+      display: none; /* hidden by default */
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 99;
+      background-color: #275587;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+    }
 
+    #backToTop:hover {
+      background-color: #006fe5;
+    }

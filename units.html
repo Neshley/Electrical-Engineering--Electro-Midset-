@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta name="viewport" content="with=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8" />
         <title>Engineering</title>
         <link rel="stylesheet" href="styles.css" />
@@ -15,16 +15,18 @@
         <nav>
             <a href="index.html"><img src="images/logo.png"></a>
             <div class="nav-links" id="navlinks">
-                <i class="fa fa-times" onclick="hidemenu()"></i>
+                <i class="fa" onclick="hidemenu()">×</i>
                 <ul>
                 <li><a href="index.html">HOME</a></li>
                 <li><a href="about.html">ABOUT</a></li>
-                <li><a href="units.html">TOPICS</a></li>
+                <li><a href="units.html" class="active">NOTES</a></li>
                 <li><a href="Contacts.html">CONTACT</a></li>
+                <li><a href="">⚙⛓</a></li>
                 <ol><li><a href="search.html">SEARCH</a></li></ol>
+                
                 </ul>
             </div>
-             <i class="fa fa-bars" onclick="showmenu()"></i>
+             <i class="fa" onclick="showmenu()">☰</i>
         </nav>
             <h1>Units/Topics</h1>
     </section>
@@ -44,7 +46,7 @@
         
     <div id="powerlines" class="powerlines">
                 <h1>Electrical powerlines</h1>
-                <p><h3>Definition of Terms</h3>
+                <p><h3><b>Definition of Terms</b></h3>
                         <b>Alternating Current (AC)</b>–Electric current whose flows is reversed manner or alternated at 50HZ in Kenya and60Hz in the U.S. <br>
                         <b>Conductors (Power Lines) </b>–cables that carry electric current <br>
                         <b>Corona</b>– Electrical breakdown of the air near high voltage conductors into charged particles. <br>
@@ -68,8 +70,10 @@
                         <b>Watt</b> – Unit of electrical power. <br>
             <h3>Transmission Line</h3> – A line carrying electricity and transmit electric power from the generating station to the consumers. <br>
             
-            <img src="images\Screenshot 2025-11-25 025841.png">
+            <div style="width: fit-content;">
+                <img src="images\Screenshot 2025-11-25 025841.png">
             <img src="images\2.png">
+            </div>
 
             <h3>Elements of Transmission lines</h3>
             <P>
@@ -317,7 +321,9 @@
         >AC Generation</h3><br>
             <h3 style="font-size: 25px;">Generator Construction </h3>
 
-                 <img src="images\Generator construction.png">
+                <div style="width: fit-content;">
+                     <img src="images\Generator construction.png" alt="generator construction">
+                </div>
 
                  <h3>The generator consists of the following parts </h3>
                 
@@ -335,8 +341,10 @@
                 <h4><i> Direction of induced emf. is given by Flemings Right Hand Rule as shown below</i></h4>
 
 
-                    <img src="images\Fleming's rule.png">
-                    <P>Find these notes and more on the pdf below...<a href="Unit Notes\Power Generation\AC GENERATION.pdf">AC Generation</a></P>
+                    <div style="width: fit-content;">
+                        <img src="images\Fleming's rule.png" alt="flemings rule">
+                    </div>
+                    <P>Find these notes and more on the book below...<a href="Unit Notes\Power Generation\AC GENERATION.pdf">AC Generation</a></P>
 
                 <a href="Unit Notes\Power Generation\AC GENERATION.pdf">AC Generation</a>
                 <br>
@@ -451,7 +459,106 @@
 
     <div id="installation" class="Installation">
                  <h1>Electrical Installation</h1>
-                 
+
+        <p>
+            <h5>Final circuits</h5>
+                -A final sub-circuit is an outgoing circuit connected to a distribution board and intended to supply 
+                electrical energy to current-using apparatus, either directly or through socket outlets or fused spur
+                boxes. <br>
+                -Examples of final sub-circuits includes; lighting, socket-outlets, cooker and water heater. A final 
+                sub-circuit originates from the consumer control unit (CCU) or distribution board (DB). Each final 
+                sub-circuit is protected by an appropriate fuse or circuit breaker mounted in the consumer control 
+                unit. <br> <br>
+           <h5> IEE Regulations</h5> 
+                i. Where an installation comprises more than one final sub-circuit, each shall be connected to a separate 
+                    way in a distribution board. <br>
+                ii. The wiring of each final sub-circuit shall be electrically separate from that of every other final sub
+                    circuit.to facilitate disconnection of each final sub-circuit for testing. <br>
+                iii. Every final sub circuit shall have means of protection against excess current. <br>
+                iv. The neutral conductor shall never be connected in the same order as that in which the live conductors 
+                    are connected to the fuses or circuit breakers. <br>
+                v. The neutral conductor shall never be connected to fuses, switches or circuit breakers. 
+                    Requirements for the consumer intake point. <br> <br>
+
+                The IEE regulations requires that, every consumer’s installation shall be adequately controlled by a 
+                switchgear readily accessible to the consumer which shall incorporate: <br>
+                i. Means of isolating all the conductors of the installation of the premises from the supply. <br>
+                ii. Means of excess current protection. <br>
+                iii. Means of earth leakage protection. <br>
+        
+        
+        </p>
+        <div style="display: block; max-width: fit-content;">
+            <h3>Final circuits</h3>
+            <img src="Unit Notes\ELECTRICAL  (....+)\ELECTRICAL INSTALLATION\final circuits 1.jpg" alt="final circuits 1">
+        </div>
+        <div style="max-width: fit-content;">
+            <img src="Unit Notes\ELECTRICAL  (....+)\ELECTRICAL INSTALLATION\switches.jpg" alt="types of switches">
+        </div>
+        <div style="max-width: fit-content;">
+            <img src="Unit Notes\ELECTRICAL  (....+)\ELECTRICAL INSTALLATION\color identification for cables.jpg" alt="cable colors">
+        </div>
+
+        <br>
+        <h5 style="color: blue;">Size of cables and rating of protective devices</h5>
+        <p>
+            Cables are manufactured in different sizes and compositions and each is designed to carry a
+            maximum amount of current. The current a cable can carry are given in the I.E.E Regulation tables
+            of current ratings. For lighting circuits the cable commonly used is the 1𝑚𝑚2 𝑜𝑟 1.5 𝑚𝑚2 which is
+            rated 18A depending on the type of cable. The most common cable used is single core and Twin flat
+            and Twin with earth. Most lighting circuits will be rated at either 5A or 10A because most switches
+            are rated 5A or 10A
+        </p>
+
+        <div style="max-width: fit-content;">
+            <img src="Unit Notes\ELECTRICAL  (....+)\ELECTRICAL INSTALLATION\cable sizing.jpg" alt="cable sizing">
+        </div>
+
+         <br>
+        <h5>I.E.E Regulations on switches</h5>
+        <p>
+            1. Every switch or Circuit Breaker the purpose of which is not obvious shall be labeled to indicate the
+            apparatus it controls. <br>
+            2. All single pole switches shall be always connected to the live conductor. <br>
+            3. Every switch or other electric control shall be placed so as to be out of reach of a person in contact
+            with bath, shower unit etc. <br>
+            4. In a two wire installation connected to a supply having neither pole connected with the earth, switch
+            or circuit breaker shall be of double pole linked type and the fuses shall be installed in both poles. <br>
+            5. In a two wire installation connected to a supply having one pole earthed, switches shall be connected
+            in the live conductor only. <br>
+        </p>
+
+        <br>
+        <p>
+            <h5>Plugs</h5>
+            This is a device intended for connection to a fixed cord or flexible cable which can be engaged
+            manually with a socket outlet and which has current carrying contact pins which may be exposed
+            when not engaged. Socket outlet will be wired such that the terminal marked L will receive the live
+            wire, the terminal marked N will receive the Neutral and the one marked E will receive the earth
+            wire. Socket outlets must be installed in a place to wait for a plug but not the vice-versa
+        </p>
+        <div style="max-width: fit-content;">
+            <img src="Unit Notes\ELECTRICAL  (....+)\ELECTRICAL INSTALLATION\plugs.jpg" alt="plugs">
+        </div>
+
+        <br>
+        <div>
+                <h3>Types of electrical drawings</h3>
+            <h5>Site plans or layout drawings</h5>
+            <p>
+                These are scale drawings based upon the architect’s site plan of the building and show the position of the
+                electrical equipment which is to be installed. The electrical equipment is identified by a graphical symbol.
+                The standard symbols used by the electrical contracting industry are those recommended by the British
+                Standard EN 60617, Graphical Symbols for Electrical Power, Telecommunications and Electronic
+                Diagrams. Some of the more common electrical installation symbols are given in Fig. 9. The site plan or
+                layout drawing will be drawn to a scale, smaller than the actual size of the building, so to find the actual
+                measurement, you must measure the distance on the drawing and multiply by the scale. For example, if the
+                site plan is drawn to a scale of 1:100, then 10 mm on the site plan represents 1 m measured in the building.
+                The layout drawing or site plan of a small domestic extension is shown <a href="Unit Notes\ELECTRICAL  (....+)\ELECTRICAL INSTALLATION\peform_elec_install.pdf">here</a> on page 30
+            </p>
+        </div>
+        
+        <p><i>Read these notes and more in the books below...</i></p>
                 <a href="Unit Notes\ELECTRICAL  (....+)\ELECTRICAL INSTALLATION\peform_elec_install.pdf">perform elec Installation</a>
                 <br>
                 <a href="Unit Notes\ELECTRICAL  (....+)\ELECTRICAL INSTALLATION\Electrical safety and IEE regulations.pdf">electrical safety and IEE Regulations pdf</a>
@@ -463,15 +570,16 @@
     </div>
         <br>
         
-        
-            <div class="Title-text">
-                <ul>
-                    <li><a href="#">Back to top</a></li>
-                </ul>
-                    <a href="unitsp2.html">Next</a>
-            </div>
-</div>
-        
+
+        <div class="Title-text">
+            <ul>
+                <li><a href="#">Back to top</a></li> <br>
+                <li><a href="unitsp2.html">Next</a></li>
+            </ul>
+             <br>
+                    <!-- Floating Back to Top Button -->
+            <button id="backToTop" title="Go to top">⇡</button>
+        </div>
         
         
     </section>
@@ -506,6 +614,28 @@
             navlinks.style.right = "-200px";
         }
 
+
+                        //--Back to top button script--
+
+            // Get the button
+            const backToTopBtn = document.getElementById("backToTop");
+
+            // Show button when user scrolls down 100px
+            window.onscroll = function() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+            };
+
+            // When clicked, scroll smoothly to top
+            backToTopBtn.addEventListener("click", function() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+            });
     </script>
         
         
