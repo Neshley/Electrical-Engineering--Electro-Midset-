@@ -13,6 +13,24 @@ The platform serves as a centralized hub where learners can explore engineering 
 
 ---
 
+```
+Banner
+↓
+Overview
+↓
+Desktop App Download
+↓
+Features
+↓
+Screenshots
+↓
+Installation
+↓
+Roadmap
+↓
+Author
+```
+
 ## 🎯 Project Goals
 
 - Provide easy access to engineering learning materials
@@ -78,3 +96,96 @@ Electrical-Engineering--Electro-Midset-
 │   └── js/
 ├── study-materials/
 └── README.md
+```
+
+## 🌐 Live Demo
+
+Visit the platform online:
+
+[Launch Electro Midset](YOUR_WEBSITE_URL)
+
+
+## 💻 Desktop Application
+
+For the best experience, download the desktop version of Electro Midset.
+
+### Download
+
+➡️ **Latest Release**
+
+[Download Electro Midset Desktop](YOUR_DOWNLOAD_LINK)
+
+### Benefits
+
+- Faster performance
+- Offline access to learning resources
+- Dedicated desktop experience
+- Easy updates
+- Enhanced navigation
+
+
+## 📸 Screenshots
+
+### Homepage
+
+![Homepage](screenshots/homepage.png)
+
+### Learning Resources
+
+![Resources](screenshots/resources.png)
+
+### Study Materials
+
+![Materials](screenshots/materials.png)
+
+
+## 🗺️ Development Roadmap
+
+### Current Version
+- [x] Educational resource platform
+- [x] Responsive website
+- [x] Resource organization
+
+### Upcoming Features
+- [ ] Resource search system
+- [ ] Progress tracking
+- [ ] Engineering calculators
+- [ ] Download center
+- [ ] Community discussion section
+
+
+## ☕ Support The Project
+
+If this project helps you in your studies or professional development, consider:
+
+- Starring the repository
+- Sharing it with fellow students
+- Contributing improvements
+- Reporting issues
+
+
+## 📊 Project Information
+
+| Attribute | Value |
+|------------|---------|
+| Project Type | Educational Platform |
+| Field | Electrical & Electronics Engineering |
+| Platform | Web & Desktop |
+| Status | Active Development |
+| License | Educational Use |
+| Maintainer | Derrick Kariuki |
+
+
+---
+
+<div align="center">
+
+### ⚡ Electrical Engineering – Electro Midset
+
+Empowering Engineering Education Through Technology
+
+Made with dedication by **Derrick Kariuki**
+
+⭐ Star the repository if you find it useful.
+
+</div>
