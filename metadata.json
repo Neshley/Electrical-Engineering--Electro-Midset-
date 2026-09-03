@@ -1,6 +1,6 @@
 {
   "name": "Electro-Mindset EEE Hub",
-  "description": "Electrical and Electronics Engineering notes, learning resources, Ohm's law calculator, and unit study guides.",
+  "description": "Electrical and Electronics Engineering hub and All-in-One Calculator suite featuring 40+ engineering solvers, formula library, guided wizards, interactive waveforms, and step-by-step solutions.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

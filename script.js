@@ -12,11 +12,17 @@ const state = {
   searchQuery: '',
   theme: localStorage.getItem('em_theme') || 'dark',
   bookmarks: JSON.parse(localStorage.getItem('em_bookmarks') || '[]'),
+  recentlyAccessed: JSON.parse(localStorage.getItem('em_recently_accessed') || '[]'),
   notes: localStorage.getItem('em_notes') || '',
   catalog: [],
   filteredFiles: [],
   readerTopic: 'powerlines',
-  workbenchTab: 'ohms',
+  workbenchTab: 'motors',
+  motorPhase: 3,
+  motorPowerUnit: 'kw',
+  vdropPhase: 1,
+  rlcMode: 'series',
+  txPhase: 3,
   // Resistor tool state
   resistorBands: 4,
   resBand1: 1, // Brown
@@ -320,6 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initWorkbench();
   initSearch();
   initStudyBag();
+  renderRecentlyAccessed();
   loadCatalogData();
   handleUrlRouting();
 
@@ -342,6 +349,8 @@ function handleUrlRouting() {
     const topicId = hash.replace('reader-', '');
     switchView('reader');
     selectReaderTopic(topicId);
+  } else if (hash === 'calculator' || hash === 'workbench') {
+    switchView('workbench');
   } else if (['dashboard', 'units', 'reader', 'workbench', 'exams', 'saved', 'info'].includes(hash)) {
     switchView(hash);
   } else {
@@ -432,7 +441,9 @@ function switchView(viewName) {
   }
 
   // View specific refreshes
-  if (viewName === 'saved') {
+  if (viewName === 'dashboard') {
+    renderRecentlyAccessed();
+  } else if (viewName === 'saved') {
     renderSavedBookmarks();
   } else if (viewName === 'exams') {
     renderExamsPortal();
@@ -471,6 +482,7 @@ async function loadCatalogData() {
   // Start with default embedded catalog so UI paints instantly
   state.catalog = DEFAULT_UNITS;
   renderDashboardUnits();
+  renderRecentlyAccessed();
   renderUnitsGrid();
 
   try {
@@ -480,6 +492,7 @@ async function loadCatalogData() {
       if (data.units && data.units.length > 0) {
         state.catalog = data.units;
         renderDashboardUnits();
+        renderRecentlyAccessed();
         renderUnitsGrid();
         updateGlobalStats(data);
       }
@@ -492,17 +505,202 @@ async function loadCatalogData() {
 function updateGlobalStats(data) {
   const totalFiles = data.totalFiles || 195;
   const totalUnits = data.totalUnits || 17;
+  const totalTools = data.toolsCount || 8;
   
   const elFiles = document.getElementById('stat-total-files');
   if (elFiles) elFiles.textContent = totalFiles;
   
   const elUnits = document.getElementById('stat-total-units');
   if (elUnits) elUnits.textContent = totalUnits;
+
+  const elTools = document.getElementById('stat-total-tools');
+  if (elTools) elTools.textContent = totalTools;
 }
 
 /* ==========================================================================
-   VIEW: DASHBOARD
+   VIEW: DASHBOARD & RECENTLY ACCESSED ENGINE
    ========================================================================== */
+
+function trackFileOpen(fileData, unitMeta) {
+  try {
+    let file = typeof fileData === 'string' ? JSON.parse(decodeURIComponent(fileData)) : fileData;
+    if (!file || (!file.url && !file.path)) return;
+
+    let unitName = file.unitName;
+    let unitCode = file.unitCode;
+    let unitId = file.unitId;
+
+    if ((!unitName || !unitCode) && unitMeta) {
+      unitName = unitName || unitMeta.name;
+      unitCode = unitCode || unitMeta.code;
+      unitId = unitId || unitMeta.id;
+    }
+
+    if ((!unitName || !unitCode) && state.catalog) {
+      const foundUnit = state.catalog.find(u => 
+        (u.files || []).some(f => (file.path && f.path === file.path) || (file.url && f.url === file.url))
+      );
+      if (foundUnit) {
+        unitName = unitName || foundUnit.name;
+        unitCode = unitCode || foundUnit.code;
+        unitId = unitId || foundUnit.id;
+      }
+    }
+
+    const item = {
+      name: file.name || 'Engineering Document',
+      rawName: file.rawName || file.name || '',
+      path: file.path || file.url,
+      url: file.url || file.path,
+      ext: file.ext || (file.name ? file.name.split('.').pop().toLowerCase() : 'pdf'),
+      category: file.category || 'Lecture Notes',
+      sizeFormatted: file.sizeFormatted || '',
+      unitName: unitName || 'Electrical Engineering',
+      unitCode: unitCode || 'EE',
+      unitId: unitId || '',
+      timestamp: Date.now() // Tracked with a timestamp in local storage
+    };
+
+    let recents = JSON.parse(localStorage.getItem('em_recently_accessed') || '[]');
+    recents = recents.filter(r => r.path !== item.path && r.url !== item.url);
+    recents.unshift(item);
+
+    // Keep top 10 in storage, but display last 3 on dashboard
+    if (recents.length > 10) recents = recents.slice(0, 10);
+
+    localStorage.setItem('em_recently_accessed', JSON.stringify(recents));
+    state.recentlyAccessed = recents;
+
+    renderRecentlyAccessed();
+  } catch (err) {
+    console.error('Error tracking file access:', err);
+  }
+}
+
+function formatRelativeTime(timestamp) {
+  if (!timestamp) return 'Recently';
+  const now = Date.now();
+  const diffSec = Math.max(0, Math.floor((now - timestamp) / 1000));
+  const diffMin = Math.floor(diffSec / 60);
+  const diffHr = Math.floor(diffMin / 60);
+  const diffDay = Math.floor(diffHr / 24);
+
+  if (diffSec < 45) return 'Just now';
+  if (diffMin < 60) return `${diffMin}m ago`;
+  if (diffHr < 24) return `${diffHr}h ago`;
+  if (diffDay === 1) return 'Yesterday';
+  if (diffDay < 7) return `${diffDay}d ago`;
+
+  return new Date(timestamp).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+}
+
+function clearRecentlyAccessed() {
+  localStorage.removeItem('em_recently_accessed');
+  state.recentlyAccessed = [];
+  renderRecentlyAccessed();
+  showToast('Recently accessed history cleared.');
+}
+
+function renderRecentlyAccessed() {
+  const container = document.getElementById('recently-accessed-container');
+  const countBadge = document.getElementById('recently-accessed-count-badge');
+  const actionsContainer = document.getElementById('recently-accessed-header-actions');
+  if (!container) return;
+
+  try {
+    const stored = localStorage.getItem('em_recently_accessed');
+    state.recentlyAccessed = stored ? JSON.parse(stored) : [];
+  } catch (e) {
+    state.recentlyAccessed = [];
+  }
+
+  // Strictly display the last 3 files the user opened
+  const last3 = state.recentlyAccessed.slice(0, 3);
+
+  if (countBadge) {
+    if (last3.length > 0) {
+      countBadge.textContent = `${last3.length} of 3`;
+      countBadge.style.display = 'inline-block';
+    } else {
+      countBadge.style.display = 'none';
+    }
+  }
+
+  if (actionsContainer) {
+    if (last3.length > 0) {
+      actionsContainer.innerHTML = `
+        <button class="btn btn-sm btn-secondary" onclick="clearRecentlyAccessed()" style="font-size: 11px; padding: 3px 8px; color: var(--text-muted);" title="Clear history">
+          Clear History
+        </button>
+      `;
+    } else {
+      actionsContainer.innerHTML = '';
+    }
+  }
+
+  if (last3.length === 0) {
+    container.innerHTML = `
+      <div class="card" style="padding: 24px; text-align: center; color: var(--text-muted); background: var(--bg-card); border-radius: var(--radius-lg); border: 1px dashed var(--border-strong);">
+        <div style="font-size: 24px; margin-bottom: 8px;">⏱️</div>
+        <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">No recently opened files yet</div>
+        <p style="font-size: 13px; color: var(--text-secondary); max-width: 480px; margin: 0 auto 14px;">
+          Files you open from any unit notes, examination past papers, or lab practicals will be automatically tracked here with timestamps so you can immediately resume your work.
+        </p>
+        <button class="btn btn-sm btn-secondary" onclick="window.location.hash='units'">
+          Browse Study Units &rarr;
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = `
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+      ${last3.map(item => {
+        const relTime = formatRelativeTime(item.timestamp);
+        const exactTime = new Date(item.timestamp).toLocaleString();
+        const extClass = `ext-${(item.ext || 'doc').toLowerCase()}`;
+        return `
+          <div class="file-card recently-accessed-card">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; gap: 8px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div class="file-ext-icon ${extClass}" style="width: 32px; height: 32px; font-size: 10px;">${item.ext || 'doc'}</div>
+                  <span class="unit-code-badge" style="font-size: 10px; padding: 2px 6px;">${item.unitCode || 'EE'}</span>
+                </div>
+                <div class="recently-accessed-timestamp" title="Opened: ${exactTime}">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <span>${relTime}</span>
+                </div>
+              </div>
+
+              <div class="file-title" style="font-size: 14px; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" title="${item.rawName || item.name}">
+                ${item.name}
+              </div>
+              <div class="file-meta" style="font-size: 12px; margin-bottom: 12px;">
+                <span>${item.unitName}</span>
+                <span>&bull;</span>
+                <span>${item.category || 'Notes'}</span>
+              </div>
+            </div>
+
+            <div class="file-actions" style="margin-top: auto;">
+              <a href="${item.url}" target="_blank" rel="noopener" class="btn btn-sm btn-primary" style="flex: 1; text-align: center; justify-content: center; display: inline-flex; align-items: center; gap: 6px;" onclick="trackFileOpen('${encodeURIComponent(JSON.stringify(item))}')">
+                <span>Open File</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+              ${item.unitId ? `
+                <button class="btn btn-sm btn-secondary" onclick="openUnitDetail('${item.unitId}')" title="Go to ${item.unitName}" style="padding: 6px 10px;">
+                  Unit &rarr;
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
 
 function renderDashboardUnits() {
   const container = document.getElementById('dashboard-units-preview');
@@ -681,7 +879,7 @@ function renderUnitFiles(unit) {
           </div>
         </div>
         <div class="file-actions">
-          <a href="${file.url}" target="_blank" rel="noopener" class="btn btn-sm btn-primary" style="flex: 1;">
+          <a href="${file.url}" target="_blank" rel="noopener" class="btn btn-sm btn-primary" style="flex: 1;" onclick="trackFileOpen('${encodeURIComponent(JSON.stringify({ ...file, unitName: unit.name, unitCode: unit.code, unitId: unit.id }))}')">
             Open / Download
           </a>
           <button class="star-btn ${isStarred ? 'starred' : ''}" onclick="toggleBookmark('${encodeURIComponent(JSON.stringify(file))}')" title="Save to Study Bag">
@@ -754,12 +952,43 @@ function initWorkbench() {
     }
   });
 
-  // Resistor band setup
-  renderResistorControls();
-  calculateResistor();
+  // Real-time calculation listeners for all engineering calculators
+  ['motor-power', 'motor-voltage', 'motor-rpm', 'motor-pf', 'motor-eff'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', calculateMotor);
+  });
 
-  // Cable sizing table
-  renderCableTable();
+  ['vdrop-voltage', 'vdrop-current', 'vdrop-length'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', calculateVoltageDrop);
+  });
+
+  ['rlc-r', 'rlc-v', 'rlc-l', 'rlc-c', 'rlc-f'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', calculateRlc);
+  });
+
+  ['tx-kva', 'tx-v1', 'tx-v2', 'tx-z'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', calculateTransformer);
+  });
+
+  // Initial runs for all calculator suites if elements are present in the DOM
+  if (document.getElementById('motor-power')) calculateMotor();
+  if (document.getElementById('vdrop-voltage')) calculateVoltageDrop();
+  if (document.getElementById('rlc-r')) calculateRlc();
+  if (document.getElementById('tx-kva')) calculateTransformer();
+
+  // Resistor band setup if elements are present
+  if (document.getElementById('select-band-1')) {
+    renderResistorControls();
+    calculateResistor();
+  }
+
+  // Cable sizing table if elements are present
+  if (document.getElementById('cable-table-body')) {
+    renderCableTable();
+  }
 
   // Power factor listener
   const pfCalcBtn = document.getElementById('calc-pf-btn');
@@ -788,12 +1017,568 @@ function switchWorkbenchTool(toolName) {
   });
 }
 
+/* ==========================================================================
+   TOOL 0.1: 3-PHASE & AC INDUCTION MOTOR CALCULATOR
+   ========================================================================== */
+function setMotorPhase(phase) {
+  state.motorPhase = phase;
+  const btn3 = document.getElementById('motor-phase-3-btn');
+  const btn1 = document.getElementById('motor-phase-1-btn');
+  const voltInput = document.getElementById('motor-voltage');
+  if (phase === 3) {
+    if (btn3) btn3.classList.add('active');
+    if (btn1) btn1.classList.remove('active');
+    if (voltInput && voltInput.value === '230') voltInput.value = '415';
+  } else {
+    if (btn1) btn1.classList.add('active');
+    if (btn3) btn3.classList.remove('active');
+    if (voltInput && voltInput.value === '415') voltInput.value = '230';
+  }
+  calculateMotor();
+}
+
+function toggleMotorPowerUnit() {
+  const select = document.getElementById('motor-unit-select');
+  const label = document.getElementById('motor-power-unit-label');
+  const powerInput = document.getElementById('motor-power');
+  if (!select || !label || !powerInput) return;
+  const newUnit = select.value;
+  const currentVal = parseFloat(powerInput.value) || 0;
+  if (newUnit === 'hp' && state.motorPowerUnit === 'kw') {
+    powerInput.value = (currentVal / 0.7457).toFixed(1);
+    label.textContent = 'HP';
+    state.motorPowerUnit = 'hp';
+  } else if (newUnit === 'kw' && state.motorPowerUnit === 'hp') {
+    powerInput.value = (currentVal * 0.7457).toFixed(1);
+    label.textContent = 'kW';
+    state.motorPowerUnit = 'kw';
+  }
+  calculateMotor();
+}
+
+function updateMotorPoles() {
+  const polesSelect = document.getElementById('motor-poles');
+  const freqSelect = document.getElementById('motor-freq');
+  const rpmInput = document.getElementById('motor-rpm');
+  if (!polesSelect || !freqSelect || !rpmInput) return;
+  const poles = parseInt(polesSelect.value) || 4;
+  const freq = parseFloat(freqSelect.value) || 50;
+  const ns = (120 * freq) / poles;
+  rpmInput.value = Math.round(ns * 0.96);
+  calculateMotor();
+}
+
+function applyMotorPreset(kw, poles, pf, eff) {
+  const pInput = document.getElementById('motor-power');
+  const uSelect = document.getElementById('motor-unit-select');
+  const pLabel = document.getElementById('motor-power-unit-label');
+  const polesSelect = document.getElementById('motor-poles');
+  const pfInput = document.getElementById('motor-pf');
+  const effInput = document.getElementById('motor-eff');
+  const rpmInput = document.getElementById('motor-rpm');
+  const freqSelect = document.getElementById('motor-freq');
+
+  if (pInput) pInput.value = kw;
+  if (uSelect) uSelect.value = 'kw';
+  if (pLabel) pLabel.textContent = 'kW';
+  state.motorPowerUnit = 'kw';
+  if (polesSelect) polesSelect.value = poles;
+  if (pfInput) pfInput.value = pf;
+  if (effInput) effInput.value = eff;
+  const freq = freqSelect ? parseFloat(freqSelect.value) || 50 : 50;
+  const ns = (120 * freq) / poles;
+  if (rpmInput) rpmInput.value = Math.round(ns * 0.96);
+  setMotorPhase(3);
+  calculateMotor();
+}
+
+function resetMotorCalc() {
+  applyMotorPreset(7.5, 4, 0.85, 88.5);
+  const voltInput = document.getElementById('motor-voltage');
+  if (voltInput) voltInput.value = '415';
+}
+
+function calculateMotor() {
+  const powerVal = parseFloat(document.getElementById('motor-power')?.value) || 0;
+  const unit = document.getElementById('motor-unit-select')?.value || 'kw';
+  const v = parseFloat(document.getElementById('motor-voltage')?.value) || 415;
+  const freq = parseFloat(document.getElementById('motor-freq')?.value) || 50;
+  const poles = parseInt(document.getElementById('motor-poles')?.value) || 4;
+  let nr = parseFloat(document.getElementById('motor-rpm')?.value) || 1440;
+  const pf = parseFloat(document.getElementById('motor-pf')?.value) || 0.85;
+  const effPercent = parseFloat(document.getElementById('motor-eff')?.value) || 88.5;
+  const phase = state.motorPhase || 3;
+
+  if (powerVal <= 0 || v <= 0 || pf <= 0 || effPercent <= 0) return;
+
+  const powerKw = unit === 'hp' ? powerVal * 0.7457 : powerVal;
+  const powerWatts = powerKw * 1000;
+  const eff = effPercent / 100;
+
+  // Synchronous speed
+  const ns = (120 * freq) / poles;
+  if (nr >= ns) nr = ns - 1;
+  const slip = ((ns - nr) / ns) * 100;
+
+  // Full Load Current (FLA)
+  let fla = 0;
+  if (phase === 3) {
+    fla = powerWatts / (Math.sqrt(3) * v * pf * eff);
+  } else {
+    fla = powerWatts / (v * pf * eff);
+  }
+
+  // Shaft Torque
+  const torque = nr > 0 ? (9550 * powerKw) / nr : 0;
+
+  // Apparent & Reactive Power
+  let sKva = 0;
+  if (phase === 3) {
+    sKva = (Math.sqrt(3) * v * fla) / 1000;
+  } else {
+    sKva = (v * fla) / 1000;
+  }
+  const pElecKw = powerKw / eff;
+  const qKvar = Math.sqrt(Math.max(0, sKva * sKva - pElecKw * pElecKw));
+
+  // Inrush
+  const dolInrush = fla * 6;
+  const sdInrush = phase === 3 ? fla * 2 : dolInrush;
+
+  // Protection recommendations
+  const olMin = (fla * 1.0).toFixed(1);
+  const olMax = (fla * 1.15).toFixed(1);
+  
+  const mcbStandard = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250];
+  const targetMcb = fla * 1.35;
+  const recMcb = mcbStandard.find(s => s >= targetMcb) || Math.ceil(targetMcb);
+
+  const targetContactor = fla * 1.25;
+  const recContactor = mcbStandard.find(s => s >= targetContactor) || Math.ceil(targetContactor);
+
+  let pfcKvar = 0;
+  if (pf < 0.95) {
+    const phi1 = Math.acos(Math.min(1, pf));
+    const phi2 = Math.acos(0.95);
+    pfcKvar = pElecKw * (Math.tan(phi1) - Math.tan(phi2));
+  }
+
+  // Update UI Elements
+  const elFla = document.getElementById('motor-res-fla');
+  if (elFla) elFla.textContent = `${fla.toFixed(2)} A`;
+
+  const elTorque = document.getElementById('motor-res-torque');
+  if (elTorque) elTorque.textContent = `${torque.toFixed(2)} N·m`;
+
+  const elNs = document.getElementById('motor-res-ns');
+  if (elNs) elNs.textContent = `${Math.round(ns)} RPM`;
+
+  const elSlip = document.getElementById('motor-res-slip');
+  if (elSlip) elSlip.textContent = `${slip.toFixed(2)} %`;
+
+  const elS = document.getElementById('motor-res-s');
+  if (elS) elS.textContent = `${sKva.toFixed(2)} kVA`;
+
+  const elQ = document.getElementById('motor-res-q');
+  if (elQ) elQ.textContent = `${qKvar.toFixed(2)} kVAR`;
+
+  const elDol = document.getElementById('motor-res-dol');
+  if (elDol) elDol.textContent = `${dolInrush.toFixed(1)} A`;
+
+  const elSd = document.getElementById('motor-res-sd');
+  if (elSd) elSd.textContent = phase === 3 ? `${sdInrush.toFixed(1)} A` : 'N/A (1-Phase)';
+
+  const elOl = document.getElementById('motor-rec-ol');
+  if (elOl) elOl.textContent = `${olMin} A - ${olMax} A`;
+
+  const elMcb = document.getElementById('motor-rec-mcb');
+  if (elMcb) elMcb.textContent = `${recMcb} A (Type D)`;
+
+  const elContactor = document.getElementById('motor-rec-contactor');
+  if (elContactor) elContactor.textContent = `${recContactor} A`;
+
+  const elPfc = document.getElementById('motor-rec-pfc');
+  if (elPfc) elPfc.textContent = pfcKvar > 0 ? `${pfcKvar.toFixed(2)} kVAR` : 'Already ≥ 0.95';
+}
+
+/* ==========================================================================
+   TOOL 0.2: BS 7671 / IEE VOLTAGE DROP & CABLE SIZER
+   ========================================================================== */
+function setVdropPhase(phase) {
+  state.vdropPhase = phase;
+  const btn1 = document.getElementById('vdrop-phase-1-btn');
+  const btn3 = document.getElementById('vdrop-phase-3-btn');
+  const vInput = document.getElementById('vdrop-voltage');
+  if (phase === 1) {
+    if (btn1) btn1.classList.add('active');
+    if (btn3) btn3.classList.remove('active');
+    if (vInput && vInput.value === '400') vInput.value = '230';
+  } else {
+    if (btn3) btn3.classList.add('active');
+    if (btn1) btn1.classList.remove('active');
+    if (vInput && vInput.value === '230') vInput.value = '400';
+  }
+  calculateVoltageDrop();
+}
+
+function resetVdropCalc() {
+  setVdropPhase(1);
+  const vInput = document.getElementById('vdrop-voltage');
+  const iInput = document.getElementById('vdrop-current');
+  const lInput = document.getElementById('vdrop-length');
+  const matSelect = document.getElementById('vdrop-material');
+  const sizeSelect = document.getElementById('vdrop-size');
+  const limitSelect = document.getElementById('vdrop-limit');
+  if (vInput) vInput.value = '230';
+  if (iInput) iInput.value = '24';
+  if (lInput) lInput.value = '45';
+  if (matSelect) matSelect.value = 'copper';
+  if (sizeSelect) sizeSelect.value = '4.0';
+  if (limitSelect) limitSelect.value = '5';
+  calculateVoltageDrop();
+}
+
+function calculateVoltageDrop() {
+  const vNom = parseFloat(document.getElementById('vdrop-voltage')?.value) || 230;
+  const current = parseFloat(document.getElementById('vdrop-current')?.value) || 24;
+  const length = parseFloat(document.getElementById('vdrop-length')?.value) || 45;
+  const material = document.getElementById('vdrop-material')?.value || 'copper';
+  const size = parseFloat(document.getElementById('vdrop-size')?.value) || 4.0;
+  const limitPct = parseFloat(document.getElementById('vdrop-limit')?.value) || 5.0;
+  const phase = state.vdropPhase || 1;
+
+  if (vNom <= 0 || current <= 0 || length <= 0 || size <= 0) return;
+
+  const rho = material === 'aluminum' ? 0.0282 : 0.0175;
+  const rSingle = (rho * length) / size;
+  const rLoop = phase === 1 ? 2 * rSingle : Math.sqrt(3) * rSingle;
+
+  const vDrop = current * rLoop;
+  const pctDrop = (vDrop / vNom) * 100;
+  const vLoad = Math.max(0, vNom - vDrop);
+
+  const pLoss = phase === 1 ? current * current * (2 * rSingle) : 3 * current * current * rSingle;
+
+  const standardSizes = [1.5, 2.5, 4.0, 6.0, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240];
+
+  function findMinSize(targetPct) {
+    const maxDropVolts = (targetPct / 100) * vNom;
+    const factor = phase === 1 ? 2 : Math.sqrt(3);
+    const reqArea = (factor * rho * length * current) / maxDropVolts;
+    const match = standardSizes.find(s => s >= reqArea);
+    return match ? `${match} mm²` : `> 240 mm² (${reqArea.toFixed(1)} mm²)`;
+  }
+
+  const rec5 = findMinSize(5.0);
+  const rec3 = findMinSize(3.0);
+
+  const isPassed = pctDrop <= limitPct;
+  const badge = document.getElementById('vdrop-compliance-badge');
+  const badgeText = document.getElementById('vdrop-compliance-text');
+
+  if (badge && badgeText) {
+    if (isPassed) {
+      badge.className = 'compliance-badge pass';
+      badgeText.innerHTML = `<strong>PASSED:</strong> Voltage drop is ${pctDrop.toFixed(2)}% (within ${limitPct}% allowable limit)`;
+    } else {
+      badge.className = 'compliance-badge fail';
+      badgeText.innerHTML = `<strong>EXCEEDS CODE LIMIT:</strong> Drop is ${pctDrop.toFixed(2)}% (Limit: ${limitPct}%). Upgrade conductor recommended.`;
+    }
+  }
+
+  const elVolts = document.getElementById('vdrop-res-volts');
+  if (elVolts) elVolts.textContent = `${vDrop.toFixed(2)} V`;
+
+  const elPct = document.getElementById('vdrop-res-percent');
+  if (elPct) {
+    elPct.textContent = `${pctDrop.toFixed(2)} %`;
+    elPct.style.color = isPassed ? 'var(--accent-emerald)' : 'var(--accent-rose)';
+  }
+
+  const elLoadv = document.getElementById('vdrop-res-loadv');
+  if (elLoadv) elLoadv.textContent = `${vLoad.toFixed(2)} V`;
+
+  const elR = document.getElementById('vdrop-res-r');
+  if (elR) elR.textContent = `${rLoop.toFixed(3)} Ω`;
+
+  const elLoss = document.getElementById('vdrop-res-loss');
+  if (elLoss) elLoss.textContent = `${pLoss.toFixed(1)} W`;
+
+  const elRec5 = document.getElementById('vdrop-rec-5');
+  if (elRec5) elRec5.textContent = rec5;
+
+  const elRec3 = document.getElementById('vdrop-rec-3');
+  if (elRec3) elRec3.textContent = rec3;
+}
+
+/* ==========================================================================
+   TOOL 0.3: AC RLC IMPEDANCE & RESONANCE NETWORK SOLVER
+   ========================================================================== */
+function setRlcMode(mode) {
+  state.rlcMode = mode;
+  const btnS = document.getElementById('rlc-mode-series-btn');
+  const btnP = document.getElementById('rlc-mode-parallel-btn');
+  if (mode === 'series') {
+    if (btnS) btnS.classList.add('active');
+    if (btnP) btnP.classList.remove('active');
+  } else {
+    if (btnP) btnP.classList.add('active');
+    if (btnS) btnS.classList.remove('active');
+  }
+  calculateRlc();
+}
+
+function resetRlcCalc() {
+  setRlcMode('series');
+  const rInput = document.getElementById('rlc-r');
+  const vInput = document.getElementById('rlc-v');
+  const lInput = document.getElementById('rlc-l');
+  const lUnit = document.getElementById('rlc-l-unit');
+  const cInput = document.getElementById('rlc-c');
+  const cUnit = document.getElementById('rlc-c-unit');
+  const fInput = document.getElementById('rlc-f');
+  const fUnit = document.getElementById('rlc-f-unit');
+
+  if (rInput) rInput.value = '47';
+  if (vInput) vInput.value = '230';
+  if (lInput) lInput.value = '150';
+  if (lUnit) lUnit.value = 'mh';
+  if (cInput) cInput.value = '10';
+  if (cUnit) cUnit.value = 'uf';
+  if (fInput) fInput.value = '50';
+  if (fUnit) fUnit.value = 'hz';
+  calculateRlc();
+}
+
+function calculateRlc() {
+  const r = parseFloat(document.getElementById('rlc-r')?.value) || 0;
+  const vRms = parseFloat(document.getElementById('rlc-v')?.value) || 230;
+
+  let lVal = parseFloat(document.getElementById('rlc-l')?.value) || 0;
+  const lUnit = document.getElementById('rlc-l-unit')?.value || 'mh';
+  const lUnitLabel = document.getElementById('rlc-l-unit-label');
+  if (lUnitLabel) lUnitLabel.textContent = lUnit === 'h' ? 'H' : (lUnit === 'uh' ? 'µH' : 'mH');
+  let lH = lVal;
+  if (lUnit === 'mh') lH = lVal * 1e-3;
+  else if (lUnit === 'uh') lH = lVal * 1e-6;
+
+  let cVal = parseFloat(document.getElementById('rlc-c')?.value) || 0;
+  const cUnit = document.getElementById('rlc-c-unit')?.value || 'uf';
+  const cUnitLabel = document.getElementById('rlc-c-unit-label');
+  if (cUnitLabel) cUnitLabel.textContent = cUnit === 'pf' ? 'pF' : (cUnit === 'nf' ? 'nF' : 'µF');
+  let cF = cVal;
+  if (cUnit === 'uf') cF = cVal * 1e-6;
+  else if (cUnit === 'nf') cF = cVal * 1e-9;
+  else if (cUnit === 'pf') cF = cVal * 1e-12;
+
+  let fVal = parseFloat(document.getElementById('rlc-f')?.value) || 50;
+  const fUnit = document.getElementById('rlc-f-unit')?.value || 'hz';
+  const fUnitLabel = document.getElementById('rlc-f-unit-label');
+  if (fUnitLabel) fUnitLabel.textContent = fUnit === 'khz' ? 'kHz' : 'Hz';
+  let fHz = fUnit === 'khz' ? fVal * 1e3 : fVal;
+
+  if (fHz <= 0) return;
+
+  const mode = state.rlcMode || 'series';
+
+  const xl = 2 * Math.PI * fHz * lH;
+  const xc = cF > 0 ? 1 / (2 * Math.PI * fHz * cF) : 1e12;
+
+  let zMag = 0;
+  let phaseDeg = 0;
+  let pf = 0;
+  let iRms = 0;
+  let qFactor = 0;
+
+  const f0 = (lH > 0 && cF > 0) ? 1 / (2 * Math.PI * Math.sqrt(lH * cF)) : 0;
+
+  if (mode === 'series') {
+    const xNet = xl - xc;
+    zMag = Math.sqrt(r * r + xNet * xNet);
+    phaseDeg = Math.atan2(xNet, r) * (180 / Math.PI);
+    iRms = zMag > 0 ? vRms / zMag : 0;
+    pf = zMag > 0 ? r / zMag : 1;
+    qFactor = (r > 0 && lH > 0 && cF > 0) ? (1 / r) * Math.sqrt(lH / cF) : 0;
+  } else {
+    const g = r > 0 ? 1 / r : 0;
+    const bl = xl > 0 ? 1 / xl : 0;
+    const bc = 1 / xc;
+    const bNet = bc - bl;
+    const yMag = Math.sqrt(g * g + bNet * bNet);
+    zMag = yMag > 0 ? 1 / yMag : 0;
+    phaseDeg = Math.atan2(-bNet, g) * (180 / Math.PI);
+    iRms = vRms * yMag;
+    pf = yMag > 0 ? g / yMag : 1;
+    qFactor = (lH > 0 && cF > 0) ? r * Math.sqrt(cF / lH) : 0;
+  }
+
+  const bw = (f0 > 0 && qFactor > 0) ? f0 / qFactor : 0;
+
+  let natureText = '';
+  let natureColor = 'var(--text-primary)';
+  if (Math.abs(xl - xc) < 0.05 * Math.max(xl, xc, 1)) {
+    natureText = 'Purely Resistive (Near Resonance, Unity PF)';
+    natureColor = 'var(--accent-emerald)';
+  } else if (xl > xc) {
+    natureText = `Inductive (Current lags Voltage by ${Math.abs(phaseDeg).toFixed(1)}°)`;
+    natureColor = 'var(--accent-cyan)';
+  } else {
+    natureText = `Capacitive (Current leads Voltage by ${Math.abs(phaseDeg).toFixed(1)}°)`;
+    natureColor = 'var(--accent-rose)';
+  }
+
+  const elZ = document.getElementById('rlc-res-z');
+  if (elZ) elZ.textContent = formatMetric(zMag, 'Ω');
+
+  const elI = document.getElementById('rlc-res-i');
+  if (elI) elI.textContent = formatMetric(iRms, 'A');
+
+  const elAngle = document.getElementById('rlc-res-angle');
+  if (elAngle) elAngle.textContent = `${phaseDeg >= 0 ? '+' : ''}${phaseDeg.toFixed(1)}°`;
+
+  const elPf = document.getElementById('rlc-res-pf');
+  if (elPf) elPf.textContent = `${pf.toFixed(3)} (${phaseDeg > 0.5 ? 'Lagging' : (phaseDeg < -0.5 ? 'Leading' : 'Unity')})`;
+
+  const elXl = document.getElementById('rlc-res-xl');
+  if (elXl) elXl.textContent = formatMetric(xl, 'Ω');
+
+  const elXc = document.getElementById('rlc-res-xc');
+  if (elXc) elXc.textContent = formatMetric(xc, 'Ω');
+
+  const elNature = document.getElementById('rlc-res-nature');
+  if (elNature) {
+    elNature.textContent = natureText;
+    elNature.style.color = natureColor;
+  }
+
+  const elF0 = document.getElementById('rlc-res-f0');
+  if (elF0) elF0.textContent = formatMetric(f0, 'Hz');
+
+  const elQ = document.getElementById('rlc-res-q');
+  if (elQ) elQ.textContent = qFactor.toFixed(2);
+
+  const elBw = document.getElementById('rlc-res-bw');
+  if (elBw) elBw.textContent = formatMetric(bw, 'Hz');
+}
+
+/* ==========================================================================
+   TOOL 0.4: POWER TRANSFORMER SIZING & FAULT ANALYSIS
+   ========================================================================== */
+function setTxPhase(phase) {
+  state.txPhase = phase;
+  const btn3 = document.getElementById('tx-phase-3-btn');
+  const btn1 = document.getElementById('tx-phase-1-btn');
+  if (phase === 3) {
+    if (btn3) btn3.classList.add('active');
+    if (btn1) btn1.classList.remove('active');
+  } else {
+    if (btn1) btn1.classList.add('active');
+    if (btn3) btn3.classList.remove('active');
+  }
+  calculateTransformer();
+}
+
+function applyTxPreset(cap, v1, v2, z) {
+  const capInput = document.getElementById('tx-kva');
+  const uSelect = document.getElementById('tx-unit-select');
+  const v1Input = document.getElementById('tx-v1');
+  const v2Input = document.getElementById('tx-v2');
+  const zInput = document.getElementById('tx-z');
+
+  if (capInput) capInput.value = cap;
+  if (uSelect) uSelect.value = cap >= 1000 && cap % 1000 === 0 && cap > 2000 ? 'mva' : 'kva';
+  if (v1Input) v1Input.value = v1;
+  if (v2Input) v2Input.value = v2;
+  if (zInput) zInput.value = z;
+  setTxPhase(3);
+  calculateTransformer();
+}
+
+function resetTxCalc() {
+  applyTxPreset(500, 11000, 415, 4.75);
+}
+
+function calculateTransformer() {
+  let capVal = parseFloat(document.getElementById('tx-kva')?.value) || 500;
+  const unit = document.getElementById('tx-unit-select')?.value || 'kva';
+  const v1 = parseFloat(document.getElementById('tx-v1')?.value) || 11000;
+  const v2 = parseFloat(document.getElementById('tx-v2')?.value) || 415;
+  const zPercent = parseFloat(document.getElementById('tx-z')?.value) || 4.75;
+  const phase = state.txPhase || 3;
+
+  if (capVal <= 0 || v1 <= 0 || v2 <= 0 || zPercent <= 0) return;
+
+  const kva = unit === 'mva' ? capVal * 1000 : capVal;
+  const sVa = kva * 1000;
+
+  let i1 = 0;
+  let i2 = 0;
+  if (phase === 3) {
+    i1 = sVa / (Math.sqrt(3) * v1);
+    i2 = sVa / (Math.sqrt(3) * v2);
+  } else {
+    i1 = sVa / v1;
+    i2 = sVa / v2;
+  }
+
+  const ratio = v1 / v2;
+  const zRatio = ratio * ratio;
+
+  const iscAmps = i2 / (zPercent / 100);
+  const iscKa = iscAmps / 1000;
+
+  const faultMva = (kva / 1000) / (zPercent / 100);
+
+  const fuseMin = (i1 * 1.25).toFixed(0);
+  const fuseMax = (i1 * 1.5).toFixed(0);
+
+  const acbStandard = [100, 160, 250, 400, 630, 800, 1000, 1250, 1600, 2000, 2500, 3200, 4000];
+  const targetAcb = i2 * 1.15;
+  const recAcb = acbStandard.find(s => s >= targetAcb) || Math.ceil(targetAcb);
+
+  const breakingRatings = [10, 16, 25, 36, 50, 65, 85, 100];
+  const recBreaking = breakingRatings.find(r => r >= iscKa) || `${Math.ceil(iscKa)} kA`;
+
+  const elI1 = document.getElementById('tx-res-i1');
+  if (elI1) elI1.textContent = formatMetric(i1, 'A');
+
+  const elI2 = document.getElementById('tx-res-i2');
+  if (elI2) elI2.textContent = formatMetric(i2, 'A');
+
+  const elRatio = document.getElementById('tx-res-ratio');
+  if (elRatio) elRatio.textContent = `${ratio.toFixed(2)} : 1`;
+
+  const elZratio = document.getElementById('tx-res-zratio');
+  if (elZratio) elZratio.textContent = zRatio >= 1000 ? `${(zRatio / 1000).toFixed(1)}k` : zRatio.toFixed(1);
+
+  const elIsc = document.getElementById('tx-res-isc');
+  if (elIsc) elIsc.textContent = `${iscKa.toFixed(2)} kA (${Math.round(iscAmps)} A)`;
+
+  const elMva = document.getElementById('tx-res-mva');
+  if (elMva) elMva.textContent = `${faultMva.toFixed(2)} MVA`;
+
+  const elFuse = document.getElementById('tx-rec-fuse');
+  if (elFuse) elFuse.textContent = `${fuseMin} A - ${fuseMax} A`;
+
+  const elAcb = document.getElementById('tx-rec-acb');
+  if (elAcb) elAcb.textContent = `${recAcb} A`;
+
+  const elBreaking = document.getElementById('tx-rec-breaking');
+  if (elBreaking) elBreaking.textContent = `${recBreaking} kA rated`;
+}
+
 /* --- Tool 1: Ohm's Law Solver --- */
 function highlightActiveOhmInputs() {
-  const v = document.getElementById('ohm-v').value;
-  const i = document.getElementById('ohm-i').value;
-  const r = document.getElementById('ohm-r').value;
-  const p = document.getElementById('ohm-p').value;
+  const vEl = document.getElementById('ohm-v');
+  const iEl = document.getElementById('ohm-i');
+  const rEl = document.getElementById('ohm-r');
+  const pEl = document.getElementById('ohm-p');
+  if (!vEl || !iEl || !rEl || !pEl) return;
+
+  const v = vEl.value;
+  const i = iEl.value;
+  const r = rEl.value;
+  const p = pEl.value;
 
   const filledCount = [v, i, r, p].filter(val => val !== '').length;
   const solveBtn = document.getElementById('ohm-solve-btn');
@@ -804,10 +1589,16 @@ function highlightActiveOhmInputs() {
 }
 
 function solveOhmsLaw() {
-  let v = parseFloat(document.getElementById('ohm-v').value);
-  let i = parseFloat(document.getElementById('ohm-i').value);
-  let r = parseFloat(document.getElementById('ohm-r').value);
-  let p = parseFloat(document.getElementById('ohm-p').value);
+  const vEl = document.getElementById('ohm-v');
+  const iEl = document.getElementById('ohm-i');
+  const rEl = document.getElementById('ohm-r');
+  const pEl = document.getElementById('ohm-p');
+  if (!vEl || !iEl || !rEl || !pEl) return;
+
+  let v = parseFloat(vEl.value);
+  let i = parseFloat(iEl.value);
+  let r = parseFloat(rEl.value);
+  let p = parseFloat(pEl.value);
 
   const hasV = !isNaN(v) && v > 0;
   const hasI = !isNaN(i) && i > 0;
@@ -864,10 +1655,10 @@ function solveOhmsLaw() {
   }
 
   // Update input fields
-  document.getElementById('ohm-v').value = Number(v.toFixed(4));
-  document.getElementById('ohm-i').value = Number(i.toFixed(4));
-  document.getElementById('ohm-r').value = Number(r.toFixed(4));
-  document.getElementById('ohm-p').value = Number(p.toFixed(4));
+  if (vEl) vEl.value = Number(v.toFixed(4));
+  if (iEl) iEl.value = Number(i.toFixed(4));
+  if (rEl) rEl.value = Number(r.toFixed(4));
+  if (pEl) pEl.value = Number(p.toFixed(4));
 
   // Render Formula Steps Box
   const stepsBox = document.getElementById('ohm-steps');
@@ -903,8 +1694,10 @@ function formatMetric(val, unit) {
 /* --- Tool 2: Resistor Color Code Calculator --- */
 function setResistorBands(count) {
   state.resistorBands = count;
-  document.getElementById('band-4-toggle').classList.toggle('active', count === 4);
-  document.getElementById('band-5-toggle').classList.toggle('active', count === 5);
+  const b4 = document.getElementById('band-4-toggle');
+  const b5 = document.getElementById('band-5-toggle');
+  if (b4) b4.classList.toggle('active', count === 4);
+  if (b5) b5.classList.toggle('active', count === 5);
   
   const band3Group = document.getElementById('group-band-3');
   const visualBand3 = document.getElementById('res-visual-band3');
@@ -921,7 +1714,7 @@ function renderResistorControls() {
   const multSelect = document.getElementById('select-mult');
   const tolSelect = document.getElementById('select-tol');
 
-  if (!band1Select) return;
+  if (!band1Select || !band2Select || !band3Select || !multSelect || !tolSelect) return;
 
   // Band 1 (digits 1-9)
   band1Select.innerHTML = RESISTOR_COLORS.filter(c => c.digit !== null && c.digit > 0).map(c => `
@@ -957,11 +1750,19 @@ function renderResistorControls() {
 }
 
 function calculateResistor() {
-  const b1 = parseInt(document.getElementById('select-band-1').value);
-  const b2 = parseInt(document.getElementById('select-band-2').value);
-  const b3 = parseInt(document.getElementById('select-band-3').value);
-  const mult = parseFloat(document.getElementById('select-mult').value);
-  const tol = parseFloat(document.getElementById('select-tol').value);
+  const b1El = document.getElementById('select-band-1');
+  const b2El = document.getElementById('select-band-2');
+  const b3El = document.getElementById('select-band-3');
+  const multEl = document.getElementById('select-mult');
+  const tolEl = document.getElementById('select-tol');
+
+  if (!b1El || !b2El || !multEl || !tolEl) return;
+
+  const b1 = parseInt(b1El.value) || 0;
+  const b2 = parseInt(b2El.value) || 0;
+  const b3 = b3El ? (parseInt(b3El.value) || 0) : 0;
+  const mult = parseFloat(multEl.value) || 1;
+  const tol = parseFloat(tolEl.value) || 5;
 
   // Update visual resistor stripes
   const color1 = RESISTOR_COLORS.find(c => c.digit === b1);
@@ -970,11 +1771,17 @@ function calculateResistor() {
   const colorMult = RESISTOR_COLORS.find(c => c.mult === mult);
   const colorTol = RESISTOR_COLORS.find(c => c.tol === tol);
 
-  if (color1) document.getElementById('res-visual-band1').style.backgroundColor = color1.hex;
-  if (color2) document.getElementById('res-visual-band2').style.backgroundColor = color2.hex;
-  if (color3 && state.resistorBands === 5) document.getElementById('res-visual-band3').style.backgroundColor = color3.hex;
-  if (colorMult) document.getElementById('res-visual-mult').style.backgroundColor = colorMult.hex;
-  if (colorTol) document.getElementById('res-visual-tol').style.backgroundColor = colorTol.hex;
+  const vis1 = document.getElementById('res-visual-band1');
+  const vis2 = document.getElementById('res-visual-band2');
+  const vis3 = document.getElementById('res-visual-band3');
+  const visMult = document.getElementById('res-visual-mult');
+  const visTol = document.getElementById('res-visual-tol');
+
+  if (color1 && vis1) vis1.style.backgroundColor = color1.hex;
+  if (color2 && vis2) vis2.style.backgroundColor = color2.hex;
+  if (color3 && vis3 && state.resistorBands === 5) vis3.style.backgroundColor = color3.hex;
+  if (colorMult && visMult) visMult.style.backgroundColor = colorMult.hex;
+  if (colorTol && visTol) visTol.style.backgroundColor = colorTol.hex;
 
   // Calculate value
   let baseValue = 0;
@@ -988,19 +1795,24 @@ function calculateResistor() {
   const maxVal = baseValue * (1 + tol / 100);
 
   const displayEl = document.getElementById('res-readout');
-  const tolEl = document.getElementById('res-tolerance-readout');
+  const tolElOut = document.getElementById('res-tolerance-readout');
   const rangeEl = document.getElementById('res-range-readout');
 
   if (displayEl) displayEl.textContent = formatMetric(baseValue, 'Ω');
-  if (tolEl) tolEl.textContent = `±${tol}%`;
+  if (tolElOut) tolElOut.textContent = `±${tol}%`;
   if (rangeEl) rangeEl.textContent = `${formatMetric(minVal, 'Ω')} to ${formatMetric(maxVal, 'Ω')}`;
 }
 
 /* --- Tool 3: AC Power Factor Calculator --- */
 function calculatePowerFactor() {
-  const v = parseFloat(document.getElementById('pf-v').value) || 230;
-  const i = parseFloat(document.getElementById('pf-i').value) || 10;
-  const pf = parseFloat(document.getElementById('pf-val').value) || 0.8;
+  const vEl = document.getElementById('pf-v');
+  const iEl = document.getElementById('pf-i');
+  const pfEl = document.getElementById('pf-val');
+  if (!vEl || !iEl || !pfEl) return;
+
+  const v = parseFloat(vEl.value) || 230;
+  const i = parseFloat(iEl.value) || 10;
+  const pf = parseFloat(pfEl.value) || 0.8;
 
   if (pf <= 0 || pf > 1) {
     showToast('Power factor must be between 0.01 and 1.0');
@@ -1020,11 +1832,17 @@ function calculatePowerFactor() {
   const targetQ = p * Math.tan(Math.acos(targetPf));
   const requiredKvar = Math.max(0, q - targetQ);
 
-  document.getElementById('pf-res-p').textContent = `${p.toFixed(2)} kW`;
-  document.getElementById('pf-res-s').textContent = `${s.toFixed(2)} kVA`;
-  document.getElementById('pf-res-q').textContent = `${q.toFixed(2)} kVAR`;
-  document.getElementById('pf-res-angle').textContent = `${angleDeg.toFixed(1)}°`;
-  document.getElementById('pf-res-correction').textContent = `${requiredKvar.toFixed(2)} kVAR`;
+  const resPEl = document.getElementById('pf-res-p');
+  const resSEl = document.getElementById('pf-res-s');
+  const resQEl = document.getElementById('pf-res-q');
+  const resAngleEl = document.getElementById('pf-res-angle');
+  const resCorrEl = document.getElementById('pf-res-correction');
+
+  if (resPEl) resPEl.textContent = `${p.toFixed(2)} kW`;
+  if (resSEl) resSEl.textContent = `${s.toFixed(2)} kVA`;
+  if (resQEl) resQEl.textContent = `${q.toFixed(2)} kVAR`;
+  if (resAngleEl) resAngleEl.textContent = `${angleDeg.toFixed(1)}°`;
+  if (resCorrEl) resCorrEl.textContent = `${requiredKvar.toFixed(2)} kVAR`;
 
   // Draw Dynamic SVG Power Triangle
   drawPowerTriangle(p, q, s, angleDeg);
@@ -1120,7 +1938,7 @@ function renderExamsPortal() {
         </div>
       </div>
       <div class="file-actions">
-        <a href="${exam.url}" target="_blank" rel="noopener" class="btn btn-sm btn-amber" style="flex: 1;">
+        <a href="${exam.url}" target="_blank" rel="noopener" class="btn btn-sm btn-amber" style="flex: 1;" onclick="trackFileOpen('${encodeURIComponent(JSON.stringify(exam))}')">
           Download Exam Paper &rarr;
         </a>
       </div>
@@ -1177,7 +1995,7 @@ function renderSavedBookmarks() {
             </div>
           </div>
           <div class="file-actions">
-            <a href="${file.url}" target="_blank" rel="noopener" class="btn btn-sm btn-primary" style="flex: 1;">
+            <a href="${file.url}" target="_blank" rel="noopener" class="btn btn-sm btn-primary" style="flex: 1;" onclick="trackFileOpen('${encodeURIComponent(JSON.stringify(file))}')">
               Open File
             </a>
             <button class="btn btn-sm btn-secondary" onclick="removeBookmark('${file.path}')" title="Remove from bag">
@@ -1310,7 +2128,11 @@ function handleSearchQuery(query) {
           type: f.category,
           title: f.name,
           subtitle: `${u.code} &bull; ${f.sizeFormatted || f.ext.toUpperCase()}`,
-          action: () => { closeSearchModal(); window.open(f.url, '_blank'); }
+          action: () => {
+            trackFileOpen({ ...f, unitName: u.name, unitCode: u.code, unitId: u.id });
+            closeSearchModal();
+            window.open(f.url, '_blank');
+          }
         });
       }
     });

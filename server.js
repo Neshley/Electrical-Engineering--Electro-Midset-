@@ -335,7 +335,7 @@ app.get('/api/stats', (req, res) => {
     filesCount: totalFiles,
     examsCount: totalExams,
     practicalsCount: totalPracticals,
-    toolsCount: 4
+    toolsCount: 8
   });
 });
 

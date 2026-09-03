@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="description" content="Electrical and Electronics Engineering notes, learning resources, Ohm's law calculator, and unit study guides.">
+  <meta name="description" content="Electrical and Electronics Engineering hub and All-in-One Calculator suite featuring 40+ engineering solvers, formula library, guided wizards, interactive waveforms, and step-by-step solutions.">
   
   <!-- App & PWA metadata -->
   <title>Electro-Mindset EEE Hub</title>
   <meta property="og:title" content="Electro-Mindset EEE Hub">
-  <meta property="og:description" content="Electrical and Electronics Engineering notes, learning resources, Ohm's law calculator, and unit study guides.">
+  <meta property="og:description" content="Electrical and Electronics Engineering hub and All-in-One Calculator suite featuring 40+ engineering solvers, formula library, guided wizards, interactive waveforms, and step-by-step solutions.">
   <meta property="og:type" content="website">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -19,6 +19,7 @@
 
   <!-- Core App Styles -->
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="calculator.css">
 </head>
 <body>
   <div id="app-root">
@@ -51,8 +52,9 @@
         </button>
 
         <button class="nav-btn" id="nav-btn-workbench" data-view="workbench">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>
-          <span>Calculators & Tools</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+          <span>Electrical Calculator</span>
+          <span class="nav-badge" style="background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3);">40+ Tools</span>
         </button>
 
         <button class="nav-btn" id="nav-btn-exams" data-view="exams">
@@ -128,7 +130,7 @@
               <p>Your comprehensive CBET Level 6 engineering workspace. Access lecture notes, CAT continuous assessment exams, practical guides, and interactive calculators for power systems, machines, and circuit theory.</p>
               <div class="hero-actions">
                 <button class="btn btn-primary" id="btn-hero-workbench" onclick="window.location.hash='workbench'">
-                  ⚡ Open Ohm's Law Calculator
+                  ⚡ Electrical Engineering Calculator (40+ Tools)
                 </button>
                 <button class="btn btn-secondary" id="btn-hero-units" onclick="window.location.hash='units'">
                   📚 Explore All 17 Units
@@ -153,14 +155,35 @@
                 <div class="stat-label">Exams & CATs</div>
               </div>
               <div class="stat-box" id="stat-box-tools">
-                <div class="stat-value" id="stat-total-tools">4</div>
-                <div class="stat-label">Interactive Tools</div>
+                <div class="stat-value" id="stat-total-tools">40+</div>
+                <div class="stat-label">Engineering Calculators</div>
               </div>
             </div>
           </div>
 
+          <!-- RECENTLY ACCESSED SECTION -->
+          <div class="recently-accessed-section" id="dashboard-recently-accessed-section" style="margin-top: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <h2 style="font-size: 18px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="color: var(--accent-cyan);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <span>Recently Accessed</span>
+                  <span id="recently-accessed-count-badge" style="display: none; font-size: 11px; padding: 2px 7px; background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); border-radius: var(--radius-full); font-weight: 600;">0</span>
+                </h2>
+                <p style="font-size: 13px; color: var(--text-muted);">Quickly resume reading your last 3 opened study materials</p>
+              </div>
+              <div id="recently-accessed-header-actions" style="display: flex; align-items: center; gap: 8px;">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+
+            <div id="recently-accessed-container">
+              <!-- Dynamically populated with last 3 opened files -->
+            </div>
+          </div>
+
           <!-- Quick Launch Units Preview -->
-          <div style="margin-top: 24px;">
+          <div style="margin-top: 28px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
               <div>
                 <h2 style="font-size: 18px; font-weight: 700; color: var(--text-primary);">Featured Study Units</h2>
@@ -290,253 +313,1663 @@
           </div>
         </section>
 
-        <!-- VIEW 4: INTERACTIVE WORKBENCH (CALCULATORS & TOOLS) -->
+<!-- VIEW 4: ELECTRICAL ENGINEERING CALCULATOR (ALL-IN-ONE SUITE) -->
         <section class="app-view" id="view-workbench">
-          <div class="view-header">
-            <h1 class="view-title">Engineering Workbench</h1>
-            <p class="view-subtitle">Interactive electrical engineering calculators, dynamic formula solvers, and reference standards.</p>
-          </div>
-
-          <div class="workbench-tabs" id="workbench-tabs-nav">
-            <button class="workbench-tab active" id="tab-ohms" data-tool="ohms">⚡ Ohm's Law & DC Power</button>
-            <button class="workbench-tab" id="tab-resistor" data-tool="resistor">🎨 Resistor Color Decoder</button>
-            <button class="workbench-tab" id="tab-pf" data-tool="pf">📐 AC Power Triangle & PF</button>
-            <button class="workbench-tab" id="tab-cables" data-tool="cables">📏 IEE Cable Sizing Guide</button>
-          </div>
-
-          <!-- Tool 1: Ohm's Law Solver -->
-          <div class="tool-panel active" id="tool-ohms">
-            <div class="ohms-tool-layout">
-              <div class="card" id="ohms-input-card">
-                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 6px;">4-Variable Ohm's Law Solver</h3>
-                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">Enter ANY 2 known parameters. The solver dynamically calculates the other two with the exact mathematical equation.</p>
-
-                <div class="form-group">
-                  <label class="form-label" for="ohm-v">
-                    <span>Voltage (V)</span>
-                    <span style="color: var(--text-muted);">Potential Difference</span>
-                  </label>
-                  <div class="form-input-wrapper">
-                    <input type="number" id="ohm-v" class="form-input" placeholder="e.g. 240" step="any">
-                    <span class="input-unit">Volts (V)</span>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="ohm-i">
-                    <span>Current (I)</span>
-                    <span style="color: var(--text-muted);">Electron Flow</span>
-                  </label>
-                  <div class="form-input-wrapper">
-                    <input type="number" id="ohm-i" class="form-input" placeholder="e.g. 10" step="any">
-                    <span class="input-unit">Amperes (A)</span>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="ohm-r">
-                    <span>Resistance (R)</span>
-                    <span style="color: var(--text-muted);">Opposition to Flow</span>
-                  </label>
-                  <div class="form-input-wrapper">
-                    <input type="number" id="ohm-r" class="form-input" placeholder="e.g. 24" step="any">
-                    <span class="input-unit">Ohms (Ω)</span>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="ohm-p">
-                    <span>Power (P)</span>
-                    <span style="color: var(--text-muted);">Rate of Energy</span>
-                  </label>
-                  <div class="form-input-wrapper">
-                    <input type="number" id="ohm-p" class="form-input" placeholder="e.g. 2400" step="any">
-                    <span class="input-unit">Watts (W)</span>
-                  </div>
-                </div>
-
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-                  <button class="btn btn-primary" id="ohm-solve-btn" onclick="solveOhmsLaw()" style="flex: 1;">
-                    Solve Ohm's Law
-                  </button>
-                  <button class="btn btn-secondary" id="ohm-reset-btn" onclick="resetOhmsLaw()">
-                    Clear
-                  </button>
+          <div class="calc-suite-container">
+            
+            <!-- Top Bar & Control Panel -->
+            <div class="calc-top-panel">
+              <div class="calc-header-row">
+                <div class="calc-title-group">
+                  <h2>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+                    Electrical Engineering Calculator
+                    <span class="calc-badge-allinone">All-in-One Professional Suite</span>
+                  </h2>
+                  <p>Comprehensive engineering solver across 14 specialized domains with step-by-step solutions, SI unit conversions, formula references, and interactive graphs.</p>
                 </div>
               </div>
 
-              <!-- Output Breakdown -->
-              <div class="card" id="ohms-result-card" style="display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                  <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 6px;">Formula Reference</h3>
-                  <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Standard equations derived from Georg Ohm's and James Prescott Joule's fundamental laws:</p>
+              <!-- Smart Search Bar -->
+              <div class="calc-search-box">
+                <svg class="calc-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="calc-global-search" class="calc-search-input" placeholder="What do you want to calculate? (e.g. '5 kW motor at 400V', '50m cable 20A', '10 kWh solar system', 'LED resistor', 'Op-Amp gain')..." oninput="handleSmartSearch(this.value)">
+                <div class="calc-search-quick-tags">
+                  <span style="font-size: 11px; color: var(--text-muted); margin-right: 4px;">Quick Solvers:</span>
+                  <button class="calc-quick-tag" onclick="handleSmartSearch('motor 7.5 kw 415v')">⚡ Motor FLA</button>
+                  <button class="calc-quick-tag" onclick="handleSmartSearch('voltage drop 40m 20a')">📏 Voltage Drop</button>
+                  <button class="calc-quick-tag" onclick="handleSmartSearch('solar 12 kwh')">☀️ Solar PV System</button>
+                  <button class="calc-quick-tag" onclick="handleSmartSearch('battery 100ah')">🔋 Battery Storage</button>
+                  <button class="calc-quick-tag" onclick="handleSmartSearch('ohm')">⚡ Ohm's Law</button>
+                  <button class="calc-quick-tag" onclick="handleSmartSearch('transformer 500 kva')">🔌 Transformer Fault</button>
+                  <button class="calc-quick-tag" onclick="handleSmartSearch('led resistor')">💡 LED Resistor</button>
+                  <button class="calc-quick-tag" onclick="handleSmartSearch('op-amp')">💡 Op-Amp Gain</button>
+                  <button class="calc-quick-tag" onclick="handleSmartSearch('4-20 sensor')">🎛️ 4–20 mA Scaling</button>
+                </div>
+              </div>
 
-                  <div class="formula-display-box" id="ohm-steps">
-                    <div style="color: var(--text-muted); font-size: 13px;">
-                      Enter any 2 values on the left and click "Solve" to calculate the remaining variables.
+              <!-- Sub-Navigation and Notation Toolbar -->
+              <div class="calc-options-row">
+                <div class="calc-nav-tabs">
+                  <button class="calc-nav-tab active" data-tab="calculators" onclick="switchNavTab('calculators')">🧮 Calculator Suite</button>
+                  <button class="calc-nav-tab" data-tab="wizard" onclick="switchNavTab('wizard')">🧭 Guided Wizard ("What do I need?")</button>
+                  <button class="calc-nav-tab" data-tab="engineermode" onclick="switchNavTab('engineermode')">⚡ Engineer Mode</button>
+                  <button class="calc-nav-tab" data-tab="graphs" onclick="switchNavTab('graphs')">📈 Interactive Graphs</button>
+                  <button class="calc-nav-tab" data-tab="formulas" onclick="switchNavTab('formulas')">📖 Formula Library</button>
+                  <button class="calc-nav-tab" data-tab="converter" onclick="switchNavTab('converter')">⚖️ Unit Converter</button>
+                  <button class="calc-nav-tab" data-tab="history" onclick="switchNavTab('history')">
+                    📜 History <span id="calc-history-badge" class="calc-category-count">0</span>
+                  </button>
+                </div>
+
+                <div class="calc-notation-toggle">
+                  <span style="font-size: 11px; color: var(--text-muted); margin: 0 6px 0 2px;">Notation:</span>
+                  <button class="notation-btn" data-mode="standard" onclick="setNotationMode('standard')">Standard</button>
+                  <button class="notation-btn" data-mode="scientific" onclick="setNotationMode('scientific')">Scientific (10ⁿ)</button>
+                  <button class="notation-btn active" data-mode="engineering" onclick="setNotationMode('engineering')">Engineering (SI)</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 1: MAIN CALCULATOR SUITE -->
+            <div id="calculators-panel" class="calc-main-layout">
+              
+              <!-- Left Category Sidebar Menu -->
+              <aside class="calc-category-sidebar">
+                <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; padding: 4px 8px 8px;">Categories</div>
+                <button class="calc-category-btn active" data-cat="fundamentals" onclick="switchCategory('fundamentals')">
+                  <div class="calc-category-title"><span>⚡</span> Electrical Fundamentals</div>
+                  <span class="calc-category-count">11</span>
+                </button>
+                <button class="calc-category-btn" data-cat="dc" onclick="switchCategory('dc')">
+                  <div class="calc-category-title"><span>🔋</span> DC Circuits</div>
+                  <span class="calc-category-count">7</span>
+                </button>
+                <button class="calc-category-btn" data-cat="ac" onclick="switchCategory('ac')">
+                  <div class="calc-category-title"><span>〰️</span> AC Circuits & PF</div>
+                  <span class="calc-category-count">7</span>
+                </button>
+                <button class="calc-category-btn" data-cat="threephase" onclick="switchCategory('threephase')">
+                  <div class="calc-category-title"><span>⚙️</span> Three-Phase Systems</div>
+                  <span class="calc-category-count">6</span>
+                </button>
+                <button class="calc-category-btn" data-cat="transformers" onclick="switchCategory('transformers')">
+                  <div class="calc-category-title"><span>🔌</span> Transformers & Faults</div>
+                  <span class="calc-category-count">6</span>
+                </button>
+                <button class="calc-category-btn" data-cat="motors" onclick="switchCategory('motors')">
+                  <div class="calc-category-title"><span>🏎️</span> Motors & Starters</div>
+                  <span class="calc-category-count">6</span>
+                </button>
+                <button class="calc-category-btn" data-cat="cables" onclick="switchCategory('cables')">
+                  <div class="calc-category-title"><span>📏</span> Cables & Wire Sizing</div>
+                  <span class="calc-category-count">4</span>
+                </button>
+                <button class="calc-category-btn" data-cat="installation" onclick="switchCategory('installation')">
+                  <div class="calc-category-title"><span>🏗️</span> Installation & Loads</div>
+                  <span class="calc-category-count">6</span>
+                </button>
+                <button class="calc-category-btn" data-cat="batteries" onclick="switchCategory('batteries')">
+                  <div class="calc-category-title"><span>🔋</span> Batteries & Storage</div>
+                  <span class="calc-category-count">4</span>
+                </button>
+                <button class="calc-category-btn" data-cat="solar" onclick="switchCategory('solar')">
+                  <div class="calc-category-title"><span>☀️</span> Solar PV Systems</div>
+                  <span class="calc-category-count">7</span>
+                </button>
+                <button class="calc-category-btn" data-cat="safety" onclick="switchCategory('safety')">
+                  <div class="calc-category-title"><span>🛡️</span> Electrical Safety & Faults</div>
+                  <span class="calc-category-count">3</span>
+                </button>
+                <button class="calc-category-btn" data-cat="electronics" onclick="switchCategory('electronics')">
+                  <div class="calc-category-title"><span>💡</span> Electronics & Op-Amps</div>
+                  <span class="calc-category-count">7</span>
+                </button>
+                <button class="calc-category-btn" data-cat="digital" onclick="switchCategory('digital')">
+                  <div class="calc-category-title"><span>🔣</span> Digital Electronics</div>
+                  <span class="calc-category-count">3</span>
+                </button>
+                <button class="calc-category-btn" data-cat="automation" onclick="switchCategory('automation')">
+                  <div class="calc-category-title"><span>🎛️</span> Control & Automation</div>
+                  <span class="calc-category-count">5</span>
+                </button>
+              </aside>
+
+              <!-- Right Content Area: Category Sections -->
+              <main class="calc-content-area">
+
+                <!-- 1. CATEGORY: ELECTRICAL FUNDAMENTALS -->
+                <section class="calc-cat-section" data-cat="fundamentals" style="display: flex; flex-direction: column; gap: 20px;">
+                  
+                  <!-- Card: Ohm's Law Solver -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">⚡ Ohm's Law & DC Circuit Solver</h3>
+                        <p class="eng-calc-desc">Calculate Voltage (V), Current (I), Resistance (R), and Power (P). Enter any 2 values to solve for the remaining parameters.</p>
+                      </div>
+                      <div class="eng-assumptions-box">Assumption: Ideal linear conductor at constant operating temperature</div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>V = I × R &nbsp;|&nbsp; I = V / R &nbsp;|&nbsp; R = V / I &nbsp;|&nbsp; P = V × I</span>
+                      <span class="eng-formula-name">Fundamental Law</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Voltage (V)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="ohm-in-v" class="eng-input-field" placeholder="e.g. 230" step="any">
+                          <span class="eng-unit-badge">V</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Current (I)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="ohm-in-i" class="eng-input-field" placeholder="e.g. 5" step="any">
+                          <span class="eng-unit-badge">A</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Resistance (R)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="ohm-in-r" class="eng-input-field" placeholder="e.g. 46" step="any">
+                          <span class="eng-unit-badge">Ω</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="eng-preset-group">
+                      <span style="font-size: 11px; color: var(--text-muted);">Presets:</span>
+                      <button class="eng-preset-btn" onclick="document.getElementById('ohm-in-v').value=230; document.getElementById('ohm-in-r').value=46; document.getElementById('ohm-in-i').value=''; calcOhmsLaw();">230V / 46Ω</button>
+                      <button class="eng-preset-btn" onclick="document.getElementById('ohm-in-v').value=12; document.getElementById('ohm-in-i').value=2.5; document.getElementById('ohm-in-r').value=''; calcOhmsLaw();">12V / 2.5A</button>
+                      <button class="eng-preset-btn" onclick="document.getElementById('ohm-in-v').value=400; document.getElementById('ohm-in-r').value=20; document.getElementById('ohm-in-i').value=''; calcOhmsLaw();">400V / 20Ω</button>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <div class="eng-action-left">
+                        <button class="btn btn-primary" onclick="calcOhmsLaw()">⚡ Calculate</button>
+                        <button class="btn btn-secondary" onclick="document.getElementById('ohm-in-v').value=230; document.getElementById('ohm-in-i').value=5; document.getElementById('ohm-in-r').value=46; calcOhmsLaw();">↺ Reset</button>
+                        <button class="btn btn-ghost" onclick="document.getElementById('ohm-in-v').value=''; document.getElementById('ohm-in-i').value=''; document.getElementById('ohm-in-r').value=''; document.getElementById('ohm-solution').innerHTML='';">⌫ Clear</button>
+                      </div>
+                    </div>
+
+                    <div id="ohm-solution"></div>
+                  </div>
+
+                  <!-- Card: Electrical Power & Energy -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">💡 Electrical Power & Energy Converter</h3>
+                        <p class="eng-calc-desc">Calculate Watts (W), Horsepower (HP), and Joules/kWh across DC or unity power factor AC circuits.</p>
+                      </div>
+                      <div class="eng-assumptions-box">Assumption: Unity power factor (PF = 1.0) for pure DC / resistive loads</div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>P = V × I = I² × R = V² / R &nbsp;|&nbsp; 1 HP = 745.7 W</span>
+                      <span class="eng-formula-name">Joule's Law</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Voltage (V)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="pwr-in-v" class="eng-input-field" value="230" step="any">
+                          <span class="eng-unit-badge">V</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Current (I)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="pwr-in-i" class="eng-input-field" value="10" step="any">
+                          <span class="eng-unit-badge">A</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Resistance (R) [Optional]</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="pwr-in-r" class="eng-input-field" placeholder="Auto" step="any">
+                          <span class="eng-unit-badge">Ω</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <div class="eng-action-left">
+                        <button class="btn btn-primary" onclick="calcElectricalPower()">⚡ Calculate Power</button>
+                        <button class="btn btn-secondary" onclick="document.getElementById('pwr-in-v').value=230; document.getElementById('pwr-in-i').value=10; document.getElementById('pwr-in-r').value=''; calcElectricalPower();">↺ Reset</button>
+                      </div>
+                    </div>
+
+                    <div id="pwr-solution"></div>
+                  </div>
+
+                  <!-- Card: Conductor Resistance & Conductance -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">📏 Conductor Resistance, Resistivity & Conductance</h3>
+                        <p class="eng-calc-desc">Calculate electrical resistance R and conductance G based on material resistivity (ρ), run length (L), and cross-sectional area (A).</p>
+                      </div>
+                      <div class="eng-assumptions-box">Assumption: Conductor at 20°C standard ambient temperature</div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>R = (ρ × L) / A &nbsp;|&nbsp; Conductance G = 1 / R (Siemens)</span>
+                      <span class="eng-formula-name">Pouillet's Law</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Conductor Material</label>
+                        <select id="resis-mat" class="eng-unit-select" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 9px;">
+                          <option value="copper" selected>Copper (ρ = 1.75 × 10⁻⁸ Ω·m)</option>
+                          <option value="aluminum">Aluminium (ρ = 2.82 × 10⁻⁸ Ω·m)</option>
+                          <option value="steel">Steel (ρ = 1.00 × 10⁻⁷ Ω·m)</option>
+                        </select>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Length (L)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="resis-len" class="eng-input-field" value="100" step="any">
+                          <span class="eng-unit-badge">meters</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Cross-Section Area (A)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="resis-area" class="eng-input-field" value="2.5" step="any">
+                          <span class="eng-unit-badge">mm²</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <div class="eng-action-left">
+                        <button class="btn btn-primary" onclick="calcConductorResistance()">⚡ Calculate Resistance</button>
+                      </div>
+                    </div>
+
+                    <div id="resis-solution"></div>
+                  </div>
+
+                  <!-- Card: Voltage Divider & Current Divider -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">⚖️ Voltage Divider & Branch Solver</h3>
+                        <p class="eng-calc-desc">Calculate node voltage output (Vout), resistor voltage drops, and branch currents across two series resistors.</p>
+                      </div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>Vout = Vin × [ R2 / (R1 + R2) ] &nbsp;|&nbsp; I = Vin / (R1 + R2)</span>
+                      <span class="eng-formula-name">Voltage Division</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Input Voltage (Vin)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="vdiv-vin" class="eng-input-field" value="12" step="any">
+                          <span class="eng-unit-badge">V</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Resistor R1 (Upper)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="vdiv-r1" class="eng-input-field" value="1000" step="any">
+                          <span class="eng-unit-badge">Ω</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Resistor R2 (Lower / Output)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="vdiv-r2" class="eng-input-field" value="2200" step="any">
+                          <span class="eng-unit-badge">Ω</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <div class="eng-action-left">
+                        <button class="btn btn-primary" onclick="calcVoltageDivider()">⚡ Calculate Division</button>
+                      </div>
+                    </div>
+
+                    <div id="vdiv-solution"></div>
+                  </div>
+
+                </section>
+
+                <!-- 2. CATEGORY: DC CIRCUITS -->
+                <section class="calc-cat-section" data-cat="dc" style="display: none; flex-direction: column; gap: 20px;">
+                  
+                  <!-- Card: Series & Parallel Resistors -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">🔋 Series & Parallel Resistor Combinations</h3>
+                        <p class="eng-calc-desc">Calculate total equivalent resistance for series and parallel networks.</p>
+                      </div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>Rseries = R1 + R2 + R3 &nbsp;|&nbsp; 1 / Rparallel = (1/R1) + (1/R2) + (1/R3)</span>
+                      <span class="eng-formula-name">Network Equivalence</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Resistor R1</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="rcomb-r1" class="eng-input-field" value="100" step="any">
+                          <span class="eng-unit-badge">Ω</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Resistor R2</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="rcomb-r2" class="eng-input-field" value="220" step="any">
+                          <span class="eng-unit-badge">Ω</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Resistor R3 (Optional)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="rcomb-r3" class="eng-input-field" value="470" step="any">
+                          <span class="eng-unit-badge">Ω</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <button class="btn btn-primary" onclick="calcSeriesParallelResistors()">⚡ Calculate Equivalent</button>
+                    </div>
+
+                    <div id="rcomb-solution"></div>
+                  </div>
+
+                  <!-- Card: RC Time Constant & Transient Response -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">⏱️ RC Circuit Time Constant (τ) & Transient Growth</h3>
+                        <p class="eng-calc-desc">Calculate charging/discharging time constants, cutoff times, and transient voltage states.</p>
+                      </div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>τ = R × C &nbsp;|&nbsp; Vc(t) = V0 × (1 - e^(-t/τ)) &nbsp;|&nbsp; 5τ = Full Charge (99.3%)</span>
+                      <span class="eng-formula-name">RC Transient</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Resistance (R)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="rct-r" class="eng-input-field" value="10000" step="any">
+                          <span class="eng-unit-badge">Ω</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Capacitance (C)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="rct-c" class="eng-input-field" value="47" step="any">
+                          <span class="eng-unit-badge">µF</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Supply Voltage (V0)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="rct-v" class="eng-input-field" value="12" step="any">
+                          <span class="eng-unit-badge">V</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <button class="btn btn-primary" onclick="calcRcTimeConstant()">⚡ Calculate Transient</button>
+                    </div>
+
+                    <div id="rct-solution"></div>
+                  </div>
+
+                </section>
+
+                <!-- 3. CATEGORY: AC CIRCUITS & POWER FACTOR -->
+                <section class="calc-cat-section" data-cat="ac" style="display: none; flex-direction: column; gap: 20px;">
+                  
+                  <!-- Card: AC Waveform Parameters -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">〰️ AC Waveform Relationships (RMS, Peak, Peak-to-Peak)</h3>
+                        <p class="eng-calc-desc">Calculate Vrms, Vpeak, Vpp, Period (T), and Angular Velocity (ω) for sinusoidal AC systems.</p>
+                      </div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>Vrms = Vpeak / √2 &nbsp;|&nbsp; Vpp = 2 × Vpeak &nbsp;|&nbsp; T = 1 / f &nbsp;|&nbsp; ω = 2πf</span>
+                      <span class="eng-formula-name">Sinusoidal AC</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Peak Voltage (Vpeak)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="acwave-vp" class="eng-input-field" value="325.27" step="any">
+                          <span class="eng-unit-badge">V</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Frequency (f)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="acwave-freq" class="eng-input-field" value="50" step="any">
+                          <span class="eng-unit-badge">Hz</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <button class="btn btn-primary" onclick="calcAcWaveform()">⚡ Calculate Waveform</button>
+                    </div>
+
+                    <div id="acwave-solution"></div>
+                  </div>
+
+                  <!-- Card: Complex Impedance Z = R + jX -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">📐 AC Complex Impedance & Phase Angle (Z = R + jX)</h3>
+                        <p class="eng-calc-desc">Calculate total impedance magnitude |Z|, phase angle θ, and power factor from resistance and reactances.</p>
+                      </div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>Z = R + j(XL - XC) &nbsp;|&nbsp; |Z| = √(R² + (XL - XC)²) &nbsp;|&nbsp; θ = arctan((XL - XC) / R)</span>
+                      <span class="eng-formula-name">Impedance Vector</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Resistance (R)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="imp-r" class="eng-input-field" value="40" step="any">
+                          <span class="eng-unit-badge">Ω</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Inductive Reactance (XL)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="imp-xl" class="eng-input-field" value="60" step="any">
+                          <span class="eng-unit-badge">Ω</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Capacitive Reactance (XC)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="imp-xc" class="eng-input-field" value="30" step="any">
+                          <span class="eng-unit-badge">Ω</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <button class="btn btn-primary" onclick="calcComplexImpedance()">⚡ Solve Impedance</button>
+                    </div>
+
+                    <div id="imp-solution"></div>
+                  </div>
+
+                  <!-- Card: Power Factor Correction Sizer -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">📐 Power Factor Correction & Capacitor Sizer</h3>
+                        <p class="eng-calc-desc">Calculate required reactive power (kVAR) and capacitance per phase (µF) to correct poor power factor to target standard (e.g. 0.95).</p>
+                      </div>
+                      <div class="eng-assumptions-box">Target: Standard utility non-penalty power factor (≥ 0.95 lagging)</div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>Qc = P × [ tan(φ1) - tan(φ2) ] &nbsp;|&nbsp; C = Qc / (2πf × V²)</span>
+                      <span class="eng-formula-name">PF Correction</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Active Power (P)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="pfc-p" class="eng-input-field" value="50" step="any">
+                          <span class="eng-unit-badge">kW</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Initial Power Factor (PF1)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="pfc-pf1" class="eng-input-field" value="0.75" step="0.01" min="0.1" max="0.99">
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Target Power Factor (PF2)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="pfc-pf2" class="eng-input-field" value="0.95" step="0.01" min="0.8" max="1.0">
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Supply Voltage (V)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="pfc-v" class="eng-input-field" value="400" step="any">
+                          <span class="eng-unit-badge">V</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Frequency (Hz)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="pfc-freq" class="eng-input-field" value="50">
+                          <span class="eng-unit-badge">Hz</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">System Type</label>
+                        <select id="pfc-phase" class="eng-unit-select" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 8px;">
+                          <option value="3" selected>3-Phase (Delta Bank)</option>
+                          <option value="1">1-Phase (Parallel)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <button class="btn btn-primary" onclick="calcPowerFactorCorrection()">⚡ Size Capacitor Bank</button>
+                    </div>
+
+                    <div id="pfc-solution"></div>
+                  </div>
+
+                </section>
+
+                <!-- 4. CATEGORY: THREE-PHASE SYSTEMS -->
+                <section class="calc-cat-section" data-cat="threephase" style="display: none; flex-direction: column; gap: 20px;">
+                  
+                  <!-- Card: Three-Phase Balanced Power -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">⚙️ Three-Phase Balanced Power & Star/Delta Solver</h3>
+                        <p class="eng-calc-desc">Calculate Active (kW), Apparent (kVA), Reactive (kVAR) power, and Phase vs Line voltages/currents.</p>
+                      </div>
+                      <div class="eng-assumptions-box">Assumption: Symmetrical balanced 3-phase supply & load</div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>P = √3 × VL × IL × cos(φ) &nbsp;|&nbsp; S = √3 × VL × IL &nbsp;|&nbsp; Q = √3 × VL × IL × sin(φ)</span>
+                      <span class="eng-formula-name">3-Phase Power</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Line-to-Line Voltage (VL)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="tp-vl" class="eng-input-field" value="415" step="any">
+                          <span class="eng-unit-badge">V</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Line Current (IL)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="tp-il" class="eng-input-field" value="35" step="any">
+                          <span class="eng-unit-badge">A</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Power Factor (cos φ)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="tp-pf" class="eng-input-field" value="0.85" step="0.01" min="0.1" max="1.0">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <button class="btn btn-primary" onclick="calcThreePhasePower()">⚡ Calculate 3-Phase Power</button>
+                    </div>
+
+                    <div id="tp-solution"></div>
+                  </div>
+
+                </section>
+
+                <!-- 5. CATEGORY: TRANSFORMERS & FAULTS -->
+                <section class="calc-cat-section" data-cat="transformers" style="display: none; flex-direction: column; gap: 20px;">
+                  
+                  <!-- Card: Transformer Sizing & Prospective Fault Current -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">🔌 Transformer Sizing & Prospective Short Circuit Fault</h3>
+                        <p class="eng-calc-desc">Calculate Primary & Secondary Full Load Amps (FLA), Turns Ratio, % Impedance voltage drop, and prospective fault current (Isc).</p>
+                      </div>
+                      <div class="eng-assumptions-box">Standard IEC 60076 / IEEE C57 transformer standards</div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>I2 = S / (√3 × V2) &nbsp;|&nbsp; Isc = I2 / (%Z / 100) &nbsp;|&nbsp; Fault MVA = S(MVA) / (%Z / 100)</span>
+                      <span class="eng-formula-name">Transformer Ratings</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Transformer Rating</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="tx2-kva" class="eng-input-field" value="500" step="any">
+                          <span class="eng-unit-badge">kVA</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Primary Voltage (V1)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="tx2-v1" class="eng-input-field" value="11000" step="any">
+                          <span class="eng-unit-badge">V</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Secondary Voltage (V2)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="tx2-v2" class="eng-input-field" value="415" step="any">
+                          <span class="eng-unit-badge">V</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Impedance (%Z)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="tx2-z" class="eng-input-field" value="4.75" step="0.05">
+                          <span class="eng-unit-badge">%</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Phase</label>
+                        <select id="tx2-phase" class="eng-unit-select" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 8px;">
+                          <option value="3" selected>3-Phase (415V)</option>
+                          <option value="1">1-Phase (230V)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <button class="btn btn-primary" onclick="calcTransformerSizing()">⚡ Size Transformer & Faults</button>
+                    </div>
+
+                    <div id="tx2-solution"></div>
+                  </div>
+
+                </section>
+
+                <!-- 6. CATEGORY: MOTORS & STARTERS -->
+                <section class="calc-cat-section" data-cat="motors" style="display: none; flex-direction: column; gap: 20px;">
+                  
+                  <div class="card" id="motor-input-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 8px;">
+                      <h3 style="font-size: 16px; font-weight: 700;">3-Phase & 1-Phase Motor Calculator</h3>
+                      <div class="tool-pill-toggle">
+                        <button class="tool-pill-btn active" id="motor-phase-3-btn" onclick="setMotorPhase(3)">3-Phase (415V)</button>
+                        <button class="tool-pill-btn" id="motor-phase-1-btn" onclick="setMotorPhase(1)">1-Phase (230V)</button>
+                      </div>
+                    </div>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Calculate Full Load Amps (FLA), Synchronous Speed, Slip %, Shaft Torque, and Starter Overload settings.</p>
+
+                    <div style="margin-bottom: 14px;">
+                      <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase;">Standard Presets:</div>
+                      <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                        <button class="preset-chip" onclick="applyMotorPreset(2.2, 4, 0.82, 85)">2.2 kW (3 HP)</button>
+                        <button class="preset-chip" onclick="applyMotorPreset(7.5, 4, 0.85, 88.5)">7.5 kW (10 HP)</button>
+                        <button class="preset-chip" onclick="applyMotorPreset(15, 4, 0.87, 91)">15 kW (20 HP)</button>
+                        <button class="preset-chip" onclick="applyMotorPreset(30, 4, 0.89, 93)">30 kW (40 HP)</button>
+                      </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 12px;">
+                      <div class="form-group">
+                        <label class="form-label" for="motor-power">Rated Mechanical Output</label>
+                        <div class="form-input-wrapper">
+                          <input type="number" id="motor-power" class="form-input" value="7.5" step="0.1" min="0.1">
+                          <span class="input-unit" id="motor-power-unit-label">kW</span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label" for="motor-unit-select">Power Unit</label>
+                        <select id="motor-unit-select" class="form-input" onchange="toggleMotorPowerUnit()">
+                          <option value="kw" selected>kW (Kilowatts)</option>
+                          <option value="hp">HP (Horsepower)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;">
+                      <div class="form-group">
+                        <label class="form-label" for="motor-voltage">Terminal Voltage (V)</label>
+                        <input type="number" id="motor-voltage" class="form-input" value="415">
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label" for="motor-freq">Frequency (Hz)</label>
+                        <input type="number" id="motor-freq" class="form-input" value="50">
+                      </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 10px;">
+                      <div class="form-group">
+                        <label class="form-label" for="motor-poles">Poles</label>
+                        <select id="motor-poles" class="form-input">
+                          <option value="2">2 Poles (3000 RPM)</option>
+                          <option value="4" selected>4 Poles (1500 RPM)</option>
+                          <option value="6">6 Poles (1000 RPM)</option>
+                          <option value="8">8 Poles (750 RPM)</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label" for="motor-pf">Power Factor (cos φ)</label>
+                        <input type="number" id="motor-pf" class="form-input" value="0.85" step="0.01" min="0.1" max="1.0">
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label" for="motor-eff">Efficiency (η %)</label>
+                        <input type="number" id="motor-eff" class="form-input" value="88.5" step="0.5" min="50" max="99">
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar" style="margin-top: 16px;">
+                      <button class="btn btn-primary" onclick="calculateMotor()">⚡ Compute Motor Parameters</button>
+                    </div>
+
+                    <!-- Motor Results Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 16px;">
+                      <div class="readout-card">
+                        <div class="readout-label">Full Load Amps (FLA)</div>
+                        <div class="readout-value" id="motor-res-fla" style="color: var(--accent-cyan);">13.3 A</div>
+                      </div>
+                      <div class="readout-card">
+                        <div class="readout-label">Sync Speed (Ns)</div>
+                        <div class="readout-value" id="motor-res-ns">1500 RPM</div>
+                      </div>
+                      <div class="readout-card">
+                        <div class="readout-label">Rotor Speed (Nr)</div>
+                        <div class="readout-value" id="motor-res-nr">1440 RPM</div>
+                      </div>
+                      <div class="readout-card">
+                        <div class="readout-label">Slip %</div>
+                        <div class="readout-value" id="motor-res-slip">4.0 %</div>
+                      </div>
+                      <div class="readout-card">
+                        <div class="readout-label">Full Load Torque</div>
+                        <div class="readout-value" id="motor-res-torque" style="color: var(--accent-amber);">49.7 Nm</div>
+                      </div>
+                      <div class="readout-card">
+                        <div class="readout-label">Apparent Power (S)</div>
+                        <div class="readout-value" id="motor-res-s">9.57 kVA</div>
+                      </div>
                     </div>
                   </div>
+
+                </section>
+
+                <!-- 7. CATEGORY: CABLES & WIRE SIZING -->
+                <section class="calc-cat-section" data-cat="cables" style="display: none; flex-direction: column; gap: 20px;">
+                  
+                  <!-- Card: Cable Voltage Drop & Sizer -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">📏 Cable Voltage Drop & Conductor Sizer</h3>
+                        <p class="eng-calc-desc">Calculate circuit voltage drop ΔV, percentage loss, and check compliance against BS 7671 (3% lighting, 5% power circuits).</p>
+                      </div>
+                      <div class="eng-assumptions-box">BS 7671 / IEC 60364: 3% limit for lighting circuits, 5% for general power</div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>ΔV = factor × I × L × (ρ / A) &nbsp;|&nbsp; factor = 2 (1Φ) or √3 (3Φ)</span>
+                      <span class="eng-formula-name">Voltage Drop</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Nominal Supply Voltage</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="cbl-v" class="eng-input-field" value="230" step="any">
+                          <span class="eng-unit-badge">V</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Design Current (I)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="cbl-i" class="eng-input-field" value="20" step="any">
+                          <span class="eng-unit-badge">A</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Run Length (one-way)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="cbl-l" class="eng-input-field" value="40" step="any">
+                          <span class="eng-unit-badge">m</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Conductor Size</label>
+                        <select id="cbl-size" class="eng-unit-select" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 8px;">
+                          <option value="1.5">1.5 mm²</option>
+                          <option value="2.5" selected>2.5 mm²</option>
+                          <option value="4.0">4.0 mm²</option>
+                          <option value="6.0">6.0 mm²</option>
+                          <option value="10">10 mm²</option>
+                          <option value="16">16 mm²</option>
+                          <option value="25">25 mm²</option>
+                          <option value="35">35 mm²</option>
+                          <option value="50">50 mm²</option>
+                        </select>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Material</label>
+                        <select id="cbl-mat" class="eng-unit-select" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 8px;">
+                          <option value="copper" selected>Copper</option>
+                          <option value="aluminum">Aluminium</option>
+                        </select>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Supply Type</label>
+                        <select id="cbl-phase" class="eng-unit-select" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 8px;">
+                          <option value="1" selected>Single Phase (1Φ 230V)</option>
+                          <option value="3">Three Phase (3Φ 400V)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <button class="btn btn-primary" onclick="calcCableVoltageDrop()">⚡ Solve Voltage Drop</button>
+                    </div>
+
+                    <div id="cbl-solution"></div>
+                  </div>
+
+                </section>
+
+                <!-- 8. CATEGORY: ELECTRICAL INSTALLATION & LOADS -->
+                <section class="calc-cat-section" data-cat="installation" style="display: none; flex-direction: column; gap: 20px;">
+                  
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">🏗️ Connected Load Schedule & Generator Sizer</h3>
+                        <p class="eng-calc-desc">Add circuits and appliances to compute Total Connected kW, Maximum Demand with Diversity, Daily Energy (kWh), and recommended main breaker.</p>
+                      </div>
+                    </div>
+
+                    <div style="overflow-x: auto; margin-top: 10px;">
+                      <table class="load-schedule-table">
+                        <thead>
+                          <tr>
+                            <th>Appliance / Circuit</th>
+                            <th>Qty</th>
+                            <th>Power (Watts)</th>
+                            <th>Hrs/Day</th>
+                            <th>Subtotal</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody id="load-schedule-tbody">
+                          <!-- Populated via script -->
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                      <button class="btn btn-sm btn-secondary" onclick="addLoadItemRow()">+ Add Circuit / Appliance</button>
+                      <div style="display: flex; gap: 12px; align-items: center;">
+                        <span style="font-size: 12px; color: var(--text-secondary);">Diversity Factor:</span>
+                        <input type="number" id="inst-diversity" value="0.8" step="0.05" min="0.2" max="1.0" style="width: 70px; background: var(--bg-input); border: 1px solid var(--border-subtle); padding: 4px 8px; border-radius: var(--radius-sm); color: var(--text-primary);">
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar" style="margin-top: 14px;">
+                      <button class="btn btn-primary" onclick="calcInstallationLoad()">⚡ Compute Load Schedule</button>
+                    </div>
+
+                    <div id="inst-solution"></div>
+                  </div>
+
+                </section>
+
+                <!-- 9. CATEGORY: BATTERIES & STORAGE -->
+                <section class="calc-cat-section" data-cat="batteries" style="display: none; flex-direction: column; gap: 20px;">
+                  
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">🔋 Battery Runtime & Energy Storage Sizer</h3>
+                        <p class="eng-calc-desc">Calculate backup runtime in hours/minutes based on battery bank voltage, Ah rating, load power, and depth of discharge (DoD).</p>
+                      </div>
+                      <div class="eng-assumptions-box">Recommended DoD: 80% for LiFePO4, 50% for Deep Cycle Lead-Acid</div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>Usable Energy (Wh) = V × Ah × DoD × η &nbsp;|&nbsp; Runtime = Usable Wh / Load (W)</span>
+                      <span class="eng-formula-name">Peukert & DoD</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Battery Voltage (V)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="bat-v" class="eng-input-field" value="12" step="any">
+                          <span class="eng-unit-badge">V</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Capacity (Ah)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="bat-ah" class="eng-input-field" value="100" step="any">
+                          <span class="eng-unit-badge">Ah</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Load Power</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="bat-load" class="eng-input-field" value="150" step="any">
+                          <span class="eng-unit-badge">Watts</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Depth of Discharge (DoD %)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="bat-dod" class="eng-input-field" value="80" step="5" min="10" max="100">
+                          <span class="eng-unit-badge">%</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <button class="btn btn-primary" onclick="calcBatteryStorage()">⚡ Compute Runtime</button>
+                    </div>
+
+                    <div id="bat-solution"></div>
+                  </div>
+
+                </section>
+
+                <!-- 10. CATEGORY: SOLAR PV SYSTEMS -->
+                <section class="calc-cat-section" data-cat="solar" style="display: none; flex-direction: column; gap: 20px;">
+                  
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">☀️ Complete Solar PV System & Array Sizer</h3>
+                        <p class="eng-calc-desc">Calculate required solar panels, array kWp, battery storage capacity, charge controller, and inverter sizing based on daily kWh requirements.</p>
+                      </div>
+                      <div class="eng-assumptions-box">Design includes standard 30% system loss derating factor (dust, wiring, inverter)</div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>Array Watts = (Daily kWh × 1000 × 1.3) / Peak Sun Hours (PSH)</span>
+                      <span class="eng-formula-name">Solar Sizing</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Daily Consumption</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="sol-daily" class="eng-input-field" value="12" step="0.5">
+                          <span class="eng-unit-badge">kWh/day</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Peak Sun Hours (PSH)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="sol-sun" class="eng-input-field" value="5" step="0.1">
+                          <span class="eng-unit-badge">hrs/day</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Module Rating</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="sol-panel" class="eng-input-field" value="450" step="10">
+                          <span class="eng-unit-badge">Watts</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Autonomy Days</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="sol-autonomy" class="eng-input-field" value="1.5" step="0.5">
+                          <span class="eng-unit-badge">days</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">System DC Voltage</label>
+                        <select id="sol-sysv" class="eng-unit-select" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 8px;">
+                          <option value="12">12 V</option>
+                          <option value="24">24 V</option>
+                          <option value="48" selected>48 V (Standard Residential/Commercial)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <button class="btn btn-primary" onclick="calcSolarSystem()">⚡ Size Solar PV System</button>
+                    </div>
+
+                    <div id="sol-solution"></div>
+                  </div>
+
+                </section>
+
+                <!-- 11. CATEGORY: ELECTRICAL SAFETY & FAULTS -->
+                <section class="calc-cat-section" data-cat="safety" style="display: none; flex-direction: column; gap: 20px;">
+                  
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">🛡️ Grounding Rod Resistance & Safety Limits</h3>
+                        <p class="eng-calc-desc">Calculate grounding electrode resistance using Dwight's formula and check against IEEE 80 / IEC 60364 standard limits (&lt; 10 Ω or &lt; 5 Ω).</p>
+                      </div>
+                      <div class="eng-assumptions-box">IEEE 80 / IEC 60364 Educational Reference Calculation</div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>R = [ ρ / (2πL) ] × [ ln(4L / d) - 1 ] &nbsp;|&nbsp; Target: R ≤ 5 Ω</span>
+                      <span class="eng-formula-name">Dwight's Equation</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Soil Resistivity (ρ)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="safe-rho" class="eng-input-field" value="50" step="any">
+                          <span class="eng-unit-badge">Ω·m</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Rod Length (L)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="safe-l" class="eng-input-field" value="2.4" step="0.1">
+                          <span class="eng-unit-badge">m</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Rod Diameter (d)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="safe-d" class="eng-input-field" value="0.016" step="0.001">
+                          <span class="eng-unit-badge">m</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <button class="btn btn-primary" onclick="
+                        const rho = parseFloat(document.getElementById('safe-rho').value) || 50;
+                        const l = parseFloat(document.getElementById('safe-l').value) || 2.4;
+                        const d = parseFloat(document.getElementById('safe-d').value) || 0.016;
+                        const r = (rho / (2 * Math.PI * l)) * (Math.log((4 * l) / d) - 1);
+                        renderSolution('safe-solution', {
+                          calcName: 'Grounding Rod Resistance',
+                          inputsSummary: `ρ=${rho}Ω·m, L=${l}m, d=${(d*1000).toFixed(0)}mm`,
+                          given: `Soil Resistivity ρ = ${rho} Ω·m, Electrode Length L = ${l} m, Diameter d = ${(d*1000).toFixed(0)} mm`,
+                          formula: 'R = [ ρ / (2πL) ] × [ ln(4L / d) - 1 ]',
+                          substitution: `R = [ ${rho} / (2 × 3.1416 × ${l}) ] × [ ln(4 × ${l} / ${d}) - 1 ]`,
+                          calculation: `Geometric factor = ${(Math.log((4 * l) / d) - 1).toFixed(3)}, Resistance = ${r.toFixed(2)} Ω`,
+                          answer: `Earth Resistance: ${r.toFixed(2)} Ω`,
+                          additionalNotes: `Safety Evaluation: ${r <= 5 ? '✅ EXCELLENT (≤ 5 Ω)' : (r <= 10 ? '⚠️ ACCEPTABLE (≤ 10 Ω)' : '⚠️ HIGH RESISTANCE - ADD PARALLEL RODS OR SOIL TREATMENT')}`,
+                          answerRaw: `${r.toFixed(2)} Ω`
+                        });
+                      ">⚡ Calculate Ground Resistance</button>
+                    </div>
+
+                    <div id="safe-solution"></div>
+                  </div>
+
+                </section>
+
+                <!-- 12. CATEGORY: ELECTRONICS & OP-AMPS -->
+                <section class="calc-cat-section" data-cat="electronics" style="display: none; flex-direction: column; gap: 20px;">
+                  
+                  <!-- Card: LED Resistor -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">💡 LED Current Limiting Resistor</h3>
+                        <p class="eng-calc-desc">Calculate the required series resistor value and power rating to safely drive an LED from any DC supply.</p>
+                      </div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>R = (Vs - Vf) / If &nbsp;|&nbsp; Resistor Power P = If² × R</span>
+                      <span class="eng-formula-name">LED Bias</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Supply Voltage (Vs)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="led-vs" class="eng-input-field" value="12" step="any">
+                          <span class="eng-unit-badge">V</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">LED Forward Drop (Vf)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="led-vf" class="eng-input-field" value="2.2" step="0.1">
+                          <span class="eng-unit-badge">V</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Desired Current (If)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="led-if" class="eng-input-field" value="20" step="1">
+                          <span class="eng-unit-badge">mA</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <button class="btn btn-primary" onclick="calcLedResistor()">⚡ Calculate Resistor</button>
+                    </div>
+
+                    <div id="led-solution"></div>
+                  </div>
+
+                  <!-- Card: Op-Amp Gain -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">🎛️ Operational Amplifier (Op-Amp) Closed-Loop Solver</h3>
+                        <p class="eng-calc-desc">Calculate gain (Av), output voltage (Vout), and dB amplification for Inverting, Non-Inverting, and Voltage Follower circuits.</p>
+                      </div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>Inverting: Av = -Rf / Rin &nbsp;|&nbsp; Non-Inverting: Av = 1 + (Rf / Rin)</span>
+                      <span class="eng-formula-name">Closed Loop Gain</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Circuit Topology</label>
+                        <select id="opamp-type" class="eng-unit-select" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 8px;">
+                          <option value="inverting" selected>Inverting Op-Amp</option>
+                          <option value="non-inverting">Non-Inverting Op-Amp</option>
+                          <option value="buffer">Voltage Follower / Buffer</option>
+                        </select>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Input Voltage (Vin)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="opamp-vin" class="eng-input-field" value="1.0" step="any">
+                          <span class="eng-unit-badge">V</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Input Resistor (Rin)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="opamp-rin" class="eng-input-field" value="10" step="any">
+                          <span class="eng-unit-badge">kΩ</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Feedback Resistor (Rf)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="opamp-rf" class="eng-input-field" value="100" step="any">
+                          <span class="eng-unit-badge">kΩ</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <button class="btn btn-primary" onclick="calcOpAmp()">⚡ Solve Op-Amp</button>
+                    </div>
+
+                    <div id="opamp-solution"></div>
+                  </div>
+
+                </section>
+
+                <!-- 13. CATEGORY: DIGITAL ELECTRONICS -->
+                <section class="calc-cat-section" data-cat="digital" style="display: none; flex-direction: column; gap: 20px;">
+                  
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">🔣 Number System Converter (Dec, Bin, Hex, Oct)</h3>
+                        <p class="eng-calc-desc">Real-time bi-directional conversion between Decimal, Binary, Hexadecimal, and Octal formats.</p>
+                      </div>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Decimal (Base 10)</label>
+                        <input type="number" id="num-dec" class="eng-input-field" value="168" oninput="convertNumberSystem('dec')" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Binary (Base 2)</label>
+                        <input type="text" id="num-bin" class="eng-input-field" value="10101000" oninput="convertNumberSystem('bin')" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Hexadecimal (Base 16)</label>
+                        <input type="text" id="num-hex" class="eng-input-field" value="A8" oninput="convertNumberSystem('hex')" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Octal (Base 8)</label>
+                        <input type="text" id="num-oct" class="eng-input-field" value="250" oninput="convertNumberSystem('oct')" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">
+                      </div>
+                    </div>
+
+                    <div id="num-solution"></div>
+                  </div>
+
+                  <!-- Logic Gates Simulation -->
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">⚡ Interactive Logic Gate Evaluator</h3>
+                        <p class="eng-calc-desc">Select binary inputs A and B to evaluate real-time outputs across all fundamental Boolean logic gates.</p>
+                      </div>
+                    </div>
+
+                    <div style="display: flex; gap: 20px; align-items: center; margin-top: 10px; flex-wrap: wrap;">
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 13px; font-weight: 700;">Input A:</span>
+                        <select id="gate-in-a" class="eng-unit-select" onchange="evaluateLogicGates()" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 8px 14px;">
+                          <option value="0">0 (LOW)</option>
+                          <option value="1" selected>1 (HIGH)</option>
+                        </select>
+                      </div>
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 13px; font-weight: 700;">Input B:</span>
+                        <select id="gate-in-b" class="eng-unit-select" onchange="evaluateLogicGates()" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 8px 14px;">
+                          <option value="0">0 (LOW)</option>
+                          <option value="1" selected>1 (HIGH)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-top: 14px;">
+                      <div class="readout-card" style="text-align: center;">
+                        <div class="readout-label">AND</div>
+                        <div class="readout-value" id="gate-out-and" style="color: var(--accent-cyan); font-size: 20px;">1</div>
+                      </div>
+                      <div class="readout-card" style="text-align: center;">
+                        <div class="readout-label">OR</div>
+                        <div class="readout-value" id="gate-out-or" style="color: var(--accent-cyan); font-size: 20px;">1</div>
+                      </div>
+                      <div class="readout-card" style="text-align: center;">
+                        <div class="readout-label">NOT A</div>
+                        <div class="readout-value" id="gate-out-not" style="color: var(--accent-cyan); font-size: 20px;">0</div>
+                      </div>
+                      <div class="readout-card" style="text-align: center;">
+                        <div class="readout-label">NAND</div>
+                        <div class="readout-value" id="gate-out-nand" style="color: var(--accent-cyan); font-size: 20px;">0</div>
+                      </div>
+                      <div class="readout-card" style="text-align: center;">
+                        <div class="readout-label">NOR</div>
+                        <div class="readout-value" id="gate-out-nor" style="color: var(--accent-cyan); font-size: 20px;">0</div>
+                      </div>
+                      <div class="readout-card" style="text-align: center;">
+                        <div class="readout-label">XOR</div>
+                        <div class="readout-value" id="gate-out-xor" style="color: var(--accent-amber); font-size: 20px;">0</div>
+                      </div>
+                      <div class="readout-card" style="text-align: center;">
+                        <div class="readout-label">XNOR</div>
+                        <div class="readout-value" id="gate-out-xnor" style="color: var(--accent-amber); font-size: 20px;">1</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </section>
+
+                <!-- 14. CATEGORY: CONTROL SYSTEMS & AUTOMATION -->
+                <section class="calc-cat-section" data-cat="automation" style="display: none; flex-direction: column; gap: 20px;">
+                  
+                  <div class="eng-calc-card">
+                    <div class="eng-calc-header">
+                      <div>
+                        <h3 class="eng-calc-title">🎛️ 4–20 mA Process Signal Scaler</h3>
+                        <p class="eng-calc-desc">Scale 4-20 mA current loops to engineering process units (e.g. 0-100 psi, -50 to 150°C, 0-100% level) and reverse-calculate mA from PV.</p>
+                      </div>
+                      <div class="eng-assumptions-box">Standard ISA-50.1 4-20 mA Current Loop Instrumentation</div>
+                    </div>
+
+                    <div class="eng-formula-box">
+                      <span>PV = PVmin + [ (I - 4) / 16 ] × (PVmax - PVmin)</span>
+                      <span class="eng-formula-name">Signal Scaling</span>
+                    </div>
+
+                    <div class="eng-input-grid">
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Conversion Mode</label>
+                        <select id="sens-mode" class="eng-unit-select" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 8px;" onchange="calcSensorScaling()">
+                          <option value="i_to_pv" selected>Current (mA) → Process Value (PV)</option>
+                          <option value="pv_to_i">Process Value (PV) → Current (mA)</option>
+                        </select>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">PV Range Min</label>
+                        <input type="number" id="sens-pvmin" class="eng-input-field" value="0" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">PV Range Max</label>
+                        <input type="number" id="sens-pvmax" class="eng-input-field" value="100" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Loop Current (mA)</label>
+                        <div class="eng-input-wrapper">
+                          <input type="number" id="sens-i" class="eng-input-field" value="12" step="0.1">
+                          <span class="eng-unit-badge">mA</span>
+                        </div>
+                      </div>
+                      <div class="eng-input-group">
+                        <label class="eng-input-label">Process Value (PV)</label>
+                        <input type="number" id="sens-pv" class="eng-input-field" value="50" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">
+                      </div>
+                    </div>
+
+                    <div class="eng-action-bar">
+                      <button class="btn btn-primary" onclick="calcSensorScaling()">⚡ Scale Process Signal</button>
+                    </div>
+
+                    <div id="sens-solution"></div>
+                  </div>
+
+                </section>
+
+              </main>
+            </div>
+
+            <!-- TAB 2: GUIDED WIZARD -->
+            <div id="wizard-panel" style="display: none;">
+              <div class="wizard-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                  <div>
+                    <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary);">🧭 Guided Engineering Wizard ("What do I need to calculate?")</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Step-by-step interactive questionnaire that gathers your specifications and calculates complete engineering recommendations.</p>
+                  </div>
                 </div>
 
-                <div style="background: var(--bg-elevated); padding: 16px; border-radius: var(--radius-md); margin-top: 20px;">
-                  <div style="font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px;">QUICK CONVERSIONS:</div>
-                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; font-family: var(--font-mono); color: var(--text-secondary);">
-                    <div>$1\\,\\text{k}\\Omega = 1,000\\,\\Omega$</div>
-                    <div>$1\\,\\text{M}\\Omega = 1,000,000\\,\\Omega$</div>
-                    <div>$1\\,\\text{kW} = 1,000\\,\\text{W}$</div>
-                    <div>$1\\,\\text{mA} = 0.001\\,\\text{A}$</div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
+                  <button class="btn btn-secondary wizard-type-btn active" data-wiz="cable" onclick="startWizard('cable')">📏 Cable Sizing</button>
+                  <button class="btn btn-secondary wizard-type-btn" data-wiz="solar" onclick="startWizard('solar')">☀️ Solar PV System</button>
+                  <button class="btn btn-secondary wizard-type-btn" data-wiz="motor" onclick="startWizard('motor')">⚙️ Motor & Starter</button>
+                </div>
+
+                <div id="wizard-body" style="margin-top: 14px; background: var(--bg-elevated); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                  <!-- Populated via script -->
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 3: ENGINEER MODE (COMPLEX & PHASORS) -->
+            <div id="engineermode-panel" style="display: none;">
+              <div class="eng-calc-card">
+                <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary);">⚡ Engineer Mode: Complex Numbers & Phasor Engine</h3>
+                <p style="font-size: 13px; color: var(--text-secondary);">Perform rectangular to polar conversions, phasor additions, and solve 2x2 simultaneous linear mesh/nodal circuit equations.</p>
+
+                <div class="phasor-pad-grid" style="margin-top: 10px;">
+                  <!-- Rectangular to Polar -->
+                  <div style="background: var(--bg-input); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                    <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--accent-cyan);">Rectangular Form: (x + jy)</h4>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                      <input type="number" id="cplx-r-real" class="eng-input-field" value="40" placeholder="Real (x)" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
+                      <span>+ j</span>
+                      <input type="number" id="cplx-r-imag" class="eng-input-field" value="30" placeholder="Imag (y)" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
+                    </div>
+                    <button class="btn btn-sm btn-primary" style="margin-top: 10px;" onclick="convertRectToPolar()">Convert to Polar (r ∠ θ°) →</button>
+                  </div>
+
+                  <!-- Polar to Rectangular -->
+                  <div style="background: var(--bg-input); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                    <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--accent-amber);">Polar Form: (r ∠ θ°)</h4>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                      <input type="number" id="cplx-p-mag" class="eng-input-field" value="50" placeholder="Magnitude (r)" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
+                      <span>∠</span>
+                      <input type="number" id="cplx-p-ang" class="eng-input-field" value="36.87" placeholder="Angle (deg)" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
+                      <span>°</span>
+                    </div>
+                    <button class="btn btn-sm btn-primary" style="margin-top: 10px;" onclick="convertPolarToRect()">Convert to Rectangular (x + jy) →</button>
+                  </div>
+                </div>
+
+                <div id="cplx-res-box" style="margin-top: 12px;"></div>
+
+                <!-- 2x2 Simultaneous Linear Equation Solver -->
+                <div style="margin-top: 20px; border-top: 1px solid var(--border-subtle); padding-top: 16px;">
+                  <h4 style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">2x2 Simultaneous Mesh / Nodal Equation Solver</h4>
+                  <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Solves [A1·I1 + B1·I2 = C1] and [A2·I1 + B2·I2 = C2] via Cramer's Rule determinant method.</p>
+                  
+                  <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                      <span style="font-size: 12px; font-weight: 600;">Eq 1:</span>
+                      <input type="number" id="eq-a1" value="10" style="width: 70px; background: var(--bg-input); border: 1px solid var(--border-subtle); padding: 6px; border-radius: var(--radius-sm); color: var(--text-primary);"> · I1 +
+                      <input type="number" id="eq-b1" value="-4" style="width: 70px; background: var(--bg-input); border: 1px solid var(--border-subtle); padding: 6px; border-radius: var(--radius-sm); color: var(--text-primary);"> · I2 =
+                      <input type="number" id="eq-c1" value="24" style="width: 70px; background: var(--bg-input); border: 1px solid var(--border-subtle); padding: 6px; border-radius: var(--radius-sm); color: var(--text-primary);">
+                    </div>
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                      <span style="font-size: 12px; font-weight: 600;">Eq 2:</span>
+                      <input type="number" id="eq-a2" value="-4" style="width: 70px; background: var(--bg-input); border: 1px solid var(--border-subtle); padding: 6px; border-radius: var(--radius-sm); color: var(--text-primary);"> · I1 +
+                      <input type="number" id="eq-b2" value="12" style="width: 70px; background: var(--bg-input); border: 1px solid var(--border-subtle); padding: 6px; border-radius: var(--radius-sm); color: var(--text-primary);"> · I2 =
+                      <input type="number" id="eq-c2" value="0" style="width: 70px; background: var(--bg-input); border: 1px solid var(--border-subtle); padding: 6px; border-radius: var(--radius-sm); color: var(--text-primary);">
+                    </div>
+                  </div>
+
+                  <button class="btn btn-primary" style="margin-top: 12px;" onclick="solve2x2Mesh()">⚡ Solve Linear Mesh Currents</button>
+                  <div id="eq-sol-box" style="margin-top: 10px;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 4: INTERACTIVE GRAPHS -->
+            <div id="graphs-panel" style="display: none;">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px;">
+                
+                <div class="eng-canvas-card">
+                  <h4 style="font-size: 15px; font-weight: 700; color: var(--text-primary);">RC Transient Voltage vs Time (0 to 5τ)</h4>
+                  <p style="font-size: 12px; color: var(--text-secondary);">Live exponential curve showing capacitor charging and discharging behaviors.</p>
+                  <div class="eng-canvas-wrapper">
+                    <canvas id="rc-graph-canvas" class="eng-graph-canvas"></canvas>
+                  </div>
+                </div>
+
+                <div class="eng-canvas-card">
+                  <h4 style="font-size: 15px; font-weight: 700; color: var(--text-primary);">Sinusoidal AC Waveform (Voltage & Current Phase Lag)</h4>
+                  <p style="font-size: 12px; color: var(--text-secondary);">AC Sine cycle demonstrating 36° inductive phase displacement.</p>
+                  <div class="eng-canvas-wrapper">
+                    <canvas id="ac-graph-canvas" class="eng-graph-canvas"></canvas>
+                  </div>
+                </div>
+
+                <div class="eng-canvas-card">
+                  <h4 style="font-size: 15px; font-weight: 700; color: var(--text-primary);">Series RLC Resonance Impedance Curve Z(f)</h4>
+                  <p style="font-size: 12px; color: var(--text-secondary);">Impedance dips to pure resistance R at resonant frequency f0.</p>
+                  <div class="eng-canvas-wrapper">
+                    <canvas id="rlc-graph-canvas" class="eng-graph-canvas"></canvas>
+                  </div>
+                </div>
+
+                <div class="eng-canvas-card">
+                  <h4 style="font-size: 15px; font-weight: 700; color: var(--text-primary);">3-Phase Induction Motor Torque-Speed Curve</h4>
+                  <p style="font-size: 12px; color: var(--text-secondary);">Torque characteristics from standstill (s=1.0) to synchronous speed (s=0).</p>
+                  <div class="eng-canvas-wrapper">
+                    <canvas id="motor-graph-canvas" class="eng-graph-canvas"></canvas>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- TAB 5: FORMULA LIBRARY -->
+            <div id="formulas-panel" style="display: none;">
+              <div style="margin-bottom: 16px;">
+                <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary);">📖 Verified Electrical Engineering Formula Library</h3>
+                <p style="font-size: 13px; color: var(--text-secondary);">Searchable repository of foundational electrical, power systems, machine, and electronic formulas with SI units and definitions.</p>
+              </div>
+
+              <div class="formula-grid">
+                <div class="formula-card">
+                  <div class="formula-card-title">Ohm's Law</div>
+                  <div class="formula-card-eq">V = I × R &nbsp;|&nbsp; I = V / R &nbsp;|&nbsp; R = V / I</div>
+                  <div class="formula-card-desc">Relates electric potential difference (V), current (I), and resistance (R) in a linear conductor.</div>
+                  <div class="formula-card-vars">V: Volts (V) • I: Amperes (A) • R: Ohms (Ω)</div>
+                  <button class="btn btn-sm btn-ghost" style="color: var(--accent-cyan);" onclick="switchCategory('fundamentals'); switchNavTab('calculators');">Open in Calculator →</button>
+                </div>
+
+                <div class="formula-card">
+                  <div class="formula-card-title">Electrical Power (Joule's Law)</div>
+                  <div class="formula-card-eq">P = V × I = I² × R = V² / R</div>
+                  <div class="formula-card-desc">Rate at which electrical energy is transferred by an electric circuit per unit time.</div>
+                  <div class="formula-card-vars">P: Watts (W) • V: Volts (V) • I: Amperes (A) • R: Ohms (Ω)</div>
+                  <button class="btn btn-sm btn-ghost" style="color: var(--accent-cyan);" onclick="switchCategory('fundamentals'); switchNavTab('calculators');">Open in Calculator →</button>
+                </div>
+
+                <div class="formula-card">
+                  <div class="formula-card-title">Three-Phase Active Power</div>
+                  <div class="formula-card-eq">P = √3 × VL × IL × cos(φ)</div>
+                  <div class="formula-card-desc">Real power consumed by a balanced three-phase AC load across line parameters.</div>
+                  <div class="formula-card-vars">VL: Line Voltage (V) • IL: Line Current (A) • cos(φ): Power factor</div>
+                  <button class="btn btn-sm btn-ghost" style="color: var(--accent-cyan);" onclick="switchCategory('threephase'); switchNavTab('calculators');">Open in Calculator →</button>
+                </div>
+
+                <div class="formula-card">
+                  <div class="formula-card-title">Synchronous Speed of AC Motor</div>
+                  <div class="formula-card-eq">Ns = (120 × f) / P</div>
+                  <div class="formula-card-desc">Rotational speed of stator's rotating magnetic field in an AC induction machine.</div>
+                  <div class="formula-card-vars">Ns: RPM • f: Frequency (Hz) • P: Number of poles</div>
+                  <button class="btn btn-sm btn-ghost" style="color: var(--accent-cyan);" onclick="switchCategory('motors'); switchNavTab('calculators');">Open in Calculator →</button>
+                </div>
+
+                <div class="formula-card">
+                  <div class="formula-card-title">Motor Shaft Torque</div>
+                  <div class="formula-card-eq">T = (9550 × P_kW) / N_rpm</div>
+                  <div class="formula-card-desc">Mechanical twisting torque output produced at the rotating motor shaft.</div>
+                  <div class="formula-card-vars">T: Newton-meters (Nm) • P_kW: Output power (kW) • N: RPM</div>
+                  <button class="btn btn-sm btn-ghost" style="color: var(--accent-cyan);" onclick="switchCategory('motors'); switchNavTab('calculators');">Open in Calculator →</button>
+                </div>
+
+                <div class="formula-card">
+                  <div class="formula-card-title">Transformer Turns Ratio & Currents</div>
+                  <div class="formula-card-eq">V1 / V2 = N1 / N2 = I2 / I1 = a</div>
+                  <div class="formula-card-desc">Voltage and current transformation ratios based on primary and secondary windings.</div>
+                  <div class="formula-card-vars">V: Volts (V) • N: Turns • I: Current (A) • a: Ratio</div>
+                  <button class="btn btn-sm btn-ghost" style="color: var(--accent-cyan);" onclick="switchCategory('transformers'); switchNavTab('calculators');">Open in Calculator →</button>
+                </div>
+
+                <div class="formula-card">
+                  <div class="formula-card-title">Transformer Short Circuit Fault</div>
+                  <div class="formula-card-eq">Isc = I_FLA / (%Z / 100)</div>
+                  <div class="formula-card-desc">Prospective symmetrical root-mean-square fault current on the transformer secondary.</div>
+                  <div class="formula-card-vars">Isc: Fault Current (A) • %Z: Percent Impedance</div>
+                  <button class="btn btn-sm btn-ghost" style="color: var(--accent-cyan);" onclick="switchCategory('transformers'); switchNavTab('calculators');">Open in Calculator →</button>
+                </div>
+
+                <div class="formula-card">
+                  <div class="formula-card-title">Cable Voltage Drop (1-Phase)</div>
+                  <div class="formula-card-eq">ΔV = 2 × I × L × (ρ / A)</div>
+                  <div class="formula-card-desc">Voltage drop along a two-core single-phase conductor run back and forth.</div>
+                  <div class="formula-card-vars">ΔV: Volts (V) • L: Length (m) • A: Area (mm²) • ρ: Resistivity</div>
+                  <button class="btn btn-sm btn-ghost" style="color: var(--accent-cyan);" onclick="switchCategory('cables'); switchNavTab('calculators');">Open in Calculator →</button>
+                </div>
+
+                <div class="formula-card">
+                  <div class="formula-card-title">Capacitive Reactance</div>
+                  <div class="formula-card-eq">XC = 1 / (2π × f × C)</div>
+                  <div class="formula-card-desc">Opposition offered to the flow of alternating current by pure capacitance.</div>
+                  <div class="formula-card-vars">XC: Ohms (Ω) • f: Frequency (Hz) • C: Farads (F)</div>
+                  <button class="btn btn-sm btn-ghost" style="color: var(--accent-cyan);" onclick="switchCategory('ac'); switchNavTab('calculators');">Open in Calculator →</button>
+                </div>
+
+                <div class="formula-card">
+                  <div class="formula-card-title">Inductive Reactance</div>
+                  <div class="formula-card-eq">XL = 2π × f × L</div>
+                  <div class="formula-card-desc">Opposition offered to the flow of alternating current by pure inductance.</div>
+                  <div class="formula-card-vars">XL: Ohms (Ω) • f: Frequency (Hz) • L: Henries (H)</div>
+                  <button class="btn btn-sm btn-ghost" style="color: var(--accent-cyan);" onclick="switchCategory('ac'); switchNavTab('calculators');">Open in Calculator →</button>
+                </div>
+
+                <div class="formula-card">
+                  <div class="formula-card-title">RLC Series Resonant Frequency</div>
+                  <div class="formula-card-eq">f0 = 1 / [ 2π × √(L × C) ]</div>
+                  <div class="formula-card-desc">Frequency where inductive and capacitive reactances cancel out, leaving Z = R minimum.</div>
+                  <div class="formula-card-vars">f0: Hertz (Hz) • L: Henries (H) • C: Farads (F)</div>
+                  <button class="btn btn-sm btn-ghost" style="color: var(--accent-cyan);" onclick="switchCategory('ac'); switchNavTab('calculators');">Open in Calculator →</button>
+                </div>
+
+                <div class="formula-card">
+                  <div class="formula-card-title">Power Factor Correction Capacitor</div>
+                  <div class="formula-card-eq">Qc = P × [ tan(φ1) - tan(φ2) ]</div>
+                  <div class="formula-card-desc">Reactive power needed to raise operating power factor from cos(φ1) to cos(φ2).</div>
+                  <div class="formula-card-vars">Qc: kVAR • P: Active kW • φ: Phase angles</div>
+                  <button class="btn btn-sm btn-ghost" style="color: var(--accent-cyan);" onclick="switchCategory('ac'); switchNavTab('calculators');">Open in Calculator →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 6: UNIVERSAL UNIT CONVERTER -->
+            <div id="converter-panel" style="display: none;">
+              <div class="eng-calc-card">
+                <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary);">⚖️ Universal Electrical & Engineering Unit Converter</h3>
+                <p style="font-size: 13px; color: var(--text-secondary);">Instant bi-directional unit conversion across all standard SI and imperial engineering dimensions.</p>
+
+                <div style="margin: 14px 0;">
+                  <label class="eng-input-label" style="margin-bottom: 6px;">Measurement Dimension</label>
+                  <select id="conv-category" class="eng-unit-select" style="width: 100%; max-width: 320px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 10px;" onchange="updateConverterUnits()">
+                    <option value="voltage" selected>⚡ Voltage (V, mV, kV, MV)</option>
+                    <option value="current">🔌 Current (A, mA, µA, kA)</option>
+                    <option value="resistance">Ω Resistance (Ω, mΩ, kΩ, MΩ)</option>
+                    <option value="power">💡 Power (W, mW, kW, MW, HP)</option>
+                    <option value="frequency">〰️ Frequency (Hz, kHz, MHz, GHz, rad/s)</option>
+                    <option value="capacitance">🔋 Capacitance (F, mF, µF, nF, pF)</option>
+                    <option value="inductance">🌀 Inductance (H, mH, µH)</option>
+                    <option value="length">📏 Length (m, mm, cm, km, inch, ft)</option>
+                  </select>
+                </div>
+
+                <div class="converter-grid">
+                  <div class="converter-col">
+                    <span style="font-size: 12px; font-weight: 600; color: var(--text-secondary);">From</span>
+                    <input type="number" id="conv-val-from" class="eng-input-field" value="1" oninput="runUnitConverter('from')" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); font-size: 16px;">
+                    <select id="conv-unit-from" class="eng-unit-select" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 8px;" onchange="runUnitConverter('from')">
+                      <!-- Populated via script -->
+                    </select>
+                  </div>
+
+                  <div style="text-align: center; font-size: 24px; color: var(--accent-cyan); font-weight: 700;">⇄</div>
+
+                  <div class="converter-col">
+                    <span style="font-size: 12px; font-weight: 600; color: var(--text-secondary);">To</span>
+                    <input type="number" id="conv-val-to" class="eng-input-field" readonly style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); font-size: 16px; color: var(--accent-emerald);">
+                    <select id="conv-unit-to" class="eng-unit-select" style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 8px;" onchange="runUnitConverter('from')">
+                      <!-- Populated via script -->
+                    </select>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Tool 2: Resistor Color Decoder -->
-          <div class="tool-panel" id="tool-resistor">
-            <div class="card" style="margin-bottom: 24px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                <div>
-                  <h3 style="font-size: 16px; font-weight: 700;">Resistor Color Code Visualizer</h3>
-                  <p style="font-size: 13px; color: var(--text-secondary);">Select the color bands below to decode the standard EIA axial resistor value and tolerance.</p>
-                </div>
-                <div style="display: flex; gap: 6px;">
-                  <button class="filter-chip active" id="band-4-toggle" onclick="setResistorBands(4)">4-Band</button>
-                  <button class="filter-chip" id="band-5-toggle" onclick="setResistorBands(5)">5-Band</button>
-                </div>
-              </div>
-
-              <!-- Graphic Resistor -->
-              <div class="resistor-display-wrapper">
-                <div class="resistor-graphic" id="resistor-graphic">
-                  <div class="resistor-band" id="res-visual-band1" style="background-color: #8b5a2b;"></div>
-                  <div class="resistor-band" id="res-visual-band2" style="background-color: #000000;"></div>
-                  <div class="resistor-band" id="res-visual-band3" style="background-color: #000000; display: none;"></div>
-                  <div class="resistor-band" id="res-visual-mult" style="background-color: #ef4444;"></div>
-                  <div style="width: 28px;"></div>
-                  <div class="resistor-band" id="res-visual-tol" style="background-color: #d97706;"></div>
-                </div>
-
-                <div style="margin-top: 24px; text-align: center;">
-                  <div style="font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">Calculated Resistance</div>
-                  <div style="font-size: 32px; font-weight: 700; font-family: var(--font-mono); color: var(--accent-cyan);" id="res-readout">1.00 kΩ</div>
-                  <div style="font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-top: 4px;">
-                    Tolerance: <span id="res-tolerance-readout" style="color: var(--accent-amber);">±5%</span> &bull; Range: <span id="res-range-readout" style="font-family: var(--font-mono);">950.00 Ω to 1.05 kΩ</span>
+            <!-- TAB 7: CALCULATION HISTORY -->
+            <div id="history-panel" style="display: none;">
+              <div class="calc-history-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
+                  <div>
+                    <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary);">📜 Engineering Calculation History</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary);">All saved sessions, formula solutions, and intermediate steps stored locally on your device.</p>
+                  </div>
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-sm btn-secondary" onclick="exportHistory('csv')">Export CSV</button>
+                    <button class="btn btn-sm btn-secondary" onclick="exportHistory('json')">Export JSON</button>
+                    <button class="btn btn-sm btn-ghost" style="color: var(--accent-rose);" onclick="clearHistory()">Clear History</button>
                   </div>
                 </div>
-              </div>
 
-              <!-- Band Color Selectors -->
-              <div class="resistor-controls-grid">
-                <div>
-                  <label class="form-label" for="select-band-1">1st Band (Digit)</label>
-                  <select id="select-band-1" class="form-input"></select>
-                </div>
-                <div>
-                  <label class="form-label" for="select-band-2">2nd Band (Digit)</label>
-                  <select id="select-band-2" class="form-input"></select>
-                </div>
-                <div id="group-band-3" style="display: none;">
-                  <label class="form-label" for="select-band-3">3rd Band (Digit)</label>
-                  <select id="select-band-3" class="form-input"></select>
-                </div>
-                <div>
-                  <label class="form-label" for="select-mult">Multiplier</label>
-                  <select id="select-mult" class="form-input"></select>
-                </div>
-                <div>
-                  <label class="form-label" for="select-tol">Tolerance</label>
-                  <select id="select-tol" class="form-input"></select>
+                <div id="history-list-container" style="overflow-x: auto;">
+                  <!-- Populated dynamically via script -->
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Tool 3: AC Power Triangle & PF -->
-          <div class="tool-panel" id="tool-pf">
-            <div class="ohms-tool-layout">
-              <div class="card">
-                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 6px;">AC Power Triangle Calculator</h3>
-                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">Calculate Apparent Power ($S$), Real Power ($P$), and Reactive Power ($Q$) from line parameters.</p>
-
-                <div class="form-group">
-                  <label class="form-label" for="pf-v">RMS Voltage (V)</label>
-                  <input type="number" id="pf-v" class="form-input" value="230">
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="pf-i">RMS Current (A)</label>
-                  <input type="number" id="pf-i" class="form-input" value="10">
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="pf-val">Power Factor (cos φ, 0 to 1.0)</label>
-                  <input type="number" id="pf-val" class="form-input" value="0.80" min="0.01" max="1" step="0.01">
-                </div>
-
-                <button class="btn btn-primary" id="calc-pf-btn" style="width: 100%; margin-top: 10px;">
-                  Calculate Power Triangle
-                </button>
-              </div>
-
-              <!-- Power Triangle Visualization -->
-              <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                  <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">Dynamic Power Triangle</h3>
-                  <div style="background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px; display: flex; justify-content: center;">
-                    <svg id="power-triangle-svg" width="240" height="140"></svg>
-                  </div>
-                </div>
-
-                <div style="margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                  <div class="stat-box">
-                    <div class="stat-value" id="pf-res-p" style="font-size: 18px; color: var(--text-primary);">1.84 kW</div>
-                    <div class="stat-label">Real Power (P)</div>
-                  </div>
-                  <div class="stat-box">
-                    <div class="stat-value" id="pf-res-s" style="font-size: 18px; color: #a855f7;">2.30 kVA</div>
-                    <div class="stat-label">Apparent Power (S)</div>
-                  </div>
-                  <div class="stat-box">
-                    <div class="stat-value" id="pf-res-q" style="font-size: 18px; color: var(--accent-amber);">1.38 kVAR</div>
-                    <div class="stat-label">Reactive Power (Q)</div>
-                  </div>
-                  <div class="stat-box">
-                    <div class="stat-value" id="pf-res-angle" style="font-size: 18px; color: var(--accent-cyan);">36.9°</div>
-                    <div class="stat-label">Phase Angle (φ)</div>
-                  </div>
-                </div>
-
-                <div class="reader-callout" style="margin-top: 16px; margin-bottom: 0;">
-                  <div style="font-size: 12px; font-weight: 700; color: var(--accent-cyan);">P.F. CORRECTION TO 0.95:</div>
-                  <div style="font-size: 13px; margin-top: 2px;">Capacitor Bank Required: <strong id="pf-res-correction" style="color: var(--accent-amber);">0.78 kVAR</strong></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tool 4: Cable Sizing Guide -->
-          <div class="tool-panel" id="tool-cables">
-            <div class="card">
-              <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 6px;">BS 7671 / IEE Standard Metric Cable Current Capacities</h3>
-              <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 18px;">Reference table for twin & earth copper conductors (Method C clipped direct / Method B in conduit at 30°C ambient).</p>
-
-              <div style="overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
-                  <thead>
-                    <tr style="border-bottom: 2px solid var(--border-strong); color: var(--text-muted); font-size: 11px; text-transform: uppercase;">
-                      <th style="padding: 10px 14px;">Conductor Size</th>
-                      <th style="padding: 10px 14px;">Current Rating (Iz)</th>
-                      <th style="padding: 10px 14px;">Max MCB / Fuse</th>
-                      <th style="padding: 10px 14px;">Typical Application</th>
-                      <th style="padding: 10px 14px;">Max Power (230V)</th>
-                    </tr>
-                  </thead>
-                  <tbody id="cable-table-body">
-                    <!-- Dynamically populated -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -652,8 +2085,8 @@
         <span>Reader</span>
       </button>
       <button class="dock-btn" data-view="workbench">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
-        <span>Tools</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/></svg>
+        <span>Calculator</span>
       </button>
       <button class="dock-btn" data-view="exams">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
@@ -807,7 +2240,8 @@
     <div class="toast-container" id="toast-container"></div>
   </div>
 
-  <!-- Application Script -->
+  <!-- Application Scripts -->
   <script src="script.js"></script>
+  <script src="calculator.js"></script>
 </body>
 </html>
