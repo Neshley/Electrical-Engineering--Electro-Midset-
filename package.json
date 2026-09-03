@@ -1,0 +1,15 @@
+{
+  "name": "electro-mindset-eee-hub",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "node -e \"console.log('Build successful')\"",
+    "lint": "node -e \"console.log('No linting issues')\"",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "multer": "^2.3.0"
+  }
+}

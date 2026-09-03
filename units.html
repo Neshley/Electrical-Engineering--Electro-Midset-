@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <script>
+            const hash = window.location.hash.toLowerCase();
+            if (hash.includes('powerlines')) window.location.replace('/#reader-powerlines');
+            else if (hash.includes('principles')) window.location.replace('/#reader-principles');
+            else if (hash.includes('calculator')) window.location.replace('/#workbench');
+            else if (hash.includes('installation')) window.location.replace('/#reader-installation');
+            else if (hash.includes('generation')) window.location.replace('/#reader-generation');
+            else if (hash.includes('machines')) window.location.replace('/#reader-machines');
+            else window.location.replace('/#units');
+        </script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8" />
         <title>Engineering</title>

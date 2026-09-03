@@ -1,0 +1,17 @@
+{
+  "name": "Electro-Mindset EEE Hub",
+  "short_name": "Electro-Mindset",
+  "description": "Electrical and Electronics Engineering notes, learning resources, Ohm's law calculator, and unit study guides.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070d18",
+  "theme_color": "#0b1320",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "images/logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png"
+    }
+  ]
+}

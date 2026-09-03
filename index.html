@@ -1,176 +1,813 @@
-
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Engineering</title>
-        <link rel="stylesheet" href="styles.css" />
-        <script src="script.js"></script>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
-    </head>
-    
-    <!------ Body ------>
-    <body>
-<section Class="header">
-        <nav>
-            <a href="index.html"><img src="images/logo.png"></a>
-            <div class="nav-links" id="navlinks">
-                <i class="fa" onclick="hidemenu()">×</i>
-                <ul>
-                    <li><a href="index.html" class="active">HOME</a></li>
-                    <li><a href="about.html">ABOUT</a></li>
-                    <li><a href="units.html">NOTES</a></li>
-                    <li><a href="Contacts.html">CONTACT</a></li>
-                    <li><a href="">⚙⛓</a></li>
-                </ul>
-            </div>
-                <i class="fa" onclick="showmenu()">☰</i>
-        </nav>
-    
-        <div class="text-box">
-           <h1>ELECTRO-MINDSET</h1>
-            <p>Welcome here at ELECTRO-MINDSET a place where we grow tongether. <br>
-                A place where we read different kinds of books.Finance books,Electronics 
-                books,Electrical e.t.c.<br>Study here with us at ELECTRO-MINDSET.</p>
-            <a href="Contacts.html" class="hero-btn">Visit us to know more</a>
-        </div>
-    </section>
-        
-        
-          <!------ units ------>
-    
-    <section class="units">
-        <h1>Units</h1>
-        <p>We have provided notes for the units covered in Electrical and Electronics Engineering.<br>Below are some of the units covered</p>
-        
-        <div class="row">
-            <div class="units-col">
-                <h3>Electrical PowerLines</h3>
-                <p>Looking foward to Enhance your Knowledge in Electrical powerlines.To study the Electric transmission systems,
-                    to study Overhead transmission lines and more...We've got resourses for you.</p>
-            </div>
-            <div class="units-col">
-                <h3>Electrical Principles</h3>
-                <p>Trying to understand the Laws in Electrical principles and  the calculations...to Understanding Earthing systems too and 
-                    other areas covered in Electrical principles? We've got you covered</p>
-            </div>
-            <div class="units-col">
-                <h3>Electrical Machines</h3>
-                <p>Working on Star delta machines,Foward reverse or any other Electric machines,we have Important resourses for you...</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="units-col">
-                <h3>Power Generation</h3>
-                <p>Are you looking foward to understand the network between Generating Station and consumers of electric power.Here you are.
-                    We have many resources and notes to explain in deep about  the generation and other notes you may need...
-                </p>
-            </div>
-            <div class="units-col">
-                <h3>Electrical Installation</h3>
-                <p>Trying to understand how to install Electrical systems...</p>
-            </div>
-            <div class="units-col">
-                <h3>Electronics</h3>
-                <p>Electronics essentially deals with electronic devices and their utilisation. Are you looking to understand 
-                    electronic devices...we got resources to help you.</p>
-            </div>
-        </div>
-        
-        
-    </section>
-        
- 
-        
-    <!------testimonials------>
-    
-     <section class="testimonials">
-        <h1>What people says</h1>
-        <p>A lot of people have been using our website to learn and to do their studies.</p>
-        
-        <div class="row">
-            <div class="testimonial-col">
-                <img src="images/user1 (2).jpg">
-                <diV>
-                    <p>My Name is JAMES MUCHOKI.I have been using Electro midset for a long time. They have helped me alot.
-                    They provide trusted notes and materials in engineering.</p>
-                    <h3>JAMES MUCHOKI IRERI</h3>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </diV>
-            </div>
-            <div class="testimonial-col">
-                <img src="images/user2.jpg">
-                <diV>
-                    <p>My Name is  VICTOR MUKUNDI and I have been using Electro midset for a while now and it has been of much help to me.
-                    It has helped me alot in my studies.</p>
-                    <h3>VICTOR MUKUNDI MUCHANGI</h3>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </diV>
-            </div>
-            <div class="testimonial-col">
-                <img src="images/user1.jpg">
-                <diV>
-                    <p>My Name is  DIANA and I have been using Electro midset for a while now and it has been of much help to me.
-                    I like using Electro Midset.</p>
-                    <h3>ANGELA DIANA MUKIRI</h3>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </diV>
-            </div>
-        </div>
-    </section>
-        
-        
-        
-            <!------Call to Action------>
-    
-    <section class="cta">
-        <h1>Browse for Books</h1>
-        <a href="units.html" class="hero-btn green-btn">Browse</a>
-    </section>
-    
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="description" content="Electrical and Electronics Engineering notes, learning resources, Ohm's law calculator, and unit study guides.">
+  
+  <!-- App & PWA metadata -->
+  <title>Electro-Mindset EEE Hub</title>
+  <meta property="og:title" content="Electro-Mindset EEE Hub">
+  <meta property="og:description" content="Electrical and Electronics Engineering notes, learning resources, Ohm's law calculator, and unit study guides.">
+  <meta property="og:type" content="website">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Electro-Mindset">
+  <meta name="theme-color" content="#080d1a">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="images/logo.png">
 
-    
-
-            <!------Footer------> 
-    
-    <section class="footer">
-        <h4>About Us</h4>
-        <p>Here at ELECTRO-MINDSET we Provide Notes on Electric Engineering.<br>We have helped to solve Electrical questions 
-            and to provide Answers to many Electrical students.<br>Study with us today</p>
-        <div class="icons">
-            <a href="https://www.facebook.com/nesh.ley.2025" class="fa fa-facebook"></a>
-            <a href="https://wa.me/+254799873196" class="fa fa-whatsapp"></a>
-            <a href="https://t.me/Technesh1" class="fa fa-telegram"></a>
-            <a href="https://linkedin.com/in/derricknesh" class="fa fa-linkedin"></a>
+  <!-- Core App Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app-root">
+    <!-- App Navigation Rail (Sidebar) -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="app-sidebar-header" id="sidebar-header">
+        <div class="brand-icon" id="brand-logo-icon">⚡</div>
+        <div class="brand-text" id="brand-text-container">
+          <h2>ELECTRO-MINDSET</h2>
+          <span>Level 6 EEE Hub</span>
         </div>
-        <p>made with <i class="fa fa-heart-o"></i> by Derrick Nesh</p>
-    </section>
-        
-        <!------javascript for Toggle Menu------>
-    <script>
-    
-        var navlinks = document.getElementById("navlinks");
-        function showmenu(){
-            navlinks.style.right = "0";
-        }
-        function hidemenu(){
-            navlinks.style.right = "-200px";
-        }
-    </script>
-        
-        
-    </body>
+      </div>
+
+      <nav class="app-sidebar-nav" id="sidebar-nav">
+        <div class="nav-section-title">Workspace</div>
+        <button class="nav-btn active" id="nav-btn-dashboard" data-view="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Dashboard</span>
+        </button>
+
+        <button class="nav-btn" id="nav-btn-units" data-view="units">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>Units Library</span>
+          <span class="nav-badge" id="sidebar-units-badge">17</span>
+        </button>
+
+        <button class="nav-btn" id="nav-btn-reader" data-view="reader">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>Study Reader</span>
+        </button>
+
+        <button class="nav-btn" id="nav-btn-workbench" data-view="workbench">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>
+          <span>Calculators & Tools</span>
+        </button>
+
+        <button class="nav-btn" id="nav-btn-exams" data-view="exams">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+          <span>CATs & Exams</span>
+        </button>
+
+        <div class="nav-section-title">Personal</div>
+        <button class="nav-btn" id="nav-btn-saved" data-view="saved">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span>My Study Bag</span>
+          <span class="nav-badge" id="saved-count-badge">0</span>
+        </button>
+
+        <button class="nav-btn" id="nav-btn-info" data-view="info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span>Syllabus & Info</span>
+        </button>
+      </nav>
+
+      <div class="app-sidebar-footer" id="sidebar-footer">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background-color: var(--accent-emerald);"></span>
+          <span style="font-size: 12px; color: var(--text-muted); font-weight: 500;">Offline Ready</span>
+        </div>
+        <button class="icon-btn" id="theme-toggle" title="Toggle Dark/Light Mode">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Canvas -->
+    <main class="app-main" id="app-main">
+      <!-- Top Application Header -->
+      <header class="app-topbar" id="app-topbar">
+        <div class="topbar-left" id="topbar-left">
+          <button class="menu-toggle-btn" id="menu-toggle" aria-label="Toggle Navigation Menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="topbar-breadcrumbs" id="topbar-breadcrumbs">
+            <span style="color: var(--text-muted);">App</span>
+            <span style="color: var(--border-strong);">/</span>
+            <span id="topbar-breadcrumb">Dashboard</span>
+          </div>
+        </div>
+
+        <div class="topbar-right" id="topbar-right">
+          <button class="search-trigger-btn" id="search-trigger" title="Quick Search across all units (Ctrl+K)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Search notes, exams, formulas...</span>
+            <span class="search-kbd">Ctrl K</span>
+          </button>
+
+          <button class="icon-btn" id="btn-top-tools" onclick="window.location.hash='workbench'" title="Open Engineering Tools">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </button>
+
+          <button class="icon-btn" id="btn-top-saved" onclick="window.location.hash='saved'" title="My Study Bag">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Views Container -->
+      <div class="app-view-container" id="app-view-container">
+
+        <!-- VIEW 1: DASHBOARD -->
+        <section class="app-view active" id="view-dashboard">
+          <!-- Hero Banner -->
+          <div class="dashboard-hero" id="dashboard-hero-card">
+            <div class="hero-content">
+              <h1>Electrical & Electronics Engineering Hub</h1>
+              <p>Your comprehensive CBET Level 6 engineering workspace. Access lecture notes, CAT continuous assessment exams, practical guides, and interactive calculators for power systems, machines, and circuit theory.</p>
+              <div class="hero-actions">
+                <button class="btn btn-primary" id="btn-hero-workbench" onclick="window.location.hash='workbench'">
+                  ⚡ Open Ohm's Law Calculator
+                </button>
+                <button class="btn btn-secondary" id="btn-hero-units" onclick="window.location.hash='units'">
+                  📚 Explore All 17 Units
+                </button>
+                <button class="btn btn-amber" id="btn-hero-exams" onclick="window.location.hash='exams'">
+                  📝 Browse CATs & Exams
+                </button>
+              </div>
+            </div>
+
+            <div class="hero-stats" id="dashboard-stats-grid">
+              <div class="stat-box" id="stat-box-units">
+                <div class="stat-value" id="stat-total-units">17</div>
+                <div class="stat-label">Units / Topics</div>
+              </div>
+              <div class="stat-box" id="stat-box-files">
+                <div class="stat-value" id="stat-total-files">195</div>
+                <div class="stat-label">Study Files</div>
+              </div>
+              <div class="stat-box" id="stat-box-exams">
+                <div class="stat-value" id="stat-total-exams">28</div>
+                <div class="stat-label">Exams & CATs</div>
+              </div>
+              <div class="stat-box" id="stat-box-tools">
+                <div class="stat-value" id="stat-total-tools">4</div>
+                <div class="stat-label">Interactive Tools</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Launch Units Preview -->
+          <div style="margin-top: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div>
+                <h2 style="font-size: 18px; font-weight: 700; color: var(--text-primary);">Featured Study Units</h2>
+                <p style="font-size: 13px; color: var(--text-muted);">Quickly jump into active semester modules</p>
+              </div>
+              <button class="btn btn-sm btn-secondary" onclick="window.location.hash='units'">View All Units &rarr;</button>
+            </div>
+            <div class="units-grid" id="dashboard-units-preview">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Engineering Quick Reference Cards -->
+          <div style="margin-top: 28px;">
+            <h2 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 14px;">Instant Engineering Cheatsheets</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+              <div class="card" id="card-cheat-ohms" onclick="window.location.hash='workbench'" style="cursor: pointer;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <span class="unit-code-badge">CIRCUIT THEORY</span>
+                  <span style="color: var(--accent-cyan); font-weight: 600; font-size: 12px;">Launch Tool &rarr;</span>
+                </div>
+                <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Ohm's Law & Power</h3>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">$V = I \times R$, $P = V \times I = I^2 R = V^2 / R$. Solve any 2 variables dynamically.</p>
+                <div style="font-family: var(--font-mono); font-size: 12px; color: var(--accent-amber); background: var(--bg-elevated); padding: 8px 12px; border-radius: var(--radius-sm);">
+                  V (Volts) | I (Amperes) | R (Ohms) | P (Watts)
+                </div>
+              </div>
+
+              <div class="card" id="card-cheat-stardelta" onclick="window.location.hash='reader-machines'" style="cursor: pointer;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <span class="unit-code-badge">MOTORS & DRIVES</span>
+                  <span style="color: var(--accent-cyan); font-weight: 600; font-size: 12px;">Read Notes &rarr;</span>
+                </div>
+                <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Star-Delta Starter (Y-Δ)</h3>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">Starting in Star reduces phase voltage to $V_L / \sqrt{3}$, cutting starting current to 1/3!</p>
+                <div style="font-family: var(--font-mono); font-size: 12px; color: var(--accent-cyan); background: var(--bg-elevated); padding: 8px 12px; border-radius: var(--radius-sm);">
+                  $I_{start} = 33.3\% \times I_{DOL}$ | $T_{start} = 33.3\% \times T_{DOL}$
+                </div>
+              </div>
+
+              <div class="card" id="card-cheat-cables" onclick="window.location.hash='workbench'" style="cursor: pointer;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <span class="unit-code-badge">IEE / BS 7671</span>
+                  <span style="color: var(--accent-cyan); font-weight: 600; font-size: 12px;">Open Chart &rarr;</span>
+                </div>
+                <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Cable Color Standards</h3>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">Brown = Live/Phase, Blue = Neutral, Green/Yellow = Earth. 2.5mm² for 32A Ring Final Sockets.</p>
+                <div style="font-family: var(--font-mono); font-size: 12px; color: var(--accent-emerald); background: var(--bg-elevated); padding: 8px 12px; border-radius: var(--radius-sm);">
+                  Lighting: 1.0-1.5mm² (6A) | Sockets: 2.5mm² (32A)
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 2: UNITS ALL GRID -->
+        <section class="app-view" id="view-units">
+          <div class="view-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <h1 class="view-title">Units & Syllabus Catalog</h1>
+              <p class="view-subtitle">Browse accredited electrical engineering modules. Filter by domain or add new custom units dynamically.</p>
+            </div>
+            <button class="btn btn-primary" id="btn-open-create-unit-modal" onclick="openCreateUnitModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span>Add New Unit</span>
+            </button>
+          </div>
+
+          <!-- Domain Filter Chips -->
+          <div class="filter-row" id="domain-filters">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- All Units Grid -->
+          <div class="units-grid" id="units-all-grid">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+        <!-- VIEW 2B: UNIT DETAIL & FILES -->
+        <section class="app-view" id="view-unit-detail">
+          <button class="unit-back-btn" id="btn-back-to-units" onclick="window.location.hash='units'">
+            &larr; Back to All Units
+          </button>
+
+          <div class="unit-detail-header" id="unit-detail-header-card">
+            <div id="unit-detail-header-content">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Category Filter Chips -->
+          <div class="filter-row" id="unit-category-filters">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Files Grid -->
+          <div class="files-grid" id="unit-files-list">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+        <!-- VIEW 3: STUDY NOTES READER -->
+        <section class="app-view" id="view-reader">
+          <div class="view-header">
+            <h1 class="view-title">Study Notes & Formula Reference</h1>
+            <p class="view-subtitle">Comprehensive textbook notes, step-by-step engineering principles, hand rules, transmission line designs, and formulas.</p>
+          </div>
+
+          <div class="reader-layout" id="reader-layout">
+            <!-- Table of contents -->
+            <div class="reader-toc" id="reader-toc">
+              <h4>Course Topics</h4>
+              <a class="toc-link active" data-topic="powerlines" onclick="selectReaderTopic('powerlines')">⚡ Electrical Powerlines</a>
+              <a class="toc-link" data-topic="principles" onclick="selectReaderTopic('principles')">🔌 Electrical Principles</a>
+              <a class="toc-link" data-topic="machines" onclick="selectReaderTopic('machines')">⚙️ Electrical Machines & Motors</a>
+              <a class="toc-link" data-topic="generation" onclick="selectReaderTopic('generation')">🏭 Power Generation & Grid</a>
+              <a class="toc-link" data-topic="installation" onclick="selectReaderTopic('installation')">🛠️ Electrical Installation</a>
+              <a class="toc-link" data-topic="maths" onclick="selectReaderTopic('maths')">📐 Engineering Mathematics</a>
+              <a class="toc-link" data-topic="solar" onclick="selectReaderTopic('solar')">☀️ Solar PV Systems</a>
+            </div>
+
+            <!-- Content Body -->
+            <div class="reader-content" id="reader-content-body">
+              <!-- Dynamically populated by selectReaderTopic() -->
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 4: INTERACTIVE WORKBENCH (CALCULATORS & TOOLS) -->
+        <section class="app-view" id="view-workbench">
+          <div class="view-header">
+            <h1 class="view-title">Engineering Workbench</h1>
+            <p class="view-subtitle">Interactive electrical engineering calculators, dynamic formula solvers, and reference standards.</p>
+          </div>
+
+          <div class="workbench-tabs" id="workbench-tabs-nav">
+            <button class="workbench-tab active" id="tab-ohms" data-tool="ohms">⚡ Ohm's Law & DC Power</button>
+            <button class="workbench-tab" id="tab-resistor" data-tool="resistor">🎨 Resistor Color Decoder</button>
+            <button class="workbench-tab" id="tab-pf" data-tool="pf">📐 AC Power Triangle & PF</button>
+            <button class="workbench-tab" id="tab-cables" data-tool="cables">📏 IEE Cable Sizing Guide</button>
+          </div>
+
+          <!-- Tool 1: Ohm's Law Solver -->
+          <div class="tool-panel active" id="tool-ohms">
+            <div class="ohms-tool-layout">
+              <div class="card" id="ohms-input-card">
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 6px;">4-Variable Ohm's Law Solver</h3>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">Enter ANY 2 known parameters. The solver dynamically calculates the other two with the exact mathematical equation.</p>
+
+                <div class="form-group">
+                  <label class="form-label" for="ohm-v">
+                    <span>Voltage (V)</span>
+                    <span style="color: var(--text-muted);">Potential Difference</span>
+                  </label>
+                  <div class="form-input-wrapper">
+                    <input type="number" id="ohm-v" class="form-input" placeholder="e.g. 240" step="any">
+                    <span class="input-unit">Volts (V)</span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="ohm-i">
+                    <span>Current (I)</span>
+                    <span style="color: var(--text-muted);">Electron Flow</span>
+                  </label>
+                  <div class="form-input-wrapper">
+                    <input type="number" id="ohm-i" class="form-input" placeholder="e.g. 10" step="any">
+                    <span class="input-unit">Amperes (A)</span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="ohm-r">
+                    <span>Resistance (R)</span>
+                    <span style="color: var(--text-muted);">Opposition to Flow</span>
+                  </label>
+                  <div class="form-input-wrapper">
+                    <input type="number" id="ohm-r" class="form-input" placeholder="e.g. 24" step="any">
+                    <span class="input-unit">Ohms (Ω)</span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="ohm-p">
+                    <span>Power (P)</span>
+                    <span style="color: var(--text-muted);">Rate of Energy</span>
+                  </label>
+                  <div class="form-input-wrapper">
+                    <input type="number" id="ohm-p" class="form-input" placeholder="e.g. 2400" step="any">
+                    <span class="input-unit">Watts (W)</span>
+                  </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                  <button class="btn btn-primary" id="ohm-solve-btn" onclick="solveOhmsLaw()" style="flex: 1;">
+                    Solve Ohm's Law
+                  </button>
+                  <button class="btn btn-secondary" id="ohm-reset-btn" onclick="resetOhmsLaw()">
+                    Clear
+                  </button>
+                </div>
+              </div>
+
+              <!-- Output Breakdown -->
+              <div class="card" id="ohms-result-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 6px;">Formula Reference</h3>
+                  <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Standard equations derived from Georg Ohm's and James Prescott Joule's fundamental laws:</p>
+
+                  <div class="formula-display-box" id="ohm-steps">
+                    <div style="color: var(--text-muted); font-size: 13px;">
+                      Enter any 2 values on the left and click "Solve" to calculate the remaining variables.
+                    </div>
+                  </div>
+                </div>
+
+                <div style="background: var(--bg-elevated); padding: 16px; border-radius: var(--radius-md); margin-top: 20px;">
+                  <div style="font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px;">QUICK CONVERSIONS:</div>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; font-family: var(--font-mono); color: var(--text-secondary);">
+                    <div>$1\\,\\text{k}\\Omega = 1,000\\,\\Omega$</div>
+                    <div>$1\\,\\text{M}\\Omega = 1,000,000\\,\\Omega$</div>
+                    <div>$1\\,\\text{kW} = 1,000\\,\\text{W}$</div>
+                    <div>$1\\,\\text{mA} = 0.001\\,\\text{A}$</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tool 2: Resistor Color Decoder -->
+          <div class="tool-panel" id="tool-resistor">
+            <div class="card" style="margin-bottom: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <div>
+                  <h3 style="font-size: 16px; font-weight: 700;">Resistor Color Code Visualizer</h3>
+                  <p style="font-size: 13px; color: var(--text-secondary);">Select the color bands below to decode the standard EIA axial resistor value and tolerance.</p>
+                </div>
+                <div style="display: flex; gap: 6px;">
+                  <button class="filter-chip active" id="band-4-toggle" onclick="setResistorBands(4)">4-Band</button>
+                  <button class="filter-chip" id="band-5-toggle" onclick="setResistorBands(5)">5-Band</button>
+                </div>
+              </div>
+
+              <!-- Graphic Resistor -->
+              <div class="resistor-display-wrapper">
+                <div class="resistor-graphic" id="resistor-graphic">
+                  <div class="resistor-band" id="res-visual-band1" style="background-color: #8b5a2b;"></div>
+                  <div class="resistor-band" id="res-visual-band2" style="background-color: #000000;"></div>
+                  <div class="resistor-band" id="res-visual-band3" style="background-color: #000000; display: none;"></div>
+                  <div class="resistor-band" id="res-visual-mult" style="background-color: #ef4444;"></div>
+                  <div style="width: 28px;"></div>
+                  <div class="resistor-band" id="res-visual-tol" style="background-color: #d97706;"></div>
+                </div>
+
+                <div style="margin-top: 24px; text-align: center;">
+                  <div style="font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">Calculated Resistance</div>
+                  <div style="font-size: 32px; font-weight: 700; font-family: var(--font-mono); color: var(--accent-cyan);" id="res-readout">1.00 kΩ</div>
+                  <div style="font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-top: 4px;">
+                    Tolerance: <span id="res-tolerance-readout" style="color: var(--accent-amber);">±5%</span> &bull; Range: <span id="res-range-readout" style="font-family: var(--font-mono);">950.00 Ω to 1.05 kΩ</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Band Color Selectors -->
+              <div class="resistor-controls-grid">
+                <div>
+                  <label class="form-label" for="select-band-1">1st Band (Digit)</label>
+                  <select id="select-band-1" class="form-input"></select>
+                </div>
+                <div>
+                  <label class="form-label" for="select-band-2">2nd Band (Digit)</label>
+                  <select id="select-band-2" class="form-input"></select>
+                </div>
+                <div id="group-band-3" style="display: none;">
+                  <label class="form-label" for="select-band-3">3rd Band (Digit)</label>
+                  <select id="select-band-3" class="form-input"></select>
+                </div>
+                <div>
+                  <label class="form-label" for="select-mult">Multiplier</label>
+                  <select id="select-mult" class="form-input"></select>
+                </div>
+                <div>
+                  <label class="form-label" for="select-tol">Tolerance</label>
+                  <select id="select-tol" class="form-input"></select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tool 3: AC Power Triangle & PF -->
+          <div class="tool-panel" id="tool-pf">
+            <div class="ohms-tool-layout">
+              <div class="card">
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 6px;">AC Power Triangle Calculator</h3>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">Calculate Apparent Power ($S$), Real Power ($P$), and Reactive Power ($Q$) from line parameters.</p>
+
+                <div class="form-group">
+                  <label class="form-label" for="pf-v">RMS Voltage (V)</label>
+                  <input type="number" id="pf-v" class="form-input" value="230">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="pf-i">RMS Current (A)</label>
+                  <input type="number" id="pf-i" class="form-input" value="10">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="pf-val">Power Factor (cos φ, 0 to 1.0)</label>
+                  <input type="number" id="pf-val" class="form-input" value="0.80" min="0.01" max="1" step="0.01">
+                </div>
+
+                <button class="btn btn-primary" id="calc-pf-btn" style="width: 100%; margin-top: 10px;">
+                  Calculate Power Triangle
+                </button>
+              </div>
+
+              <!-- Power Triangle Visualization -->
+              <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">Dynamic Power Triangle</h3>
+                  <div style="background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px; display: flex; justify-content: center;">
+                    <svg id="power-triangle-svg" width="240" height="140"></svg>
+                  </div>
+                </div>
+
+                <div style="margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                  <div class="stat-box">
+                    <div class="stat-value" id="pf-res-p" style="font-size: 18px; color: var(--text-primary);">1.84 kW</div>
+                    <div class="stat-label">Real Power (P)</div>
+                  </div>
+                  <div class="stat-box">
+                    <div class="stat-value" id="pf-res-s" style="font-size: 18px; color: #a855f7;">2.30 kVA</div>
+                    <div class="stat-label">Apparent Power (S)</div>
+                  </div>
+                  <div class="stat-box">
+                    <div class="stat-value" id="pf-res-q" style="font-size: 18px; color: var(--accent-amber);">1.38 kVAR</div>
+                    <div class="stat-label">Reactive Power (Q)</div>
+                  </div>
+                  <div class="stat-box">
+                    <div class="stat-value" id="pf-res-angle" style="font-size: 18px; color: var(--accent-cyan);">36.9°</div>
+                    <div class="stat-label">Phase Angle (φ)</div>
+                  </div>
+                </div>
+
+                <div class="reader-callout" style="margin-top: 16px; margin-bottom: 0;">
+                  <div style="font-size: 12px; font-weight: 700; color: var(--accent-cyan);">P.F. CORRECTION TO 0.95:</div>
+                  <div style="font-size: 13px; margin-top: 2px;">Capacitor Bank Required: <strong id="pf-res-correction" style="color: var(--accent-amber);">0.78 kVAR</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tool 4: Cable Sizing Guide -->
+          <div class="tool-panel" id="tool-cables">
+            <div class="card">
+              <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 6px;">BS 7671 / IEE Standard Metric Cable Current Capacities</h3>
+              <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 18px;">Reference table for twin & earth copper conductors (Method C clipped direct / Method B in conduit at 30°C ambient).</p>
+
+              <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+                  <thead>
+                    <tr style="border-bottom: 2px solid var(--border-strong); color: var(--text-muted); font-size: 11px; text-transform: uppercase;">
+                      <th style="padding: 10px 14px;">Conductor Size</th>
+                      <th style="padding: 10px 14px;">Current Rating (Iz)</th>
+                      <th style="padding: 10px 14px;">Max MCB / Fuse</th>
+                      <th style="padding: 10px 14px;">Typical Application</th>
+                      <th style="padding: 10px 14px;">Max Power (230V)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cable-table-body">
+                    <!-- Dynamically populated -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 5: CATS & EXAMS PORTAL -->
+        <section class="app-view" id="view-exams">
+          <div class="view-header">
+            <h1 class="view-title">CATs & Past Examination Portal</h1>
+            <p class="view-subtitle">Access continuous assessment tests, candidate practical guides, POE exams 1-4, and revision answer keys across all engineering units.</p>
+          </div>
+
+          <div class="card" style="margin-bottom: 20px;">
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <input type="text" id="exam-search-input" class="form-input" placeholder="Search exams by unit or keyword (e.g. CAT, Powerlines, Solutions)..." oninput="renderExamsPortal()">
+            </div>
+          </div>
+
+          <div class="files-grid" id="exams-list-container">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+        <!-- VIEW 6: MY STUDY BAG & SCRATCHPAD -->
+        <section class="app-view" id="view-saved">
+          <div class="view-header">
+            <h1 class="view-title">My Study Bag</h1>
+            <p class="view-subtitle">Bookmarked documents, quick reference materials, and persistent engineering scratchpad.</p>
+          </div>
+
+          <!-- Bookmarked Documents List -->
+          <div style="margin-bottom: 28px;">
+            <h2 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 14px;">Bookmarked Resources</h2>
+            <div id="saved-bookmarks-container">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Persistent Engineering Scratchpad -->
+          <div class="card" id="scratchpad-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <div>
+                <h3 style="font-size: 16px; font-weight: 700;">Engineering Notes Scratchpad</h3>
+                <p style="font-size: 12px; color: var(--text-muted);">Autosaves locally to your browser in real-time</p>
+              </div>
+              <button class="btn btn-sm btn-secondary" id="btn-export-notes" onclick="exportNotes()">
+                💾 Export Notes (.txt)
+              </button>
+            </div>
+            <textarea id="study-scratchpad" class="form-input" style="height: 180px; font-family: var(--font-mono); font-size: 13px; line-height: 1.6; resize: vertical;" placeholder="Type your personal revision notes, calculations, or reminders here..."></textarea>
+          </div>
+        </section>
+
+        <!-- VIEW 7: SYLLABUS & INFO -->
+        <section class="app-view" id="view-info">
+          <div class="view-header">
+            <h1 class="view-title">Course Outline & Contacts</h1>
+            <p class="view-subtitle">Accredited CBET Level 6 Electrical and Electronics Engineering syllabus breakdown and lecturer support channels.</p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <!-- Outline Card -->
+            <div class="card">
+              <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 12px; color: var(--accent-cyan);">Level 6 Curriculum Structure</h3>
+              <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">The Level 6 Diploma in Electrical & Electronics Engineering consists of core competencies covering electrical power transmission, machine automation, renewable solar energy, installation, and project management.</p>
+
+              <div style="font-size: 13px; line-height: 1.8; color: var(--text-primary);">
+                <div>⚡ <strong>EE-601:</strong> Install Electrical Powerlines</div>
+                <div>🔌 <strong>EE-602:</strong> Apply Electrical Principles</div>
+                <div>🛠️ <strong>EE-603:</strong> Electrical Installation Work</div>
+                <div>⚙️ <strong>EE-604:</strong> Electrical Machine Installation</div>
+                <div>🎛️ <strong>EE-605:</strong> Automate an Electrical Machine</div>
+                <div>🏭 <strong>EE-606:</strong> Electrical Power Generation</div>
+                <div>☀️ <strong>EE-607:</strong> Install Solar PV Systems</div>
+                <div>📐 <strong>EE-609:</strong> Engineering Mathematics</div>
+                <div>📹 <strong>EE-612:</strong> Install Security Systems</div>
+              </div>
+            </div>
+
+            <!-- Contacts Card -->
+            <div class="card">
+              <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 12px; color: var(--accent-amber);">Support & Study Community</h3>
+              <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">Get in touch for study resources, revision discussions, or technical queries.</p>
+
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <a href="https://wa.me/254799873196" target="_blank" rel="noopener" class="btn btn-emerald" style="background-color: var(--accent-emerald); color: #fff;">
+                  💬 Chat on WhatsApp (+254 799873196)
+                </a>
+                <a href="tel:+254704034278" class="btn btn-secondary">
+                  📞 Call +254 704034278
+                </a>
+                <a href="mailto:derrickmunene2025@gmail.com" class="btn btn-secondary">
+                  ✉️ Email: derrickmunene2025@gmail.com
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Navigation Dock -->
+    <nav class="mobile-dock" id="mobile-dock">
+      <button class="dock-btn active" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <span>Home</span>
+      </button>
+      <button class="dock-btn" data-view="units">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <span>Units</span>
+      </button>
+      <button class="dock-btn" data-view="reader">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+        <span>Reader</span>
+      </button>
+      <button class="dock-btn" data-view="workbench">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+        <span>Tools</span>
+      </button>
+      <button class="dock-btn" data-view="exams">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+        <span>Exams</span>
+      </button>
+    </nav>
+
+    <!-- Global Quick Search Modal Palette -->
+    <div class="modal-overlay" id="search-modal-overlay">
+      <div class="search-modal-container" id="search-modal-container">
+        <div class="search-modal-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-cyan);"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="search-modal-input" class="search-modal-input" placeholder="Search 195 notes, past papers, formulas, units..." autocomplete="off">
+          <button class="icon-btn" onclick="closeSearchModal()" style="width: 28px; height: 28px; border: none;">✕</button>
+        </div>
+        <div class="search-results-list" id="search-results-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Add New Engineering Unit -->
+    <div class="modal-overlay" id="create-unit-modal-overlay">
+      <div class="app-modal-container" id="create-unit-modal-card">
+        <div class="modal-header">
+          <div>
+            <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Add New Engineering Unit</h3>
+            <p style="font-size: 13px; color: var(--text-muted);">Create a new study module and index files automatically with zero code.</p>
+          </div>
+          <button class="icon-btn" onclick="closeCreateUnitModal()" style="border: none;">✕</button>
+        </div>
+
+        <form id="create-unit-form" onsubmit="handleCreateUnitSubmit(event)">
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="form-label" for="new-unit-name">
+                <span>Unit Name / Title *</span>
+                <span style="color: var(--text-muted); font-size: 11px;">e.g., Instrumentation & Control</span>
+              </label>
+              <input type="text" id="new-unit-name" class="form-input" required placeholder="e.g. Instrumentation & Control Systems" oninput="autoSuggestCodeAndFolder()">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+              <div class="form-group">
+                <label class="form-label" for="new-unit-code">
+                  <span>Unit Code</span>
+                  <span style="color: var(--text-muted); font-size: 11px;">CBET Code</span>
+                </label>
+                <input type="text" id="new-unit-code" class="form-input" placeholder="e.g. EE-618">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="new-unit-domain">
+                  <span>Engineering Domain</span>
+                  <span style="color: var(--text-muted); font-size: 11px;">Category</span>
+                </label>
+                <select id="new-unit-domain" class="form-input" onchange="handleDomainSelectChange()">
+                  <option value="Power Systems">Power Systems</option>
+                  <option value="Circuit Theory">Circuit Theory</option>
+                  <option value="Machines & Drives">Machines & Drives</option>
+                  <option value="Installation">Installation</option>
+                  <option value="Electronics & Control">Electronics & Control</option>
+                  <option value="Renewable Energy">Renewable Energy</option>
+                  <option value="Mathematics">Mathematics</option>
+                  <option value="Applied Engineering">Applied Engineering</option>
+                  <option value="Computing">Computing</option>
+                  <option value="Management">Management</option>
+                  <option value="Professional Skills">Professional Skills</option>
+                  <option value="__custom__">+ Custom Domain...</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group" id="custom-domain-group" style="display: none;">
+              <label class="form-label" for="new-unit-custom-domain">Custom Domain Name</label>
+              <input type="text" id="new-unit-custom-domain" class="form-input" placeholder="e.g. Mechatronics">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="new-unit-folder">
+                <span>Folder Name in 'Unit Notes/'</span>
+                <span style="color: var(--text-muted); font-size: 11px;">Auto-created on server</span>
+              </label>
+              <input type="text" id="new-unit-folder" class="form-input" placeholder="Instrumentation & Control">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="new-unit-desc">Description / Syllabus Overview</label>
+              <textarea id="new-unit-desc" class="form-input" style="height: 70px; resize: vertical;" placeholder="Overview of key competencies, objectives, or course topics..."></textarea>
+            </div>
+
+            <!-- Drag & Drop / File Input -->
+            <div class="form-group">
+              <label class="form-label">
+                <span>Upload Initial Files (Optional)</span>
+                <span style="color: var(--text-muted); font-size: 11px;">PDF, DOCX, CATs, images</span>
+              </label>
+              <div class="drop-zone" id="new-unit-dropzone" onclick="document.getElementById('new-unit-files').click()">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--accent-cyan); margin-bottom: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <div style="font-size: 13px; font-weight: 600; color: var(--text-primary);">Click or drag files here to upload</div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Support for lecture notes, past exam PDFs, DOCX guides</div>
+                <input type="file" id="new-unit-files" multiple style="display: none;" onchange="handleUnitFilesSelected(this.files)">
+              </div>
+              <div id="new-unit-selected-files-list" style="margin-top: 8px; display: flex; flex-direction: column; gap: 4px;"></div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeCreateUnitModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit-create-unit">
+              ⚡ Create Unit & Index Files
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal: Upload Files to Existing Unit -->
+    <div class="modal-overlay" id="upload-files-modal-overlay">
+      <div class="app-modal-container" id="upload-files-modal-card">
+        <div class="modal-header">
+          <div>
+            <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Upload Unit Resources</h3>
+            <p style="font-size: 13px; color: var(--text-muted);" id="upload-modal-unit-name">Adding resources to unit...</p>
+          </div>
+          <button class="icon-btn" onclick="closeUploadFilesModal()" style="border: none;">✕</button>
+        </div>
+
+        <form id="upload-files-form" onsubmit="handleUploadFilesSubmit(event)">
+          <div class="modal-body">
+            <div class="drop-zone" id="upload-existing-dropzone" onclick="document.getElementById('upload-existing-files').click()">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--accent-cyan); margin-bottom: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <div style="font-size: 13px; font-weight: 600; color: var(--text-primary);">Click or drag files here to upload</div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Files will be placed directly in the unit folder and automatically categorized</div>
+              <input type="file" id="upload-existing-files" multiple style="display: none;" onchange="handleExistingFilesSelected(this.files)">
+            </div>
+            <div id="upload-existing-selected-list" style="margin-top: 10px; display: flex; flex-direction: column; gap: 4px; max-height: 200px; overflow-y: auto;"></div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeUploadFilesModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit-upload-files">
+              Upload & Index Files
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toast-container"></div>
+  </div>
+
+  <!-- Application Script -->
+  <script src="script.js"></script>
+</body>
 </html>
