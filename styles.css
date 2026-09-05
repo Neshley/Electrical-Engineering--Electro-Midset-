@@ -4,19 +4,19 @@
    ========================================================================== */
 
 :root {
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* Deep Slate Dark Theme (Default) */
-  --bg-app: #080d1a;
-  --bg-sidebar: #0d1527;
-  --bg-card: #121c33;
-  --bg-card-hover: #182542;
-  --bg-elevated: #1b294b;
-  --bg-input: #0a1122;
+  --bg-app: #090e1a;
+  --bg-sidebar: #0d1424;
+  --bg-card: #111a2f;
+  --bg-card-hover: #16223d;
+  --bg-elevated: #1a2745;
+  --bg-input: #0b1120;
   
-  --border-subtle: #1e2d4d;
-  --border-strong: #2a3e68;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
   --border-accent: #0284c7;
 
   --text-primary: #f8fafc;
@@ -36,10 +36,10 @@
   --accent-rose: #f43f5e;
   --accent-rose-subtle: rgba(244, 63, 94, 0.12);
 
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.6);
-  --shadow-modal: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 8px 10px -6px rgba(0, 0, 0, 0.7);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.45), 0 2px 4px -2px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.55), 0 4px 6px -4px rgba(0, 0, 0, 0.55);
+  --shadow-modal: 0 20px 25px -5px rgba(0, 0, 0, 0.65), 0 8px 10px -6px rgba(0, 0, 0, 0.65);
 
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -48,19 +48,19 @@
 }
 
 [data-theme="light"] {
-  --bg-app: #f1f5f9;
+  --bg-app: #f8fafc;
   --bg-sidebar: #ffffff;
   --bg-card: #ffffff;
-  --bg-card-hover: #f8fafc;
+  --bg-card-hover: #f1f5f9;
   --bg-elevated: #e2e8f0;
-  --bg-input: #f8fafc;
+  --bg-input: #ffffff;
 
   --border-subtle: #e2e8f0;
   --border-strong: #cbd5e1;
   --border-accent: #0284c7;
 
   --text-primary: #0f172a;
-  --text-secondary: #475569;
+  --text-secondary: #334155;
   --text-muted: #64748b;
 
   --accent-cyan: #0284c7;
@@ -73,7 +73,7 @@
   --accent-emerald: #059669;
   --accent-emerald-subtle: rgba(5, 150, 105, 0.1);
 
-  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
   --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.05);
   --shadow-modal: 0 20px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.08);
@@ -422,44 +422,62 @@ html, body {
 
 /* Dashboard Banner Hero */
 .dashboard-hero {
-  background: linear-gradient(135deg, rgba(2, 132, 199, 0.14) 0%, rgba(6, 182, 212, 0.05) 100%), var(--bg-card);
-  border: 1px solid rgba(6, 182, 212, 0.25);
+  background: radial-gradient(circle at 85% 15%, rgba(2, 132, 199, 0.16) 0%, transparent 55%), linear-gradient(135deg, rgba(2, 132, 199, 0.08) 0%, rgba(6, 182, 212, 0.03) 100%), var(--bg-card);
+  border: 1px solid rgba(6, 182, 212, 0.22);
   border-radius: var(--radius-lg);
-  padding: 28px;
+  padding: 30px;
   position: relative;
   overflow: hidden;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06), var(--shadow-md);
+}
+
+.hero-kicker-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(2, 132, 199, 0.12);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
 }
 
 .hero-content h1 {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  line-height: 1.25;
 }
 
 .hero-content p {
   font-size: 14px;
   color: var(--text-secondary);
-  max-width: 600px;
-  line-height: 1.6;
-  margin-bottom: 18px;
+  max-width: 640px;
+  line-height: 1.65;
+  margin-bottom: 20px;
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
 }
 
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
-  min-width: 260px;
+  min-width: 270px;
 }
 
 .stat-box {

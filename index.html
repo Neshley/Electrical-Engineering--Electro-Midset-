@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="description" content="Electrical and Electronics Engineering hub and All-in-One Calculator suite featuring 40+ engineering solvers, formula library, guided wizards, interactive waveforms, and step-by-step solutions.">
+  <meta name="description" content="Comprehensive Electrical and Electronics Engineering suite featuring 40+ engineering solvers, formula library, guided wizards, interactive waveforms, and step-by-step solutions for all engineers.">
   
   <!-- App & PWA metadata -->
   <title>Electro-Mindset EEE Hub</title>
   <meta property="og:title" content="Electro-Mindset EEE Hub">
-  <meta property="og:description" content="Electrical and Electronics Engineering hub and All-in-One Calculator suite featuring 40+ engineering solvers, formula library, guided wizards, interactive waveforms, and step-by-step solutions.">
+  <meta property="og:description" content="Comprehensive Electrical and Electronics Engineering suite featuring 40+ engineering solvers, formula library, guided wizards, interactive waveforms, and step-by-step solutions for all engineers.">
   <meta property="og:type" content="website">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -16,6 +16,11 @@
   <meta name="theme-color" content="#080d1a">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" href="images/logo.png">
+
+  <!-- Typography: Plus Jakarta Sans & JetBrains Mono for High-Precision Engineering -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Core App Styles -->
   <link rel="stylesheet" href="styles.css">
@@ -26,10 +31,14 @@
     <!-- App Navigation Rail (Sidebar) -->
     <aside class="app-sidebar" id="app-sidebar">
       <div class="app-sidebar-header" id="sidebar-header">
-        <div class="brand-icon" id="brand-logo-icon">⚡</div>
+        <div class="brand-icon" id="brand-logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
         <div class="brand-text" id="brand-text-container">
           <h2>ELECTRO-MINDSET</h2>
-          <span>Level 6 EEE Hub</span>
+          <span>Electrical Engineering Suite</span>
         </div>
       </div>
 
@@ -126,17 +135,21 @@
           <!-- Hero Banner -->
           <div class="dashboard-hero" id="dashboard-hero-card">
             <div class="hero-content">
-              <h1>Electrical & Electronics Engineering Hub</h1>
-              <p>Your comprehensive CBET Level 6 engineering workspace. Access lecture notes, CAT continuous assessment exams, practical guides, and interactive calculators for power systems, machines, and circuit theory.</p>
+              <div class="hero-kicker-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                <span>ELECTRICAL &amp; ELECTRONICS ENGINEERING PLATFORM</span>
+              </div>
+              <h1>Electrical &amp; Electronics Engineering Suite</h1>
+              <p>A unified workstation and technical reference platform for electrical, electronics, power systems, and control engineers. Access 40+ engineering solvers, formula derivations, comprehensive technical notes, and practical problem sets.</p>
               <div class="hero-actions">
                 <button class="btn btn-primary" id="btn-hero-workbench" onclick="window.location.hash='workbench'">
-                  ⚡ Electrical Engineering Calculator (40+ Tools)
+                  ⚡ Engineering Calculator (40+ Tools)
                 </button>
                 <button class="btn btn-secondary" id="btn-hero-units" onclick="window.location.hash='units'">
-                  📚 Explore All 17 Units
+                  📚 Browse Technical Disciplines
                 </button>
                 <button class="btn btn-amber" id="btn-hero-exams" onclick="window.location.hash='exams'">
-                  📝 Browse CATs & Exams
+                  📝 Assessments &amp; Problem Sets
                 </button>
               </div>
             </div>
@@ -144,19 +157,19 @@
             <div class="hero-stats" id="dashboard-stats-grid">
               <div class="stat-box" id="stat-box-units">
                 <div class="stat-value" id="stat-total-units">17</div>
-                <div class="stat-label">Units / Topics</div>
+                <div class="stat-label">Core Disciplines</div>
               </div>
               <div class="stat-box" id="stat-box-files">
                 <div class="stat-value" id="stat-total-files">195</div>
-                <div class="stat-label">Study Files</div>
+                <div class="stat-label">Technical Notes</div>
               </div>
               <div class="stat-box" id="stat-box-exams">
                 <div class="stat-value" id="stat-total-exams">28</div>
-                <div class="stat-label">Exams & CATs</div>
+                <div class="stat-label">Problem Sets &amp; CATs</div>
               </div>
               <div class="stat-box" id="stat-box-tools">
                 <div class="stat-value" id="stat-total-tools">40+</div>
-                <div class="stat-label">Engineering Calculators</div>
+                <div class="stat-label">Engineering Solvers</div>
               </div>
             </div>
           </div>
@@ -186,8 +199,8 @@
           <div style="margin-top: 28px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
               <div>
-                <h2 style="font-size: 18px; font-weight: 700; color: var(--text-primary);">Featured Study Units</h2>
-                <p style="font-size: 13px; color: var(--text-muted);">Quickly jump into active semester modules</p>
+                <h2 style="font-size: 18px; font-weight: 700; color: var(--text-primary);">Featured Disciplines &amp; Modules</h2>
+                <p style="font-size: 13px; color: var(--text-muted);">Quickly access core engineering domains and technical resources</p>
               </div>
               <button class="btn btn-sm btn-secondary" onclick="window.location.hash='units'">View All Units &rarr;</button>
             </div>
@@ -2024,26 +2037,26 @@
         <!-- VIEW 7: SYLLABUS & INFO -->
         <section class="app-view" id="view-info">
           <div class="view-header">
-            <h1 class="view-title">Course Outline & Contacts</h1>
-            <p class="view-subtitle">Accredited CBET Level 6 Electrical and Electronics Engineering syllabus breakdown and lecturer support channels.</p>
+            <h1 class="view-title">Disciplines &amp; Engineering Contacts</h1>
+            <p class="view-subtitle">Electrical &amp; Electronics Engineering curriculum structure, technical standards, and engineering support channels.</p>
           </div>
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
             <!-- Outline Card -->
             <div class="card">
-              <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 12px; color: var(--accent-cyan);">Level 6 Curriculum Structure</h3>
-              <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">The Level 6 Diploma in Electrical & Electronics Engineering consists of core competencies covering electrical power transmission, machine automation, renewable solar energy, installation, and project management.</p>
+              <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 12px; color: var(--accent-cyan);">Electrical Engineering Core Disciplines</h3>
+              <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">Electrical &amp; Electronics Engineering spans fundamental and advanced disciplines covering power transmission &amp; distribution, machine automation, renewable solar energy, industrial installation, and project management.</p>
 
               <div style="font-size: 13px; line-height: 1.8; color: var(--text-primary);">
-                <div>⚡ <strong>EE-601:</strong> Install Electrical Powerlines</div>
-                <div>🔌 <strong>EE-602:</strong> Apply Electrical Principles</div>
-                <div>🛠️ <strong>EE-603:</strong> Electrical Installation Work</div>
-                <div>⚙️ <strong>EE-604:</strong> Electrical Machine Installation</div>
-                <div>🎛️ <strong>EE-605:</strong> Automate an Electrical Machine</div>
-                <div>🏭 <strong>EE-606:</strong> Electrical Power Generation</div>
-                <div>☀️ <strong>EE-607:</strong> Install Solar PV Systems</div>
-                <div>📐 <strong>EE-609:</strong> Engineering Mathematics</div>
-                <div>📹 <strong>EE-612:</strong> Install Security Systems</div>
+                <div>⚡ <strong>EE-101:</strong> Install Electrical Powerlines &amp; Transmission</div>
+                <div>🔌 <strong>EE-102:</strong> Electrical Principles &amp; Circuit Theory</div>
+                <div>🛠️ <strong>EE-103:</strong> Electrical Installation &amp; Safety</div>
+                <div>⚙️ <strong>EE-104:</strong> Electrical Machines &amp; Industrial Drives</div>
+                <div>🎛️ <strong>EE-105:</strong> Automate an Electrical Machine</div>
+                <div>🏭 <strong>EE-106:</strong> Power Generation &amp; Grid Stations</div>
+                <div>☀️ <strong>EE-107:</strong> Solar PV Systems &amp; Renewable Energy</div>
+                <div>📐 <strong>EE-109:</strong> Engineering Mathematics &amp; Analysis</div>
+                <div>📹 <strong>EE-112:</strong> Security Systems &amp; Surveillance</div>
               </div>
             </div>
 
@@ -2133,9 +2146,9 @@
               <div class="form-group">
                 <label class="form-label" for="new-unit-code">
                   <span>Unit Code</span>
-                  <span style="color: var(--text-muted); font-size: 11px;">CBET Code</span>
+                  <span style="color: var(--text-muted); font-size: 11px;">Standard Code</span>
                 </label>
-                <input type="text" id="new-unit-code" class="form-input" placeholder="e.g. EE-618">
+                <input type="text" id="new-unit-code" class="form-input" placeholder="e.g. EE-118">
               </div>
 
               <div class="form-group">
