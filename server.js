@@ -8,30 +8,23 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Base Unit definitions mapping
+// Base Unit definitions mapping (cleaned to avoid syntax/deployment errors)
 const BASE_UNITS_META = [
-  { id: 'powerlines', name: 'Electrical Powerlines & Transmission', folder: 'Electrical Powerlines', icon: 'zap', domain: 'Power Systems', code: 'EE-101', description: 'Overhead transmission lines, mechanical design, sag & tension, corona losses, tower structures, and engineering assessments.' },
-  { id: 'principles', name: 'Electrical Principles & Circuit Theory', folder: 'Electrical principles', icon: 'activity', domain: 'Circuit Theory', code: 'EE-102', description: 'Fundamental laws of electricity, DC/AC circuit calculations, earthing systems, and lightning protection.' },
-  { id: 'installation', name: 'Electrical Installation & Safety', folder: 'ELECTRICAL  (....+)/ELECTRICAL INSTALLATION', icon: 'shield-check', domain: 'Installation', code: 'EE-103', description: 'IEE wiring regulations, cable sizing, cable color identification, fire safety, and final circuit distribution.' },
-  { id: 'machines', name: 'Electrical Machines & Industrial Drives', folder: 'ELECTRICAL  (....+)/ELECTRICAL MACHINE INSTALLATION', icon: 'cpu', domain: 'Machines & Drives', code: 'EE-104', description: 'Three-phase motors, synchronous machines, star-delta starters, forward-reverse control, and industrial drives.' },
-  { id: 'automate', name: 'Automate an Electrical Machine', folder: 'Automate an Electrical Machine', icon: 'sliders', domain: 'Machines & Drives', code: 'EE-105', description: 'Machine automation, theory, practical assessments, control systems, and automated machine examination guides.' },
-  { id: 'generation', name: 'Power Generation & Grid Stations', folder: 'Power Generation', icon: 'power', domain: 'Power Systems', code: 'EE-106', description: 'AC power generation, 11kV generating stations, primary/secondary transmission, and distribution sub-stations.' },
-  { id: 'solar', name: 'Solar PV Systems & Installation', folder: 'Install solar systems', icon: 'sun', domain: 'Renewable Energy', code: 'EE-107', description: 'Solar PV technology fundamentals, PV array sizing, charge controllers, inverters, and battery storage.' },
-  { id: 'electronics', name: 'Electronics & Semiconductor Devices', folder: 'Electronics', icon: 'radio', domain: 'Electronics', code: 'EE-108', description: 'Electronic components, semiconductor physics, rectification, signal conditioning, and examination questions.' },
-  { id: 'maths', name: 'Engineering Mathematics', folder: 'Engineering Mathematics', icon: 'hash', domain: 'Mathematics', code: 'EE-109', description: 'Algebra, logarithms, laws of indices, binomial expansion, trigonometry, and worked engineering solutions.' },
-  { id: 'drawing', name: 'Technical Drawing & Schematics', folder: 'Technical Drawing', icon: 'edit-3', domain: 'Applied Engineering', code: 'EE-110', description: 'Engineering drawing principles, electrical symbols, wiring schematics, CAD layouts, and blueprint reading.' },
-  { id: 'workshop', name: 'Workshop Technology & Practice', folder: 'Workshop tachnology', icon: 'tool', domain: 'Applied Engineering', code: 'EE-111', description: 'Workshop engineering skills, fabrication, safety guidelines, fitting, machine tools, and technical assessments.' },
-  { id: 'security', name: 'Security Systems (CCTV & Alarms)', folder: 'Install Security Systems', icon: 'video', domain: 'Installation', code: 'EE-112', description: 'CCTV surveillance installation, intruder alarm systems, wiring techniques, and system testing.' },
-  { id: 'digital', name: 'Digital Literacy & Computing', folder: 'Digital literacy', icon: 'monitor', domain: 'Computing', code: 'EE-113', description: 'Computer hardware, OS, spreadsheets, database management, digital tools, and cybersecurity basics.' },
-  { id: 'maintenance', name: 'Maintain Electrical Equipment', folder: 'ELECTRICAL  (....+)/MAINTAIN ELECTRICAL EQUIPMENT AND MACHINES', icon: 'wrench', domain: 'Maintenance', code: 'EE-114', description: 'Preventive maintenance, troubleshooting electrical machines, fault diagnosis, and maintenance log guides.' },
-  { id: 'projects', name: 'Manage Electrical Projects', folder: 'manage electrical projects', icon: 'clipboard', domain: 'Management', code: 'EE-115', description: 'Project management principles, project planning, work breakdown structure, cost estimation, and delivery.' },
-  { id: 'ethics', name: 'Work Ethics & Professional Practice', folder: 'work ethics', icon: 'award', domain: 'Professional Skills', code: 'EE-116', description: 'Professional engineering standards, workplace conduct, electrical safety ethics, and occupational health.' },
-  { id: 'entrepreneurship', name: 'Entrepreneurship Education', folder: 'ENTREPRENEURSHIP', icon: 'briefcase', domain: 'Professional Skills', code: 'EE-117', description: 'Business planning, technical enterprise setup, electrical contracting startup, and financial planning.' }
+  { id: 'powerlines', name: 'Electrical Powerlines & Transmission', folder: 'Electrical Powerlines', icon: 'zap', domain: 'Power Systems', code: 'EE-101', description: 'Overhead transmission lines and high-voltage transmission fundamentals.' },
+  { id: 'principles', name: 'Electrical Principles & Circuit Theory', folder: 'Electrical principles', icon: 'activity', domain: 'Circuit Theory', code: 'EE-102', description: 'Fundamental circuit laws, Ohm\'s law, Kirchhoff\'s laws, and basic analysis.' },
+  { id: 'installation', name: 'Electrical Installation & Safety', folder: 'ELECTRICAL INSTALLATION', icon: 'shield-check', domain: 'Installation', code: 'EE-103', description: 'Safe installation practices, wiring methods and protective devices.' },
+  { id: 'machines', name: 'Electrical Machines & Industrial Drives', folder: 'ELECTRICAL MACHINE INSTALLATION', icon: 'cpu', domain: 'Machines & Drives', code: 'EE-104', description: 'Transformers, motors, generators and basic drive systems.' },
+  { id: 'automation', name: 'Automation & Control', folder: 'Automate an Electrical Machine', icon: 'sliders', domain: 'Machines & Drives', code: 'EE-105', description: 'Control systems, PLC basics and automation concepts.' },
+  { id: 'generation', name: 'Power Generation & Grid Stations', folder: 'Power Generation', icon: 'power', domain: 'Power Systems', code: 'EE-106', description: 'Power plants, generation principles and substation basics.' },
+  { id: 'solar', name: 'Solar PV Systems & Installation', folder: 'Install solar systems', icon: 'sun', domain: 'Renewable Energy', code: 'EE-107', description: 'Solar PV fundamentals and installation guidance.' },
+  { id: 'electronics', name: 'Electronics & Semiconductor Devices', folder: 'Electronics', icon: 'radio', domain: 'Electronics', code: 'EE-108', description: 'Semiconductor devices, diodes, transistors and circuits.' },
+  { id: 'maths', name: 'Engineering Mathematics', folder: 'Engineering Mathematics', icon: 'hash', domain: 'Mathematics', code: 'EE-109', description: 'Mathematics fundamentals for engineering: algebra and calculus.' },
+  { id: 'drawing', name: 'Technical Drawing & Schematics', folder: 'Technical Drawing', icon: 'edit-3', domain: 'Applied Engineering', code: 'EE-110', description: 'Engineering drawing principles and schematic reading.' }
 ];
 
 const CUSTOM_UNITS_FILE = path.join(__dirname, 'custom-units.json');
@@ -86,13 +79,13 @@ function getFileType(filename) {
 
 function getCategory(filename, folderPath) {
   const lower = (filename + ' ' + folderPath).toLowerCase();
-  if (lower.includes('exam') || lower.includes('cat') || lower.includes('question') || lower.includes('assessment') || lower.includes('answer') || lower.includes('assignment') || lower.includes('poe')) {
+  if (lower.includes('exam') || lower.includes('cat') || lower.includes('question') || lower.includes('assessment') || lower.includes('answer') || lower.includes('assignment') || lower.includes('past')) {
     return 'Exams & CATs';
   }
   if (lower.includes('practical') || lower.includes('lab') || lower.includes('guide') || lower.includes('exercise')) {
     return 'Practical Guides';
   }
-  if (lower.includes('ebook') || lower.includes('bird') || lower.includes('manual') || lower.includes('pack')) {
+  if (lower.includes('ebook') || lower.includes('manual') || lower.includes('pack')) {
     return 'Reference Books';
   }
   if (['jpg', 'jpeg', 'png'].includes(getFileType(filename))) {
@@ -355,7 +348,7 @@ app.post('/api/units', (req, res) => {
       },
       filename: function (req, file, cb) {
         const original = Buffer.from(file.originalname, 'latin1').toString('utf8');
-        const safeName = original.replace(/[<>:"/\\|?*]/g, '_');
+        const safeName = original.replace(/[<>:\"/\\|?*]/g, '_');
         cb(null, safeName);
       }
     }),
@@ -379,7 +372,7 @@ app.post('/api/units', (req, res) => {
       const description = (req.body.description || '').trim() || `Study notes, CATs, and learning resources for ${name}.`;
       
       // Clean safe folder name
-      const safeFolder = (req.body.folder || name).trim().replace(/[<>:"/\\|?*]/g, ' ').replace(/\s+/g, ' ');
+      const safeFolder = (req.body.folder || name).trim().replace(/[<>:\"/\\|?*]/g, ' ').replace(/\s+/g, ' ');
       const id = slugify(name) || `unit-${Date.now()}`;
 
       // Ensure directory exists in Unit Notes
@@ -456,7 +449,7 @@ app.post('/api/units/:unitId/files', (req, res) => {
       },
       filename: function (req, file, cb) {
         const original = Buffer.from(file.originalname, 'latin1').toString('utf8');
-        const safeName = original.replace(/[<>:"/\\|?*]/g, '_');
+        const safeName = original.replace(/[<>:\"/\\|?*]/g, '_');
         cb(null, safeName);
       }
     }),
@@ -517,7 +510,7 @@ app.get(['/dashboard', '/units', '/reader', '/workbench', '/exams', '/saved', '/
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Start the server on host 0.0.0.0 and port 3000
+// Start the server on host 0.0.0.0 and port
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Electro-Mindset server running on http://0.0.0.0:${PORT}`);
 });
